@@ -4,6 +4,7 @@
 	<comment></comment>
 	<projects>
 		<project>lpc_chip_43xx</project>
+		<project>ciaa_api</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
