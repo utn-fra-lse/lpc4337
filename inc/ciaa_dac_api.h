@@ -95,7 +95,7 @@ static inline void dac_set_output_value(uint16_t output) {
 	/* Get current bias */
 	tmp = CIAA_DAC->CR & DAC_BIAS_EN;
 	/* Add desired value */
-	tmp |= DAC_VALUE(output);
+	tmp |= DAC_VALUE((output & 0x3ff));
 	/* Update value */
 	CIAA_DAC->CR = tmp;
 }
