@@ -25,19 +25,35 @@
 
 /* Pin struct definition */
 typedef struct {
-	uint8_t SCU_PORT;
-	uint8_t SCU_PIN;
-	uint8_t GPIO_PORT;
-	uint8_t GPIO_PIN;
+	uint8_t SCU_PORT;		/* GPIO PORT number for SCU */
+	uint8_t SCU_PIN;		/* GPIO PIN number for SCU */
+	uint8_t GPIO_PORT;		/* GPIO PORT to read/write */
+	uint8_t GPIO_PIN;		/* GPIO PIN to read/write */
+	uint8_t GPIO_FUNCTION;	/* Function number to work as GPIO */
 } pin_t;
 
 /* Pin declarations */
-extern const pin_t LEDR;
-extern const pin_t LEDG;
-extern const pin_t LEDB;
-extern const pin_t LED1;
-extern const pin_t LED2;
-extern const pin_t LED3;
+extern pin_t LEDR;
+extern pin_t LEDG;
+extern pin_t LEDB;
+extern pin_t LED1;
+extern pin_t LED2;
+extern pin_t LED3;
+
+extern pin_t TEC1;
+extern pin_t TEC2;
+extern pin_t TEC3;
+extern pin_t TEC4;
+
+extern pin_t GPIO0;
+extern pin_t GPIO1;
+extern pin_t GPIO2;
+extern pin_t GPIO3;
+extern pin_t GPIO4;
+extern pin_t GPIO5;
+extern pin_t GPIO6;
+extern pin_t GPIO7;
+extern pin_t GPIO8;
 
 /* Function prototypes */
 
@@ -48,7 +64,7 @@ extern const pin_t LED3;
  *
  * @return	None
  */
-static void inline gpio_init(pin_t pin) { CIAA_SCU->SFSP[pin.SCU_PORT][pin.SCU_PIN] = (SCU_MODE_INACT | SCU_MODE_ZIF_DIS | SCU_MODE_INBUFF_EN); }
+static void inline gpio_init(pin_t pin) { CIAA_SCU->SFSP[pin.SCU_PORT][pin.SCU_PIN] = pin.GPIO_FUNCTION; }
 
 /**
  * @brief	set GPIO pin direction
