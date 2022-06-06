@@ -9,6 +9,7 @@
 #define CIAA_DAC_API_H_
 
 #include "chip.h"
+#include "ciaa_scu_api.h"
 
 /* Base DAC register redefinition */
 #define CIAA_DAC	LPC_DAC
