@@ -9,6 +9,7 @@
 #define CIAA_GPIO_API_H_
 
 #include "chip.h"
+#include "ciaa_scu_api.h"
 
 /* Definitions */
 #define CIAA_GPIO	LPC_GPIO_PORT
@@ -64,7 +65,7 @@ extern pin_t GPIO8;
  *
  * @return	None
  */
-static void inline gpio_init(pin_t pin) { CIAA_SCU->SFSP[pin.SCU_PORT][pin.SCU_PIN] = pin.GPIO_FUNCTION; }
+static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin, pin.GPIO_FUNCTION); }
 
 /**
  * @brief	set GPIO pin direction

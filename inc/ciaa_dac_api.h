@@ -107,11 +107,6 @@ static inline void dac_set_output_value(uint16_t output) {
  * 
  *	@return	None
  */ 
-static inline void dac_set_alternative_output_enabled(bool enabled) {
-	/* Clear ENAIO bit that enables P4_4 DAC output */
-	LPC_SCU->ENAIO[2] &= ~1;
-	/* Set bit if the output in P4_4 is required */
-	if(enabled) { LPC_SCU->ENAIO[2] |= 1; }
-}
+static inline void dac_set_alternative_output_enabled(bool enabled) { scu_dac_config(enabled); }
 
 #endif /* CIAA_DAC_API_H_ */
