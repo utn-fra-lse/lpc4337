@@ -70,12 +70,17 @@ static inline void scu_i2c0_config(uint32_t mode) { CIAA_SCU->SFSI2C0 = mode; }
 static inline void scu_adc_channel_config(uint8_t adc, uint8_t channel) { CIAA_SCU->ENAIO[adc] |= 1UL << channel; }
 
 /*
- *	@brief	Enable DAC output on P4_4
+ *	@brief	Enable/Disable DAC output on P4_4
  *
- *	@param	None
+ *	@param	enabled: whether to enable or disable the DAC output
  *
  *	@param	None
  */
-static inline void scu_dac_config(void) { CIAA_SCU->ENAIO[adc] |= 1UL << channel; }
+static inline void scu_dac_config(bool enabled) {
+	/* Clear ENAIO bit that enables P4_4 DAC output */
+	CIAA_SCU->ENAIO[2] &= ~1;
+	/* Set bit if the output in P4_4 is required */
+	if(enabled) { CIAA_SCU->ENAIO[2] |= 1; }
+}
 
 #endif /* CIAA_SCU_API_H_ */
