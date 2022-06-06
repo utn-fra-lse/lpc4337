@@ -9,7 +9,6 @@
 #define CIAA_SCU_API_H_
 
 #include "chip.h"
-#include "ciaa_gpio_api.h"
 
 #define CIAA_SCU	LPC_SCU
 
@@ -41,12 +40,13 @@
 /*
  *	@brief	Sets IO control pin mux
  *
- *	@param	pin: pin struct to be used
+ *	@param	scu_port: SCU PORT of the GPIO
+ *	@param	scu_pin: SCU PIN of the GPIO
  *	@param	mode: function to set to the pin
  *
  *	@return	None
  */
-static inline void scu_set_pin_mode(pin_t pin, uint16_t mode) { CIAA_SCU->SFSP[pin.SCU_PORT][pin.SCU_PIN] = mode; }
+static inline void scu_set_pin_mode(uint8_t scu_port,  uint8_t scu_pin, uint16_t mode) { CIAA_SCU->SFSP[scu_port][scu_pin] = mode; }
 
 /*
  *	@brief	I2C0 configuration
