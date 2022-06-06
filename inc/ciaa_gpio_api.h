@@ -13,7 +13,6 @@
 
 /* Definitions */
 #define CIAA_GPIO	LPC_GPIO_PORT
-#define CIAA_SCU	LPC_SCU
 
 #define OFF		false
 #define ON		true
@@ -65,7 +64,7 @@ extern pin_t GPIO8;
  *
  * @return	None
  */
-static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin, pin.GPIO_FUNCTION); }
+static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, pin.GPIO_FUNCTION); }
 
 /**
  * @brief	set GPIO pin direction
