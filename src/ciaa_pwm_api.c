@@ -12,6 +12,15 @@ pwm_output_t PWM2 = { &LED2, CTOUT_5, 2 };
 pwm_output_t PWM3 = { &LED3, CTOUT_4, 3 };
 pwm_output_t PWM4 = { &GPIO2, CTOUT_6, 4 };
 pwm_output_t PWM5 = { &GPIO8, CTOUT_7, 5 };
+pwm_output_t PWM6 = { &TFIL1, CTOUT_1, 6 };
+pwm_output_t PWM7 = { &TFIL2, CTOUT_0, 7 };
+pwm_output_t PWM8 = { &TFIL3, CTOUT_3, 8 };
+pwm_output_t PWM9 = { &TCOL0, CTOUT_10, 9 };
+pwm_output_t PWM10 = { &TCOL1, CTOUT_13, 10 };
+pwm_output_t PWM11 = { &TCOL2, CTOUT_12, 11 };
+pwm_output_t PWM12 = { &LCD1, CTOUT_2, 12 };
+pwm_output_t PWM13 = { &LCD2, CTOUT_5, 13 };
+pwm_output_t PWM14 = { &LCD3, CTOUT_4, 14 };
 
 void pwm_init(void) {
 	pwm_config_t config = pwm_get_default_config();

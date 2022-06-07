@@ -38,6 +38,14 @@ extern pwm_output_t PWM3;
 extern pwm_output_t PWM4;
 extern pwm_output_t PWM5;
 extern pwm_output_t PWM6;
+extern pwm_output_t PWM7;
+extern pwm_output_t PWM8;
+extern pwm_output_t PWM9;
+extern pwm_output_t PWM10;
+extern pwm_output_t PWM11;
+extern pwm_output_t PWM12;
+extern pwm_output_t PWM13;
+extern pwm_output_t PWM14;
 
 void pwm_init(void);
 void pwm_config_init(pwm_config_t config);
