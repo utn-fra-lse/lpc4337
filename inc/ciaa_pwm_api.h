@@ -111,13 +111,32 @@ static inline void pwm_set_start(bool enabled) {
 }
 
 /*
+ *	@brief	Set new match value
+ *
+ *	@param	match: match output to update
+ *	@param	value: number of ticks for the match
+ *
+ *	@return	None
+ */
+static inline void pwm_set_match(uint8_t match, uint32_t value) { CIAA_PWM->MATCHREL[match].U = value; }
+
+/*
  * 	@brief	Set counter max ticks
  *
  * 	@param	ticks: number of ticks to set
  *
  * 	@return	None
  */
-static inline void pwm_set_wrap(uint32_t value) { CIAA_PWM->MATCHREL[SCT_MATCH_0].U = value; }
+static inline void pwm_set_wrap(uint32_t value) {
+	/* Stop the SCT before configuration */
+	pwm_stop();
+	/* Reset CTOUT 0 counter value */
+	pwm_set_match(SCT_MATCH_0, 0);
+	/* Update wrap value */
+	CIAA_PWM->MATCHREL[SCT_MATCH_0].U = value;
+	/* Start SCT counter */
+	pwm_start();
+}
 
 /*
  * 	@brief	Get counter max ticks
@@ -135,7 +154,12 @@ static inline uint32_t pwm_get_wrap(void) { return CIAA_PWM->MATCHREL[SCT_MATCH_
  *
  * 	@return	ticks value
  */
-static inline uint32_t pwm_percent_to_ticks(uint8_t percent) { return (pwm_get_wrap() * percent) / 100; }
+static inline uint32_t pwm_percent_to_ticks(uint8_t percent) {
+	/* Check the value is within limits */
+	if(percent > 0 && percent < 100) {	return (pwm_get_wrap() * percent) / 100; }
+	return 0;
+}
+
 
 /*
  * 	@brief	Convert duty ticks to percent
@@ -145,16 +169,6 @@ static inline uint32_t pwm_percent_to_ticks(uint8_t percent) { return (pwm_get_w
  * 	@return	0-100 percent value
  */
 static inline uint8_t pwm_ticks_to_percent(uint32_t ticks) { return (100 * ticks) / pwm_get_wrap(); }
-
-/*
- *	@brief	Set new match value
- *
- *	@param	match: match output to update
- *	@param	value: number of ticks for the match
- *
- *	@return	None
- */
-static inline void pwm_set_match(uint8_t match, uint32_t value) { CIAA_PWM->MATCHREL[match].U = value; }
 
 /*
  *	@brief	Set duty cycle in ticks
@@ -193,9 +207,11 @@ static inline void pwm_set_duty_percent(pwm_output_t output, uint8_t percent) { 
  * 	@return	None
  */
 static inline void pwm_set_duty_us(pwm_output_t output, uint32_t us) {
-
+	/* Get PWM frequency */
 	uint32_t freq = Chip_Clock_GetRate(CLK_MX_SCT) / pwm_get_wrap();
+	/* Get number of ticks */
 	uint32_t ticks = pwm_get_wrap() * ((float)us / 1E6) * freq;
+	/* Set duty cycle in ticks */
 	pwm_set_duty_ticks(output, ticks);
 }
 
