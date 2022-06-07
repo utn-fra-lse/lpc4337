@@ -72,10 +72,28 @@ static inline void pwm_set_start(bool enabled) {
 	else { pwm_stop(); }
 }
 
+static inline void pwm_set_wrap(uint32_t value) { CIAA_PWM->MATCHREL[SCT_MATCH_0].U = value; }
+
+static inline uint32_t pwm_get_wrap(void) { return CIAA_PWM->MATCHREL[SCT_MATCH_0].U; }
+
+static inline uint32_t pwm_percent_to_ticks(uint8_t percent) { return (pwm_get_wrap() * percent) / 100; }
+
+static inline uint8_t pwm_ticks_to_percent(uint32_t ticks) { return (100 * ticks) / pwm_get_wrap(); }
+
 static inline void pwm_set_match(uint8_t match, uint32_t value) { CIAA_PWM->MATCHREL[match].U = value; }
 
 static inline void pwm_set_duty_ticks(pwm_output_t output, uint32_t ticks) { pwm_set_match(output.pwm, ticks); }
 
-static inline void pwm_set_wrap(uint32_t value) { CIAA_PWM->MATCHREL[SCT_MATCH_0].U = value; }
+static inline uint32_t pwm_get_duty(pwm_output_t output) { return CIAA_PWM->MATCHREL[output.pwm].U; }
+
+static inline void pwm_set_duty_percent(pwm_output_t output, uint8_t percent) { pwm_set_duty_ticks(output, pwm_percent_to_ticks(percent)); }
+
+static inline void pwm_set_duty_us(pwm_output_t output, uint32_t us) {
+
+	uint32_t freq = Chip_Clock_GetRate(CLK_MX_SCT) / pwm_get_wrap();
+	uint32_t ticks = pwm_get_wrap() * ((float)us / 1E6) * freq;
+	pwm_set_duty_ticks(output, ticks);
+}
+
 
 #endif /* CIAA_PWM_API_H_ */
