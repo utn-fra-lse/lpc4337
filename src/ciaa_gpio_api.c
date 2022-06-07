@@ -6,7 +6,7 @@
  */
 
 /* CIAA GPIO API includes */
-#include <ciaa_gpio_api.h>
+#include "ciaa_gpio_api.h"
 
 /* Pin definitions */
 pin_t LEDR = { 2, 0, 5, 0, SCU_MODE_FUNC4 };
@@ -30,3 +30,19 @@ pin_t GPIO5 = { 6, 9, 3, 5, SCU_MODE_FUNC0 };
 pin_t GPIO6 = { 6, 10, 3, 6, SCU_MODE_FUNC0 };
 pin_t GPIO7 = { 6, 11, 3, 7, SCU_MODE_FUNC0 };
 pin_t GPIO8 = { 6, 12, 2, 8, SCU_MODE_FUNC0 };
+
+pin_t TFIL0 = { 4, 0, 2, 0, SCU_MODE_FUNC0 };
+pin_t TFIL1 = { 4, 1, 2, 1, SCU_MODE_FUNC0 };
+pin_t TFIL2 = { 4, 2, 2, 2, SCU_MODE_FUNC0 };
+pin_t TFIL3 = { 4, 3, 2, 3, SCU_MODE_FUNC0 };
+
+pin_t TCOL0 = { 1, 5, 1, 8, SCU_MODE_FUNC0 };
+pin_t TCOL1 = { 7, 4, 3, 12, SCU_MODE_FUNC0 };
+pin_t TCOL2 = { 7, 5, 3, 13, SCU_MODE_FUNC0 };
+
+pin_t LCD1 = { 4, 4, 2, 4, SCU_MODE_FUNC0 };
+pin_t LCD2 = { 4, 5, 2, 5, SCU_MODE_FUNC0 };
+pin_t LCD3 = { 4, 6, 2, 6, SCU_MODE_FUNC0 };
+pin_t LCD4 = { 4, 10, 5, 14, SCU_MODE_FUNC4 };
+pin_t LCD_RS = { 4, 8, 5, 12, SCU_MODE_FUNC4 };
+pin_t LCD_EN = { 4, 9, 5, 13, SCU_MODE_FUNC4 };

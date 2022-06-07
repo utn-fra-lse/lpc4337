@@ -55,6 +55,22 @@ extern pin_t GPIO6;
 extern pin_t GPIO7;
 extern pin_t GPIO8;
 
+extern pin_t TFIL0;
+extern pin_t TFIL1;
+extern pin_t TFIL2;
+extern pin_t TFIL3;
+
+extern pin_t TCOL0;
+extern pin_t TCOL1;
+extern pin_t TCOL2;
+
+extern pin_t LCD1;
+extern pin_t LCD2;
+extern pin_t LCD3;
+extern pin_t LCD4;
+extern pin_t LCD_RS;
+extern pin_t LCD_EN;
+
 /* Function prototypes */
 
 /**
