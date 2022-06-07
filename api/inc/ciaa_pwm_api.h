@@ -156,7 +156,7 @@ static inline uint32_t pwm_get_wrap(void) { return CIAA_PWM->MATCHREL[SCT_MATCH_
  */
 static inline uint32_t pwm_percent_to_ticks(uint8_t percent) {
 	/* Check the value is within limits */
-	if(percent > 0 && percent < 100) {	return (pwm_get_wrap() * percent) / 100; }
+	if(percent > 0 && percent <= 100) {	return (pwm_get_wrap() * percent) / 100; }
 	return 0;
 }
 
