@@ -28,6 +28,24 @@ void timer_reset(uint8_t timer);
 void timer_set_irq_enabled(uint8_t timer, bool enabled);
 
 /*
+ * 	@brief	Convert milliseconds to ticks
+ *
+ * 	@param	ms: number of milliseconds
+ *
+ * 	@return None
+ */
+static inline uint32_t timer_ms_to_ticks(uint32_t ms) { return (SystemCoreClock / 1E3) * ms; }
+
+/*
+ * 	@brief	Convert microseconds to ticks
+ *
+ * 	@param	us: number of microseconds
+ *
+ * 	@return	None
+ */
+static inline uint32_t timer_us_to_ticks(uint32_t us) { return (SystemCoreClock / 1E6) * us; }
+
+/*
  *	@brief	Gets the TIMER base register
  *
  *	@param	timer: TIMER number (0, 1, 2, 3)
