@@ -3,8 +3,8 @@
 	<name>ciaa_api</name>
 	<comment></comment>
 	<projects>
-		<project>lpc_chip_43xx</project>
 		<project>ciaa_api</project>
+		<project>lpc_chip_43xx</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
