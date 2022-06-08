@@ -14,7 +14,7 @@ ADC_CHANNEL_T channels[] = {
 };
 
 /* Interrupt handler function pointer */
-void (*handlers[])(void) = { NULL, NULL };
+void (*adc_handlers[])(void) = { NULL, NULL };
 
 /*
  * 	@brief	Initializes ADC with default config
@@ -205,7 +205,7 @@ void adc_set_irq_enabled(uint8_t adc, bool enabled) {
  */
 void ADC0_IRQHandler(void) {
 	/* Check if there is a handler and call it */
-	if(handlers[0]) { handlers[0](); }
+	if(adc_handlers[0]) { adc_handlers[0](); }
 }
 
 /*
@@ -217,5 +217,5 @@ void ADC0_IRQHandler(void) {
  */
 void ADC1_IRQHandler(void) {
 	/* Check if there is a handler and call it */
-	if(handlers[1]) { handlers[1](); }
+	if(adc_handlers[1]) { adc_handlers[1](); }
 }

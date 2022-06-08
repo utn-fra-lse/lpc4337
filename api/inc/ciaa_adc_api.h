@@ -42,7 +42,7 @@ typedef struct {
  * */
 
 /* Extern interrupt handler pointer */
-extern void (*handlers[])(void);
+extern void (*adc_handlers[])(void);
 
 /* Prototype functions */
 void adc_init(uint8_t adc);
@@ -145,7 +145,7 @@ static inline void adc_set_irq_channel_enabled(uint8_t adc, uint8_t channel, boo
  *
  * 	@return None
  */
-static inline void adc_set_irq_handler(uint8_t adc, void (*handler)(void)) { handlers[adc] = handler; }
+static inline void adc_set_irq_handler(uint8_t adc, void (*handler)(void)) { adc_handlers[adc] = handler; }
 
 /*
  *	@brief	Get the actual conversion state on a channel
