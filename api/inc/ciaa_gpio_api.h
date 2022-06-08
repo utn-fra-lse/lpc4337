@@ -74,7 +74,7 @@ extern pin_t LCD_EN;
 /* Function prototypes */
 
 /**
- * @brief	initialize GPIO pin
+ * @brief	Initialize GPIO pin
  *
  * @param	pin: struct to the pin
  *
@@ -83,7 +83,7 @@ extern pin_t LCD_EN;
 static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, pin.GPIO_FUNCTION); }
 
 /**
- * @brief	set GPIO pin direction
+ * @brief	Set GPIO pin direction
  *
  * @param	pin: struct to the pin
  * @param	dir: direction of the pin:
@@ -103,7 +103,7 @@ static void inline gpio_set_dir(pin_t pin, bool dir) {
 }
 
 /**
- * @brief	set GPIO pin direction to input
+ * @brief	Set GPIO pin direction to input
  *
  * @param	pin: struct to the pin
  *
@@ -112,7 +112,7 @@ static void inline gpio_set_dir(pin_t pin, bool dir) {
 static void inline gpio_set_dir_in(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] &= ~(1UL << pin.GPIO_PIN); }
 
 /**
- * @brief	set GPIO pin direction to output
+ * @brief	Set GPIO pin direction to output
  *
  * @param	pin: struct to the pin
  *
@@ -121,7 +121,7 @@ static void inline gpio_set_dir_in(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] &=
 static void inline gpio_set_dir_out(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] |= 1UL << pin.GPIO_PIN; }
 
 /**
- * @brief	set GPIO pin output value
+ * @brief	Set GPIO pin output value
  *
  * @param	pin: struct to the pin to initialize
  * @param	value: output value:
@@ -133,7 +133,7 @@ static void inline gpio_set_dir_out(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] |
 static void inline gpio_put(pin_t pin, bool value) { CIAA_GPIO->B[pin.GPIO_PORT][pin.GPIO_PIN] = value; }
 
 /**
- * @brief	set GPIO pin output value to high
+ * @brief	Set GPIO pin output value to high
  *
  * @param	pin: struct to the pin to initialize
  *
@@ -142,7 +142,7 @@ static void inline gpio_put(pin_t pin, bool value) { CIAA_GPIO->B[pin.GPIO_PORT]
 static void inline gpio_set(pin_t pin) { CIAA_GPIO->SET[pin.GPIO_PORT] = (1 << pin.GPIO_PIN); }
 
 /**
- * @brief	set GPIO pin output value to low
+ * @brief	Set GPIO pin output value to low
  *
  * @param	pin: struct to the pin to initialize
  *
@@ -151,7 +151,7 @@ static void inline gpio_set(pin_t pin) { CIAA_GPIO->SET[pin.GPIO_PORT] = (1 << p
 static void inline gpio_clr(pin_t pin) { CIAA_GPIO->CLR[pin.GPIO_PORT] = (1 << pin.GPIO_PIN); }
 
 /**
- * @brief	toggle GPIO pin output value
+ * @brief	Toggle GPIO pin output value
  *
  * @param	pin: struct to the pin to initialize
  *
@@ -160,7 +160,7 @@ static void inline gpio_clr(pin_t pin) { CIAA_GPIO->CLR[pin.GPIO_PORT] = (1 << p
 static void inline gpio_xor(pin_t pin) { CIAA_GPIO->NOT[pin.GPIO_PORT] = (1 << pin.GPIO_PIN); }
 
 /**
- * @brief	get GPIO pin value
+ * @brief	Get GPIO pin value
  *
  * @param	pin: struct to the pin to initialize
  *
