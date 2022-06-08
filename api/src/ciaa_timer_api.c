@@ -7,13 +7,23 @@
 
 #include "ciaa_timer_api.h"
 
+/* TIMER base registers array */
 LPC_TIMER_T *CIAA_TIMERS[] = { CIAA_TIMER0, CIAA_TIMER1, CIAA_TIMER2, CIAA_TIMER3 };
+/* Base clocks for TIMERs */
 CHIP_CCU_CLK_T TIMER_CLKS[] = { CLK_MX_TIMER0, CLK_MX_TIMER1, CLK_MX_TIMER2, CLK_MX_TIMER3 };
+/* TIMER interrupt vectors */
 LPC43XX_IRQn_Type TIMER_IRQS[] = { TIMER0_IRQn, TIMER1_IRQn, TIMER2_IRQn, TIMER3_IRQn };
 
+/* Interrupt handlers function pointer */
 void (*timer_handlers[])(void) = { NULL, NULL, NULL, NULL };
 
-/* Resets the timer terminal and prescale counts to 0 */
+/*
+ * 	@brief	Resets the timer terminal and prescale counts to 0
+ *
+ * 	@param	timer: TIMER number (0, 1, 2, 3)
+ *
+ * 	@return	None
+ */
 void timer_reset(uint8_t timer) {
 	/* Disable timer, set terminal count to non-0 */
 	uint32_t reg = timer_get_base_register(timer)->TCR;
@@ -27,6 +37,14 @@ void timer_reset(uint8_t timer) {
 	timer_get_base_register(timer)->TCR = reg;
 }
 
+/*
+ * 	@brief	Enable/Disbale TIMER interrupt
+ *
+ * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	enabled: whether to enable or disable interrupt
+ *
+ * 	@return None
+ */
 void timer_set_irq_enabled(uint8_t timer, bool enabled) {
 	/* Disable interrupt */
 	timer_get_base_register(timer)->MCR &= ~TIMER_INT_ON_MATCH(0);
@@ -39,6 +57,13 @@ void timer_set_irq_enabled(uint8_t timer, bool enabled) {
 	NVIC_EnableIRQ(TIMER_IRQS[timer]);
 }
 
+/*
+ *	@brief	TIMER0 interrupt handler
+ *
+ *	@param	None
+ *
+ *	@return	None
+ */
 void TIMER0_IRQHandler(void) {
 
 	if(timer_get_match_pending(0)) {
@@ -47,6 +72,13 @@ void TIMER0_IRQHandler(void) {
 	}
 }
 
+/*
+ *	@brief	TIMER1 interrupt handler
+ *
+ *	@param	None
+ *
+ *	@return	None
+ */
 void TIMER1_IRQHandler(void) {
 
 	if(timer_get_match_pending(1)) {
@@ -56,6 +88,13 @@ void TIMER1_IRQHandler(void) {
 	}
 }
 
+/*
+ *	@brief	TIMER2 interrupt handler
+ *
+ *	@param	None
+ *
+ *	@return	None
+ */
 void TIMER2_IRQHandler(void) {
 
 	if(timer_get_match_pending(2)) {
@@ -65,6 +104,13 @@ void TIMER2_IRQHandler(void) {
 	}
 }
 
+/*
+ *	@brief	TIMER3 interrupt handler
+ *
+ *	@param	None
+ *
+ *	@return	None
+ */
 void TIMER3_IRQHandler(void) {
 
 	if(timer_get_match_pending(3)) {
