@@ -16,6 +16,14 @@
 #define CIAA_TIMER2	LPC_TIMER2
 #define CIAA_TIMER3	LPC_TIMER3
 
+/* CIAA available TIMERS */
+typedef enum {
+	TIMER_0,
+	TIMER_1,
+	TIMER_2,
+	TIMER_3
+} ciaa_timer_t;
+
 /* Extern arrays */
 extern LPC_TIMER_T *CIAA_TIMERS[];
 extern CHIP_CCU_CLK_T TIMER_CLKS[];
@@ -24,8 +32,8 @@ extern LPC43XX_IRQn_Type TIMER_IRQS[];
 extern void (*timer_handlers[])(void);
 
 /* Function prototypes */
-void timer_reset(uint8_t timer);
-void timer_set_irq_enabled(uint8_t timer, bool enabled);
+void timer_reset(ciaa_timer_t timer);
+void timer_set_irq_enabled(ciaa_timer_t timer, bool enabled);
 
 /*
  * 	@brief	Convert milliseconds to ticks
@@ -48,69 +56,69 @@ static inline uint32_t timer_us_to_ticks(uint32_t us) { return (SystemCoreClock 
 /*
  *	@brief	Gets the TIMER base register
  *
- *	@param	timer: TIMER number (0, 1, 2, 3)
+ *	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  *	@return	TIMER base register
  */
-static inline LPC_TIMER_T* timer_get_base_register(uint8_t timer) { return CIAA_TIMERS[timer]; }
+static inline LPC_TIMER_T* timer_get_base_register(ciaa_timer_t timer) { return CIAA_TIMERS[timer]; }
 
 /*
  * 	@brief	Enable TIMER clock
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return	None
  */
-static inline void timer_init(uint8_t timer) { Chip_Clock_Enable(TIMER_CLKS[timer]); }
+static inline void timer_init(ciaa_timer_t timer) { Chip_Clock_Enable(TIMER_CLKS[timer]); }
 
 /*
  *	@brief	Disable TIMER clock
  *
- *	@param	timer: TIMER number (0, 1, 2, 3)
+ *	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  *	@return	None
  */
-static inline void timer_deinit(uint8_t timer) { Chip_Clock_Disable(TIMER_CLKS[timer]); }
+static inline void timer_deinit(ciaa_timer_t timer) { Chip_Clock_Disable(TIMER_CLKS[timer]); }
 
 /*
  * 	@brief	Set TIMER match value in ticks
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  * 	@param	ticks: match value in ticks
  *
  * 	@return	None
  */
-static inline void timer_set_match_ticks(uint8_t timer, uint32_t ticks) { timer_get_base_register(timer)->MR[0] = ticks; }
+static inline void timer_set_match_ticks(ciaa_timer_t timer, uint32_t ticks) { timer_get_base_register(timer)->MR[0] = ticks; }
 
 /*
  * 	@brief	Start TIMER counter
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return	None
  */
-static inline void timer_start(uint8_t timer) { timer_get_base_register(timer)->TCR |= TIMER_ENABLE; }
+static inline void timer_start(ciaa_timer_t timer) { timer_get_base_register(timer)->TCR |= TIMER_ENABLE; }
 
 /*
  * 	@brief	Stop TIMER counter
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return	None
  */
-static inline void timer_stop(uint8_t timer) { timer_get_base_register(timer)->TCR &= ~TIMER_ENABLE; }
+static inline void timer_stop(ciaa_timer_t timer) { timer_get_base_register(timer)->TCR &= ~TIMER_ENABLE; }
 
 /*
  * 	@brief	Start/Stop TIMER counter
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  * 	@param	enabled: whether the TIMER starts or stops:
  * 		- false: to stop
  * 		- true: to start
  *
  * 	@return	None
  */
-static inline void timer_set_start(uint8_t timer, bool enabled) {
+static inline void timer_set_start(ciaa_timer_t timer, bool enabled) {
 	/* Disable interrupt */
 	timer_stop(timer);
 	/* Enable if required */
@@ -120,38 +128,38 @@ static inline void timer_set_start(uint8_t timer, bool enabled) {
 /*
  * 	@brief	Get if there is a match interrupt pending
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return	true if there is, false if not
  */
-static inline bool timer_get_match_pending(uint8_t timer) { return (bool) ((timer_get_base_register(timer)->IR & TIMER_MATCH_INT(0)) != 0); }
+static inline bool timer_get_match_pending(ciaa_timer_t timer) { return (bool) ((timer_get_base_register(timer)->IR & TIMER_MATCH_INT(0)) != 0); }
 
 /*
  * 	@brief	Clear interrupt match flag
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return None
  */
-static inline void timer_clear_irq_flag(uint8_t timer) { timer_get_base_register(timer)->IR = TIMER_IR_CLR(0); }
+static inline void timer_clear_irq_flag(ciaa_timer_t timer) { timer_get_base_register(timer)->IR = TIMER_IR_CLR(0); }
 
 /*
  * 	@brief	Set an interrupt handler
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  * 	@param	handler: function handler to call
  *
  * 	@return None
  */
-static inline void timer_set_irq_handler(uint8_t timer, void (*handler)(void)) { timer_handlers[timer] = handler; }
+static inline void timer_set_irq_handler(ciaa_timer_t timer, void (*handler)(void)) { timer_handlers[timer] = handler; }
 
 /*
  * 	@brief	Clear an interrupt handler
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return None
  */
-static inline void timer_clear_irq_handler(uint8_t timer) { timer_handlers[timer] = NULL; }
+static inline void timer_clear_irq_handler(ciaa_timer_t timer) { timer_handlers[timer] = NULL; }
 
 #endif /* CIAA_TIMER_API_H_ */
