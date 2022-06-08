@@ -71,6 +71,28 @@ extern pin_t LCD4;
 extern pin_t LCD_RS;
 extern pin_t LCD_EN;
 
+extern pin_t RXD1;
+extern pin_t TX_EN;
+extern pin_t RXD0;
+extern pin_t CRS_DV;
+extern pin_t MDIO;
+extern pin_t TXD0;
+extern pin_t TXD1;
+extern pin_t MDC;
+
+extern pin_t RS232_TXD;
+extern pin_t RS232_RXD;
+
+extern pin_t RS485_DIR;
+extern pin_t RS485_TXD;
+extern pin_t RS485_RXD;
+
+extern pin_t CAN_RD;
+extern pin_t CAN_TD;
+
+extern pin_t SPI_MISO;
+extern pin_t SPI_MOSI;
+
 /* Function prototypes */
 
 /**
