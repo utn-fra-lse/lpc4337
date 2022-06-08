@@ -20,11 +20,11 @@ void (*timer_handlers[])(void) = { NULL, NULL, NULL, NULL };
 /*
  * 	@brief	Resets the timer terminal and prescale counts to 0
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  *
  * 	@return	None
  */
-void timer_reset(uint8_t timer) {
+void timer_reset(ciaa_timer_t timer) {
 	/* Disable timer, set terminal count to non-0 */
 	uint32_t reg = timer_get_base_register(timer)->TCR;
 	timer_get_base_register(timer)->TCR = 0;
@@ -40,12 +40,12 @@ void timer_reset(uint8_t timer) {
 /*
  * 	@brief	Enable/Disbale TIMER interrupt
  *
- * 	@param	timer: TIMER number (0, 1, 2, 3)
+ * 	@param	timer: TIMER number (ciaa_ttimer_t)
  * 	@param	enabled: whether to enable or disable interrupt
  *
  * 	@return None
  */
-void timer_set_irq_enabled(uint8_t timer, bool enabled) {
+void timer_set_irq_enabled(ciaa_timer_t timer, bool enabled) {
 	/* Disable interrupt */
 	timer_get_base_register(timer)->MCR &= ~TIMER_INT_ON_MATCH(0);
 	/* Enable if required */
@@ -66,9 +66,9 @@ void timer_set_irq_enabled(uint8_t timer, bool enabled) {
  */
 void TIMER0_IRQHandler(void) {
 
-	if(timer_get_match_pending(0)) {
-		if(timer_handlers[0]) { timer_handlers[0](); }
-		timer_clear_irq_flag(0);
+	if(timer_get_match_pending(TIMER_0)) {
+		if(timer_handlers[TIMER_0]) { timer_handlers[TIMER_0](); }
+		timer_clear_irq_flag(TIMER_0);
 	}
 }
 
@@ -81,10 +81,10 @@ void TIMER0_IRQHandler(void) {
  */
 void TIMER1_IRQHandler(void) {
 
-	if(timer_get_match_pending(1)) {
+	if(timer_get_match_pending(TIMER_1)) {
 
-		if(timer_handlers[1]) { timer_handlers[1](); }
-		timer_clear_irq_flag(1);
+		if(timer_handlers[TIMER_1]) { timer_handlers[TIMER_1](); }
+		timer_clear_irq_flag(TIMER_1);
 	}
 }
 
@@ -97,10 +97,10 @@ void TIMER1_IRQHandler(void) {
  */
 void TIMER2_IRQHandler(void) {
 
-	if(timer_get_match_pending(2)) {
+	if(timer_get_match_pending(TIMER_2)) {
 
-		if(timer_handlers[2]) { timer_handlers[2](); }
-		timer_clear_irq_flag(2);
+		if(timer_handlers[TIMER_2]) { timer_handlers[TIMER_2](); }
+		timer_clear_irq_flag(TIMER_2);
 	}
 }
 
@@ -113,9 +113,9 @@ void TIMER2_IRQHandler(void) {
  */
 void TIMER3_IRQHandler(void) {
 
-	if(timer_get_match_pending(3)) {
+	if(timer_get_match_pending(TIMER_3)) {
 
-		if(timer_handlers[3]) { timer_handlers[3](); }
-		timer_clear_irq_flag(3);
+		if(timer_handlers[TIMER_3]) { timer_handlers[TIMER_3](); }
+		timer_clear_irq_flag(TIMER_3);
 	}
 }
