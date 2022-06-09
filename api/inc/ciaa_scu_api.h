@@ -37,6 +37,17 @@
 /* Pin configuration for Fast-mode Plus I2C */
 #define I2C0_FAST_MODE_PLUS			(2 << 1 | 1 << 3 | 1 << 7 | 1 << 10 | 1 << 11)
 
+typedef struct {
+	uint8_t GPIO;
+	uint8_t CTOUT;
+	uint8_t USART;
+	uint8_t I2C;
+	uint8_t SSP;
+	uint8_t I2S;
+	uint8_t USB;
+	uint8_t CAN;
+} scu_pin_functions_t;
+
 /*
  *	@brief	Sets IO control pin mux
  *
