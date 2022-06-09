@@ -37,6 +37,7 @@
 /* Pin configuration for Fast-mode Plus I2C */
 #define I2C0_FAST_MODE_PLUS			(2 << 1 | 1 << 3 | 1 << 7 | 1 << 10 | 1 << 11)
 
+/* SCU pin functions struct */
 typedef struct {
 	uint8_t GPIO;
 	uint8_t CTOUT;
@@ -47,6 +48,71 @@ typedef struct {
 	uint8_t USB;
 	uint8_t CAN;
 } scu_pin_functions_t;
+
+/* Extern pins with their functions */
+extern scu_pin_functions_t P2_0;
+extern scu_pin_functions_t P2_1;
+extern scu_pin_functions_t P2_2;
+extern scu_pin_functions_t P2_10;
+extern scu_pin_functions_t P2_11;
+extern scu_pin_functions_t P2_12;
+
+extern scu_pin_functions_t P1_0;
+extern scu_pin_functions_t P1_1;
+extern scu_pin_functions_t P1_2;
+extern scu_pin_functions_t P1_6;
+
+extern scu_pin_functions_t P6_1;
+extern scu_pin_functions_t P6_4;
+extern scu_pin_functions_t P6_5;
+extern scu_pin_functions_t P6_7;
+extern scu_pin_functions_t P6_8;
+extern scu_pin_functions_t P6_9;
+extern scu_pin_functions_t P6_10;
+extern scu_pin_functions_t P6_11;
+extern scu_pin_functions_t P6_12;
+
+extern scu_pin_functions_t P4_0;
+extern scu_pin_functions_t P4_1;
+extern scu_pin_functions_t P4_2;
+extern scu_pin_functions_t P4_3;
+extern scu_pin_functions_t P1_5;
+extern scu_pin_functions_t P7_4;
+extern scu_pin_functions_t P7_5;
+
+extern scu_pin_functions_t P4_4;
+extern scu_pin_functions_t P4_5;
+extern scu_pin_functions_t P4_6;
+extern scu_pin_functions_t P4_10;
+extern scu_pin_functions_t P4_8;
+extern scu_pin_functions_t P4_9;
+
+extern scu_pin_functions_t P0_0;
+extern scu_pin_functions_t P0_1;
+extern scu_pin_functions_t P1_15;
+extern scu_pin_functions_t P1_16;
+extern scu_pin_functions_t P1_17;
+extern scu_pin_functions_t P1_18;
+extern scu_pin_functions_t P1_19;
+extern scu_pin_functions_t P1_20;
+extern scu_pin_functions_t P7_7;
+
+extern scu_pin_functions_t P2_3;
+extern scu_pin_functions_t P2_4;
+
+extern scu_pin_functions_t P6_2;
+extern scu_pin_functions_t P9_5;
+extern scu_pin_functions_t P9_6;
+
+extern scu_pin_functions_t P3_1;
+extern scu_pin_functions_t P3_2;
+
+extern scu_pin_functions_t PF_4;
+extern scu_pin_functions_t P1_3;
+extern scu_pin_functions_t P1_4;
+
+extern scu_pin_functions_t P6_3;
+extern scu_pin_functions_t P6_6;
 
 /*
  *	@brief	Sets IO control pin mux
