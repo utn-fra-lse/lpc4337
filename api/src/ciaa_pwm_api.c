@@ -91,7 +91,7 @@ void pwm_set_output_pin(pwm_output_t output) {
 	/* Stop the SCT before configuration */
 	pwm_stop();
 	/* Enable CTOUT function on pin */
-	scu_set_pin_mode(output.pin->SCU_PORT, output.pin->SCU_PIN, (SCU_MODE_INACT | SCU_MODE_FUNC1));
+	scu_set_pin_mode(output.pin->SCU_PORT, output.pin->SCU_PIN, (SCU_MODE_INACT | output.pin->FUNCTIONS->CTOUT));
 	/* CTOUT index */
 	uint8_t index = output.index;
 	/* PWM output number */
