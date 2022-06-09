@@ -25,11 +25,11 @@
 
 /* Pin struct definition */
 typedef struct {
-	uint8_t SCU_PORT;		/* GPIO PORT number for SCU */
-	uint8_t SCU_PIN;		/* GPIO PIN number for SCU */
-	uint8_t GPIO_PORT;		/* GPIO PORT to read/write */
-	uint8_t GPIO_PIN;		/* GPIO PIN to read/write */
-	uint8_t GPIO_FUNCTION;	/* Function number to work as GPIO */
+	uint8_t SCU_PORT;				/* GPIO PORT number for SCU */
+	uint8_t SCU_PIN;				/* GPIO PIN number for SCU */
+	uint8_t GPIO_PORT;				/* GPIO PORT to read/write */
+	uint8_t GPIO_PIN;				/* GPIO PIN to read/write */
+	scu_pin_functions_t *FUNCTIONS;	/* SCU functions for the PIN */
 } pin_t;
 
 /* Pin declarations */
@@ -102,7 +102,7 @@ extern pin_t SPI_MOSI;
  *
  * @return	None
  */
-static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, pin.GPIO_FUNCTION); }
+static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, pin.FUNCTIONS->GPIO); }
 
 /**
  * @brief	Set GPIO pin direction
