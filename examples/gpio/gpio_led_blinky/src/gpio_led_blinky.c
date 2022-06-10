@@ -14,14 +14,12 @@
 int main(void) {
 	/* Update System Clocl */
 	SystemCoreClockUpdate();
-	/* Initialize GPIO connected to LED1 */
-	gpio_init(LED1);
-	/* Set as output */
+	/* Set LED1 pin as output */
 	gpio_set_dir(LED1, true);
 
 	while(1) {
 		/* Toggle LED */
-		gpio_xor(LED2);
+		gpio_xor(LED1);
 		/* Wait for 1 second */
 		sleep_ms(1000);
 	}
