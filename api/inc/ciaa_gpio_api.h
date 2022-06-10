@@ -96,13 +96,32 @@ extern pin_t SPI_MOSI;
 /* Function prototypes */
 
 /**
- * @brief	Initialize GPIO pin
+ * @brief	Set GPIO pin direction to input
  *
  * @param	pin: struct to the pin
  *
  * @return	None
  */
-static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, pin.FUNCTIONS->GPIO); }
+static void inline gpio_set_dir_in(pin_t pin) {
+	/* Set pin function */
+	scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, SCU_MODE_INACT | SCU_MODE_INBUFF_EN | SCU_MODE_ZIF_DIS | pin.FUNCTIONS->GPIO);
+	/* Set pin direction */
+	CIAA_GPIO->DIR[pin.GPIO_PORT] &= ~(1UL << pin.GPIO_PIN);
+}
+
+/**
+ * @brief	Set GPIO pin direction to output
+ *
+ * @param	pin: struct to the pin
+ *
+ * @return	None
+ */
+static void inline gpio_set_dir_out(pin_t pin) {
+	/* Set pin function */
+	scu_set_pin_mode(pin.SCU_PORT, pin.SCU_PIN, SCU_MODE_INACT | SCU_MODE_ZIF_DIS | SCU_MODE_INBUFF_EN | pin.FUNCTIONS->GPIO);
+	/* Set pin direction */
+	CIAA_GPIO->DIR[pin.GPIO_PORT] |= 1UL << pin.GPIO_PIN;
+}
 
 /**
  * @brief	Set GPIO pin direction
@@ -119,24 +138,6 @@ static void inline gpio_set_dir(pin_t pin, bool dir) {
 	if (dir) { gpio_set_dir_out(pin); }
 	else { gpio_set_dir_in(pin); }
 }
-
-/**
- * @brief	Set GPIO pin direction to input
- *
- * @param	pin: struct to the pin
- *
- * @return	None
- */
-static void inline gpio_set_dir_in(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] &= ~(1UL << pin.GPIO_PIN); }
-
-/**
- * @brief	Set GPIO pin direction to output
- *
- * @param	pin: struct to the pin
- *
- * @return	None
- */
-static void inline gpio_set_dir_out(pin_t pin) { CIAA_GPIO->DIR[pin.GPIO_PORT] |= 1UL << pin.GPIO_PIN; }
 
 /**
  * @brief	Set GPIO pin output value
