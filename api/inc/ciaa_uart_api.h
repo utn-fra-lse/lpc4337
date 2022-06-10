@@ -81,7 +81,8 @@ extern uart_config_t UART_DEFAULT_CONFIGS[];
 /* Function prototypes */
 void uart_init(ciaa_uart_t uart);
 void uart_config_init(uart_config_t config);
-void uart_puts(ciaa_uart_t usart, const char* str);
+void uart_puts(ciaa_uart_t uart, const char* str);
+void uart_gets(ciaa_uart_t uart, char *str);
 void uart_set_baud_rate(ciaa_uart_t usart, uint32_t baudRate);
 
 /* Inline functions */
@@ -111,6 +112,12 @@ static inline void uart_set_tx_enabled(ciaa_uart_t uart, bool enabled) {
 
 static inline uart_line_status_t uart_get_line_status(ciaa_uart_t uart) { return (uart_line_status_t) uart_get_base_register(uart)->LSR; };
 
+static inline bool uart_is_readable(ciaa_uart_t uart) { return (bool) (uart_get_line_status(uart) & UART_RECEIVE_DATA_READY); }
+
+static inline bool uart_is_writable(ciaa_uart_t uart) { return (bool) (uart_get_line_status(uart) & UART_HOLDING_REG_EMPTY); }
+
 static inline void uart_putc(ciaa_uart_t uart, char data) { uart_get_base_register(uart)->THR = (uint32_t) data; }
+
+static inline const char uart_getc(ciaa_uart_t uart) { return (const char) (uart_get_base_register(uart)->RBR & UART_RBR_MASKBIT); }
 
 #endif /* CIAA_UART_API_H_ */

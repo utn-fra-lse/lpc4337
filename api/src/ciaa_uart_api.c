@@ -91,8 +91,26 @@ void uart_puts(ciaa_uart_t uart, const char* str) {
 	/* Loop until null character */
 	while(*str) {
 		/* Wait until the transmit holding register is empty */
-		while ( !(uart_get_line_status(uart) & UART_HOLDING_REG_EMPTY) );
+		while ( !uart_is_writable(uart) );
 		/* Send byte */
 		uart_putc(uart, *str++);
+	}
+}
+
+void uart_gets(ciaa_uart_t uart, char *str) {
+
+	uint8_t size = 0;
+	while(*str) {
+		*str = '\0';
+		size++;
+		str++;
+	}
+	str = (str - size);
+
+	while(!uart_is_readable(uart));
+
+	while(uart_is_readable(uart)) {
+		*str = uart_getc(uart);
+		str++;
 	}
 }
