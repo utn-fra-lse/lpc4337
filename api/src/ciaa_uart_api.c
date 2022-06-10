@@ -18,6 +18,9 @@ uart_config_t UART_DEFAULT_CONFIGS[] = {
 	{ UART_3, 115200, UART_STOP_BITS_1, UART_PARITY_DISABLE, UART_WORD_LENGTH_8, &RS485_TXD, &RS485_RXD }
 };
 
+/* Interrupt handler function pointer */
+void (*uart_handlers[])(void) = { NULL, NULL, NULL, NULL };
+
 void uart_init(ciaa_uart_t uart) {
 	/* Get default UART configuration and initialize */
 	uart_config_init(uart_get_default_config(uart));
@@ -112,5 +115,32 @@ void uart_gets(ciaa_uart_t uart, char *str) {
 	while(uart_is_readable(uart)) {
 		*str = uart_getc(uart);
 		str++;
+	}
+}
+
+void UART0_IRQHandler(void) {
+
+	if(uart_get_interrupt_pending(UART_0) == UART_RDA) {
+		if(uart_handlers[UART_0]) { uart_handlers[UART_0](); }
+	}
+}
+
+void UART1_IRQHandler(void) {
+
+	if(uart_get_interrupt_pending(UART_1) == UART_RDA) {
+		if(uart_handlers[UART_1]) { uart_handlers[UART_1](); }
+	}
+}
+
+void UART2_IRQHandler(void) {
+
+	if(uart_get_interrupt_pending(UART_2) == UART_RDA) {
+		if(uart_handlers[UART_2]) { uart_handlers[UART_2](); }
+	}
+}
+
+void UART3_IRQHandler(void) {
+	if(uart_get_interrupt_pending(UART_3) == UART_RDA) {
+		if(uart_handlers[UART_3]) { uart_handlers[UART_3](); }
 	}
 }

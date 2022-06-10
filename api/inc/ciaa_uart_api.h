@@ -63,6 +63,21 @@ typedef enum {
 	UART_WORD_LENGTH_8 = (3 << 0)			/* UART word length select: 8 bit data mode */
 } uart_word_length_t;
 
+/* UART Interrupt enable */
+typedef enum {
+	UART_RECEIVE_AVAILABLE_IRQ = (1 << 0),	/* RBR Interrupt enable */
+	UART_HOLDING_REG_EMPTY_IRQ = (1 << 1),	/* THR Interrupt enable */
+	UART_LINE_STATUS_IRQ = (1 << 2)			/* RX line status interrupt enable */
+} uart_irqs_t;
+
+/* UART Interrupt IDs */
+typedef enum {
+	UART_RLS = (0x3 << 1),		/* Receive Line Status */
+	UART_RDA = (0x2 << 1),		/* Receive Data Available */
+	UART_CTI = (0x6 << 1),		/* Character Time-out Indicator */
+	UART_THRE = (0x1 << 1),		/* Transmitter Holding Register Empty */
+} uart_irq_ids_t;
+
 typedef struct {
 	ciaa_uart_t uart;
 	uint32_t baudRate;
@@ -77,6 +92,8 @@ typedef struct {
 extern LPC_USART_T *CIAA_UARTS[];
 /* Extern UART default configurations */
 extern uart_config_t UART_DEFAULT_CONFIGS[];
+/* Extern interrupt handler function pointer */
+extern void (*uart_handlers[])(void);
 
 /* Function prototypes */
 void uart_init(ciaa_uart_t uart);
@@ -119,5 +136,22 @@ static inline bool uart_is_writable(ciaa_uart_t uart) { return (bool) (uart_get_
 static inline void uart_putc(ciaa_uart_t uart, char data) { uart_get_base_register(uart)->THR = (uint32_t) data; }
 
 static inline const char uart_getc(ciaa_uart_t uart) { return (const char) (uart_get_base_register(uart)->RBR & UART_RBR_MASKBIT); }
+
+static inline void uart_set_rx_irq_enabled(ciaa_uart_t uart, bool enabled) {
+
+	LPC43XX_IRQn_Type irqs[] = { USART0_IRQn, UART1_IRQn, USART2_IRQn, USART3_IRQn };
+
+	uart_get_base_register(uart)->IER &= ~UART_RECEIVE_AVAILABLE_IRQ;
+	NVIC_DisableIRQ(irqs[uart]);
+	if(enabled) {
+		uart_get_base_register(uart)->IER |= UART_RECEIVE_AVAILABLE_IRQ;
+		/* Enable UART interrupt */
+		NVIC_EnableIRQ(irqs[uart]);
+	}
+}
+
+static inline void uart_set_rx_handler(ciaa_uart_t uart, void (*handler)(void)) { uart_handlers[uart] = handler; }
+
+static inline uart_irq_ids_t uart_get_interrupt_pending(ciaa_uart_t uart) { return (uart_irq_ids_t) (uart_get_base_register(uart)->IIR & UART_IIR_INTID_MASK); }
 
 #endif /* CIAA_UART_API_H_ */
