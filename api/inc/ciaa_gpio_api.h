@@ -115,13 +115,9 @@ static void inline gpio_init(pin_t pin) { scu_set_pin_mode(pin.SCU_PORT, pin.SCU
  * @return	None
  */
 static void inline gpio_set_dir(pin_t pin, bool dir) {
-
-	if (dir) {
-		CIAA_GPIO->DIR[pin.GPIO_PORT] |= 1UL << pin.GPIO_PIN;
-	}
-	else {
-		CIAA_GPIO->DIR[pin.GPIO_PORT] &= ~(1UL << pin.GPIO_PIN);
-	}
+	/* Check direction and set */
+	if (dir) { gpio_set_dir_out(pin); }
+	else { gpio_set_dir_in(pin); }
 }
 
 /**
