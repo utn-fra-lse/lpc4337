@@ -11,6 +11,7 @@
 | SCU | [ciaa_scu_api.h]/[ciaa_scu_api.c] | Support for System Control Unit. It is responsible for enabling a pin function.
 | SysTick | [ciaa_systick_api.h]/[ciaa_systick_api.c] | Support for SysTick and time tracking.
 | TIMER | [ciaa_timer_api.h]/[ciaa_timer_api.c] | Support for TIMERs initialization and interrupts.
+| UART | [ciaa_uart_api.h]/[ciaa_uart_api.c] | Support for asyncronous receiver transmiter. All UART from 0 through 3 are usable.
 
 ## Extra libraries
 
@@ -34,3 +35,5 @@
 [ciaa_timer_api.c]: src/ciaa_timer_api.c
 [ciaa_stdlib.h]: inc/ciaa_stdlib.h
 [ciaa_stdlib.c]: src/ciaa_stdlib.c
+[ciaa_uart_api.h]: inc/ciaa_uart_api.h
+[ciaa_uart_api.c]: src/ciaa_uart_api.c
