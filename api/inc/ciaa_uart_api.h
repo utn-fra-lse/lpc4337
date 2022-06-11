@@ -72,20 +72,21 @@ typedef enum {
 
 /* UART Interrupt IDs */
 typedef enum {
-	UART_RLS = (0x3 << 1),		/* Receive Line Status */
-	UART_RDA = (0x2 << 1),		/* Receive Data Available */
-	UART_CTI = (0x6 << 1),		/* Character Time-out Indicator */
-	UART_THRE = (0x1 << 1),		/* Transmitter Holding Register Empty */
+	UART_RLS = (0x3 << 1),					/* Receive Line Status */
+	UART_RDA = (0x2 << 1),					/* Receive Data Available */
+	UART_CTI = (0x6 << 1),					/* Character Time-out Indicator */
+	UART_THRE = (0x1 << 1),					/* Transmitter Holding Register Empty */
 } uart_irq_ids_t;
 
+/* UART config struct */
 typedef struct {
-	ciaa_uart_t uart;
-	uint32_t baudRate;
-	uart_stop_bits_t stopBits;
-	uart_parity_t parityBits;
-	uart_word_length_t wordLength;
-	pin_t *txPin;
-	pin_t *rxPin;
+	ciaa_uart_t uart;						/* UART type */
+	uint32_t baudRate;						/* UART baud rate */
+	uart_stop_bits_t stopBits;				/* UART stop bits */
+	uart_parity_t parityBits;				/* UART parity bits */
+	uart_word_length_t wordLength;			/* UART word length */
+	pin_t *txPin;							/* UART TXD pin */
+	pin_t *rxPin;							/* UART RXD pin */
 } uart_config_t;
 
 /* Extern UART base register array */
@@ -104,54 +105,186 @@ void uart_set_baud_rate(ciaa_uart_t usart, uint32_t baudRate);
 
 /* Inline functions */
 
+/*
+ * 	@brief	Get UART base register
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return UART base register
+ */
 static inline LPC_USART_T* uart_get_base_register(ciaa_uart_t uart) { return CIAA_UARTS[uart]; }
 
+/*
+ * 	@brief	Get configuration value for word length, stop and parity bits
+ *
+ * 	@param	config: UART configuration
+ *
+ * 	@return	configuration value
+ */
 static inline uint8_t uart_get_config_value(uart_config_t config) { return (config.stopBits | config.parityBits | config.wordLength); }
 
-static inline void uart_set_config_value(uart_config_t config) { uart_get_base_register(config.uart)->LCR = (config.stopBits | config.parityBits | config.wordLength); }
+/*
+ * 	@brief	Set stop, parity and word length
+ *
+ * 	@param	config: UART configuration
+ *
+ * 	@return	None
+ */
+static inline void uart_set_config_value(uart_config_t config) { uart_get_base_register(config.uart)->LCR = uart_get_config_value(config); }
 
+/*
+ * 	@brief	Get default configuration for UART
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	UART default configuration
+ */
 static inline uart_config_t uart_get_default_config(ciaa_uart_t uart) { return UART_DEFAULT_CONFIGS[uart]; }
 
+/*
+ * 	@brief	Setup UART FIFOs
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	None
+ */
 static inline void uart_setup_fifos(ciaa_uart_t uart) { uart_get_base_register(uart)->FCR = (UART_FCR_FIFO_EN | UART_FCR_RX_RS | UART_FCR_TX_RS); }
 
+/*
+ * 	@brief	Set TXD pin
+ *
+ * 	@param	uart: UART number
+ * 	@param	pin: pin to assign
+ *
+ * 	@return	None
+ */
 static inline void uart_set_tx_pin(ciaa_uart_t uart, pin_t *pin) { scu_set_pin_mode(pin->SCU_PORT, pin->SCU_PIN, (SCU_MODE_INACT | pin->FUNCTIONS->USART)); }
 
+/*
+ * 	@brief	Set RXD pin
+ *
+ * 	@param	uart: UART number
+ * 	@param	pin: pin to assign
+ *
+ * 	@return None
+ */
 static inline void uart_set_rx_pin(ciaa_uart_t uart, pin_t *pin) { scu_set_pin_mode(pin->SCU_PORT, pin->SCU_PIN, (SCU_MODE_INACT | SCU_MODE_INBUFF_EN | pin->FUNCTIONS->USART)); }
 
+/*
+ * 	@brief	Enable transmitter
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	None
+ */
 static inline void uart_tx_enable(ciaa_uart_t uart) { uart_get_base_register(uart)->TER2 = UART_TER2_TXEN; }
 
+/*
+ * 	@brief	Disable transmitter
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return None
+ */
 static inline void uart_tx_disable(ciaa_uart_t uart) { uart_get_base_register(uart)->TER2 = 0; }
 
+/*
+ * 	@brief	Enable/Disable transmitter
+ *
+ * 	@param	uart: UART number
+ * 	@param	enabled: whether the transmitter is enabled or not
+ */
 static inline void uart_set_tx_enabled(ciaa_uart_t uart, bool enabled) {
+	/* Disable transmitter */
 	uart_tx_disable(uart);
+	/* Enable if necessary */
 	if(enabled) { uart_tx_enable(uart); }
 }
 
+/*
+ * 	@brief	Get UART line status
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return None
+ */
 static inline uart_line_status_t uart_get_line_status(ciaa_uart_t uart) { return (uart_line_status_t) uart_get_base_register(uart)->LSR; };
 
+/*
+ * 	@brief	Check if UART is available for reading
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	true if data is available, false if not
+ */
 static inline bool uart_is_readable(ciaa_uart_t uart) { return (bool) (uart_get_line_status(uart) & UART_RECEIVE_DATA_READY); }
 
+/*
+ * 	@brief	Check if UART is available for writing
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	true if data is available, false if not
+ */
 static inline bool uart_is_writable(ciaa_uart_t uart) { return (bool) (uart_get_line_status(uart) & UART_HOLDING_REG_EMPTY); }
 
+/*
+ * 	@brief	Write a byte through UART
+ *
+ * 	@param	uart: UART number
+ * 	@param	data: byte to send
+ *
+ * 	@return	None
+ */
 static inline void uart_putc(ciaa_uart_t uart, char data) { uart_get_base_register(uart)->THR = (uint32_t) data; }
 
+/*
+ * 	@brief	Read a byte from UART
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return	byte read
+ */
 static inline const char uart_getc(ciaa_uart_t uart) { return (const char) (uart_get_base_register(uart)->RBR & UART_RBR_MASKBIT); }
 
+/*
+ * 	@brief	Enable/Disable UART RXD interrupt
+ *
+ * 	@param	uart: UART number
+ * 	@param	enabled: whether the interrupt is enabled or not
+ *
+ * 	@return	None
+ */
 static inline void uart_set_rx_irq_enabled(ciaa_uart_t uart, bool enabled) {
-
+	/* Interrupt vectors */
 	LPC43XX_IRQn_Type irqs[] = { USART0_IRQn, UART1_IRQn, USART2_IRQn, USART3_IRQn };
-
+	/* Disable RXD interrupt */
 	uart_get_base_register(uart)->IER &= ~UART_RECEIVE_AVAILABLE_IRQ;
 	NVIC_DisableIRQ(irqs[uart]);
+	/* Enable iterrupt if necessary */
 	if(enabled) {
 		uart_get_base_register(uart)->IER |= UART_RECEIVE_AVAILABLE_IRQ;
-		/* Enable UART interrupt */
 		NVIC_EnableIRQ(irqs[uart]);
 	}
 }
 
+/*
+ * 	@brief	Set an RXD interrupt handler
+ *
+ * 	@param	uart: UART number
+ * 	@param	handler: pointer to the handler function
+ *
+ * 	@return	None
+ */
 static inline void uart_set_rx_handler(ciaa_uart_t uart, void (*handler)(void)) { uart_handlers[uart] = handler; }
 
+/*
+ * 	@brief	Check if there is an interrupt pending
+ *
+ * 	@param	uart: UART number
+ *
+ * 	@return pending interrupt if available
+ */
 static inline uart_irq_ids_t uart_get_interrupt_pending(ciaa_uart_t uart) { return (uart_irq_ids_t) (uart_get_base_register(uart)->IIR & UART_IIR_INTID_MASK); }
 
 #endif /* CIAA_UART_API_H_ */
