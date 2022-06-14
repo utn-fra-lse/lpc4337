@@ -285,7 +285,7 @@
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-		<project id="ciaa_api.com.crt.advproject.projecttype.lib.205126168" name="Static Library" projectType="com.crt.advproject.projecttype.lib"/>
+		<project id="CIAA_API.com.crt.advproject.projecttype.lib.205126168" name="Static Library" projectType="com.crt.advproject.projecttype.lib"/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="com.crt.config">
