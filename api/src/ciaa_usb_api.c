@@ -176,13 +176,35 @@ ErrorCode_t usb_send_interrupt(uint32_t status) {
 	return LPC_OK;
 }
 
+
+/* Private functions */
+
 /* Handle interrupt from USB */
 void USB_IRQHandler(void)
 {
 	USBD_API->hw->ISR(lusb.hUsb);
 }
 
-/* Private functions */
+void usb_pll_init(usb_config_t config) {
+	/* Get pll configuration */
+	pll_config_t pll = config.pll;
+	/* No need to setup anything if PLL is already setup for the frequency */
+	if (Chip_Clock_GetClockInputHz(CLKIN_USBPLL) == pll.freq) { return; }
+	/* Setup default USB PLL state for a 480MHz output from 12MHz input and attach */
+	Chip_Clock_SetupPLL(config.inClk, CGU_USB_PLL, &pll);
+	/* enable USB PLL */
+	Chip_Clock_EnablePLL(CGU_USB_PLL);
+	/* Wait for PLL lock */
+	while (!(Chip_Clock_GetPLLStatus(CGU_USB_PLL) & CGU_PLL_LOCKED));
+}
+
+ErrorCode_t usb_reset_event(usb_handle_t handle) {
+	/* Reset the control structure */
+	memset(&lusb, 0, sizeof(lusb_ctrl_t));
+	/* Set handler */
+	lusb.hUsb = handle;
+	return LPC_OK;
+}
 
 void usb_init_api_params(usb_api_params_t *params) {
 
@@ -246,14 +268,6 @@ ErrorCode_t usb_init_handlers(usb_core_controller_t *ctrl) {
 		}
 	}
 	return ret;
-}
-
-ErrorCode_t usb_reset_event(usb_handle_t handle) {
-	/* Reset the control structure */
-	memset(&lusb, 0, sizeof(lusb_ctrl_t));
-	/* Set handler */
-	lusb.hUsb = handle;
-	return LPC_OK;
 }
 
 /* USB bulk EP_IN endpoint handler */
@@ -391,17 +405,4 @@ ErrorCode_t usb_ep0_patch(usb_handle_t handle, void *data, uint32_t event) {
 			break;
 	}
 	return ep0_handler(handle, data, event);
-}
-
-void usb_pll_init(usb_config_t config) {
-	/* Get pll configuration */
-	pll_config_t pll = config.pll;
-	/* No need to setup anything if PLL is already setup for the frequency */
-	if (Chip_Clock_GetClockInputHz(CLKIN_USBPLL) == pll.freq) { return; }
-	/* Setup default USB PLL state for a 480MHz output from 12MHz input and attach */
-	Chip_Clock_SetupPLL(config.inClk, CGU_USB_PLL, &pll);
-	/* enable USB PLL */
-	Chip_Clock_EnablePLL(CGU_USB_PLL);
-	/* Wait for PLL lock */
-	while (!(Chip_Clock_GetPLLStatus(CGU_USB_PLL) & CGU_PLL_LOCKED));
 }
