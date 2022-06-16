@@ -12,6 +12,7 @@
 | SysTick | [ciaa_systick_api.h]/[ciaa_systick_api.c] | Support for SysTick and time tracking.
 | TIMER | [ciaa_timer_api.h]/[ciaa_timer_api.c] | Support for TIMERs initialization and interrupts.
 | UART | [ciaa_uart_api.h]/[ciaa_uart_api.c] | Support for asyncronous receiver transmiter. All UART from 0 through 3 are usable.
+| USB | [ciaa_usb_api.h]/[ciaa_usb_api.c] | Support for basic USB communication. Send and read functions working with libusb drivers necessary in host computer.
 
 ## Extra libraries
 
@@ -37,3 +38,5 @@
 [ciaa_stdlib.c]: src/ciaa_stdlib.c
 [ciaa_uart_api.h]: inc/ciaa_uart_api.h
 [ciaa_uart_api.c]: src/ciaa_uart_api.c
+[ciaa_usb_api.h]: inc/ciaa_usb_api.h
+[ciaa_usb_api.c]: src/ciaa_usb_api.c
