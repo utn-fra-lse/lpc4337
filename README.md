@@ -22,4 +22,8 @@ This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be ab
 
 This one contains some examples for the API for every peripherial.
 
+## libusb
+
+This directory has a simple app to test the USB in the CIAA.
+
 [cfg]: etc/openocd/lpc4337.cfg
