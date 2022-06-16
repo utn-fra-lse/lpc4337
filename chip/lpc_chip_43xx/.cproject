@@ -179,11 +179,5 @@
 	<storageModule moduleId="com.crt.advproject"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.debug.13298023;com.crt.advproject.config.lib.debug.13298023.;com.crt.advproject.gcc.lib.debug.2046689825;com.crt.advproject.compiler.input.1233598164">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.debug.13298023;com.crt.advproject.config.lib.debug.13298023.;com.crt.advproject.gas.lib.debug.1714322433;com.crt.advproject.assembler.input.1152230208">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
-		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>
