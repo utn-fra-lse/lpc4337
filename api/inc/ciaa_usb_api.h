@@ -144,6 +144,8 @@ static inline uint32_t get_buffer_size(uint8_t *buf) {
 }
 
 /* Function prototypes */
+
+/* Public functions */
 ErrorCode_t usb_init(void);
 bool usb_is_connected(void);
 ErrorCode_t usb_queue_read(char *buf, uint32_t len);
@@ -153,7 +155,7 @@ ErrorCode_t usb_queue_send(char *buf);
 int32_t usb_queue_send_done(void);
 ErrorCode_t usb_send(char *buf);
 ErrorCode_t usb_send_interrupt(uint32_t status);
-
+/* Private functions */
 void usb_pll_init(usb_config_t config);
 ErrorCode_t usb_reset_event(usb_handle_t handle);
 void usb_init_api_params(usb_api_params_t *params);
