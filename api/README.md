@@ -19,6 +19,8 @@
 | Library | Files | Description |
 | --- | --- | --- |
 | stdlib | [ciaa_stdlib.h]/[ciaa_stdlib.c] | Adds sleep functions.
+| usb_descriptors | [ciaa_usb_descriptors.c] | Defines the USB descriptors for the LPC4337.
+| usb_app_config | [app_usbd_cfg.h] | USB configuration and definitions for generic project.
 
 [ciaa_gpio_api.h]: inc/ciaa_gpio_api.h
 [ciaa_gpio_api.c]: src/ciaa_gpio_api.c
@@ -40,3 +42,5 @@
 [ciaa_uart_api.c]: src/ciaa_uart_api.c
 [ciaa_usb_api.h]: inc/ciaa_usb_api.h
 [ciaa_usb_api.c]: src/ciaa_usb_api.c
+[ciaa_usb_descriptors.c]: src/ciaa_usb_descriptors.c
+[app_usbd_cfg.h]: inc/app_usbd_cfg.h
