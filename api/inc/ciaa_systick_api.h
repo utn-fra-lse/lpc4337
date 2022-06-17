@@ -19,7 +19,7 @@ extern void (*systick_handler)(void);
 extern absolute_time_t absoluteTimeMs;
 
 /* Function prototypes */
-void systick_init(uint32_t frequency);
+void systick_init(uint32_t us);
 
 /*
  * 	@brief	Starts the SysTick counter
