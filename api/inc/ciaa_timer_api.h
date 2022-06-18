@@ -12,22 +12,30 @@
 
 /* Base TIMER register redefinitions */
 #define CIAA_TIMER0	LPC_TIMER0
+#ifdef CORE_M4
 #define CIAA_TIMER1	LPC_TIMER1
 #define CIAA_TIMER2	LPC_TIMER2
+#endif
 #define CIAA_TIMER3	LPC_TIMER3
 
 /* CIAA available TIMERS */
 typedef enum {
 	TIMER_0,
+#ifdef CORE_M4
 	TIMER_1,
 	TIMER_2,
+#endif
 	TIMER_3
 } ciaa_timer_t;
 
 /* Extern arrays */
 extern LPC_TIMER_T *CIAA_TIMERS[];
 extern CHIP_CCU_CLK_T TIMER_CLKS[];
+#ifdef CORE_M4
 extern LPC43XX_IRQn_Type TIMER_IRQS[];
+#elif defined(CORE_M0)
+extern LPC43XX_M0_IRQn_Type TIMER_IRQS[];
+#endif
 /* Extern interrupt handlers pointer */
 extern void (*timer_handlers[])(void);
 

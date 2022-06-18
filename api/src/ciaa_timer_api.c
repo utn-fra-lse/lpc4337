@@ -7,15 +7,25 @@
 
 #include "ciaa_timer_api.h"
 
+#ifdef CORE_M4
 /* TIMER base registers array */
 LPC_TIMER_T *CIAA_TIMERS[] = { CIAA_TIMER0, CIAA_TIMER1, CIAA_TIMER2, CIAA_TIMER3 };
 /* Base clocks for TIMERs */
 CHIP_CCU_CLK_T TIMER_CLKS[] = { CLK_MX_TIMER0, CLK_MX_TIMER1, CLK_MX_TIMER2, CLK_MX_TIMER3 };
 /* TIMER interrupt vectors */
 LPC43XX_IRQn_Type TIMER_IRQS[] = { TIMER0_IRQn, TIMER1_IRQn, TIMER2_IRQn, TIMER3_IRQn };
-
 /* Interrupt handlers function pointer */
 void (*timer_handlers[])(void) = { NULL, NULL, NULL, NULL };
+#elif defined(CORE_M0)
+/* TIMER base registers array */
+LPC_TIMER_T *CIAA_TIMERS[] = { CIAA_TIMER0, CIAA_TIMER3 };
+/* Base clocks for TIMERs */
+CHIP_CCU_CLK_T TIMER_CLKS[] = { CLK_MX_TIMER0, CLK_MX_TIMER3 };
+/* TIMER interrupt vectors */
+LPC43XX_M0_IRQn_Type TIMER_IRQS[] = { TIMER0_IRQn, TIMER3_IRQn };
+/* Interrupt handlers function pointer */
+void (*timer_handlers[])(void) = { NULL, NULL };
+#endif
 
 /*
  * 	@brief	Resets the timer terminal and prescale counts to 0
@@ -72,6 +82,7 @@ void TIMER0_IRQHandler(void) {
 	}
 }
 
+#ifdef CORE_M4
 /*
  *	@brief	TIMER1 interrupt handler
  *
@@ -103,7 +114,7 @@ void TIMER2_IRQHandler(void) {
 		timer_clear_irq_flag(TIMER_2);
 	}
 }
-
+#endif
 /*
  *	@brief	TIMER3 interrupt handler
  *
