@@ -5,7 +5,7 @@
  *      Author: fabri
  */
 
-#include <ciaa_multicore_api.h>
+#include "ciaa_multicore_api.h"
 
 /* Array of IPC Event callback functions */
 static void(*ipc_callback_lookup[IPC_MAX_PID]) (const ipc_msg_t*);
@@ -69,28 +69,6 @@ static void ipc_send_signal(void) {
 /* Simple event handler for non OS implementations */
 static int ipc_event_handler_implementation(ipc_event_t event, uint16_t cpu, int tout) {
 	__WFI();
-	return 0;
-}
-
-/*
- * 	@brief	Start M0 core
- *
- * 	@param	None
- *
- * 	@return	zero if initialized correctly
- */
-int multicore_m0_start(void) {
-	uint32_t m0_image_addr = BASE_ADDRESS_M0APP;
-	/* Make sure the alignment is OK */
-	if (multicore_m0_check_alignment(m0_image_addr)) { return -1; }
-	/* Sanity check, see if base address and reset handler address resides in same region */
-	if (multicore_m0_sanity_check(m0_image_addr)) { return -2; }
-	/* Make sure the M0 core is being held in reset via the RGU */
-	Chip_RGU_TriggerReset(RGU_M0APP_RST);
-	Chip_Clock_Enable(CLK_M4_M0APP);
-	/* Keep in mind the M0 image must be aligned on a 4K boundary */
-	Chip_CREG_SetM0AppMemMap(m0_image_addr);
-	Chip_RGU_ClearReset(RGU_M0APP_RST);
 	return 0;
 }
 
