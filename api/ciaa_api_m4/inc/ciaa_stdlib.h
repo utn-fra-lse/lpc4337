@@ -10,6 +10,8 @@
 
 #include "ciaa_timer_api.h"
 
+#define DELAY_TIMER	TIMER_0
+
 /* Extern sleep end flag */
 extern bool sleep_flag;
 

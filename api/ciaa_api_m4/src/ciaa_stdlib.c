@@ -40,26 +40,26 @@ void sleep_us(uint32_t us) {
 
 
 void sleep_ticks(uint32_t ticks) {
-	/* Initialize TIMER0 */
-	timer_init(TIMER_0);
+	/* Initialize TIMER */
+	timer_init(DELAY_TIMER);
 	/* Reset counter value */
-	timer_reset(TIMER_0);
+	timer_reset(DELAY_TIMER);
 	/* Set a new match to trigger interrupt */
-	timer_set_match_ticks(TIMER_0, ticks);
+	timer_set_match_ticks(DELAY_TIMER, ticks);
 	/* Enable TIMER0 interrupt */
-	timer_set_irq_enabled(TIMER_0, true);
+	timer_set_irq_enabled(DELAY_TIMER, true);
 	/* Set a handler for the interrupt */
-	timer_set_irq_handler(TIMER_0, sleep_set_flag);
+	timer_set_irq_handler(DELAY_TIMER, sleep_set_flag);
 	/* Start TIMER0 counter */
-	timer_start(TIMER_0);
+	timer_start(DELAY_TIMER);
 	/* Wait for interrupt to trigger */
 	while(!sleep_get_flag());
 	/* Clear sleep flag */
 	sleep_clear_flag();
-	/* Stop TIMER0 conter */
-	timer_stop(TIMER_0);
+	/* Stop TIMER conter */
+	timer_stop(DELAY_TIMER);
 	/* Reset counter value */
-	timer_reset(TIMER_0);
-	/* Disable TIMER0 */
-	timer_deinit(TIMER_0);
+	timer_reset(DELAY_TIMER);
+	/* Disable TIMER */
+	timer_deinit(DELAY_TIMER);
 }
