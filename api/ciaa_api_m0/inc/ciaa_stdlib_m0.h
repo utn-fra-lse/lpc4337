@@ -8,6 +8,6 @@
 #ifndef CIAA_STDLIB_M0_H_
 #define CIAA_STDLIB_M0_H_
 
-#include "ciaa_timer_api_m0.h"
+#include "ciaa_stdlib.h"
 
 #endif /* CIAA_STDLIB_M0_H_ */
