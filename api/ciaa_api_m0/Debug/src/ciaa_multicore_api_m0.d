@@ -1,6 +1,7 @@
 src/ciaa_multicore_api_m0.o src/ciaa_multicore_api_m0.d: \
  ../src/ciaa_multicore_api_m0.c \
  D:\Facultad\Quinto\TD\ III\ciaa-api\api\ciaa_api_m0\inc/ciaa_multicore_api_m0.h \
+ D:\Facultad\Quinto\TD\ III\ciaa-api\api\ciaa_api_common\inc/ciaa_multicore_api.h \
  D:\Facultad\Quinto\TD\ III\ciaa-api\chip\lpc_chip_43xx_m0\inc/chip.h \
  D:\Facultad\Quinto\TD\ III\ciaa-api\chip\lpc_chip_43xx_m0\inc\config_43xx_m0app/sys_config.h \
  D:\Facultad\Quinto\TD\ III\ciaa-api\chip\lpc_chip_43xx_m0\inc/cmsis.h \
@@ -63,6 +64,8 @@ src/ciaa_multicore_api_m0.o src/ciaa_multicore_api_m0.d: \
  D:\Facultad\Quinto\TD\ III\ciaa-api\chip\lpc_chip_43xx_m0\inc/i2cm_18xx_43xx.h
 
 D:\Facultad\Quinto\TD\ III\ciaa-api\api\ciaa_api_m0\inc/ciaa_multicore_api_m0.h:
+
+D:\Facultad\Quinto\TD\ III\ciaa-api\api\ciaa_api_common\inc/ciaa_multicore_api.h:
 
 D:\Facultad\Quinto\TD\ III\ciaa-api\chip\lpc_chip_43xx_m0\inc/chip.h:
 
