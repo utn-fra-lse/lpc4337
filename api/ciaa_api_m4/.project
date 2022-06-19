@@ -5,6 +5,7 @@
 	<projects>
 		<project>ciaa_api</project>
 		<project>lpc_chip_43xx</project>
+		<project>ciaa_api_common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

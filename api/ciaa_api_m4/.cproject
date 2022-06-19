@@ -98,6 +98,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd_rom}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ciaa_api_common/inc}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.1709262689" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" useByScannerDiscovery="false"/>
 								<inputType id="com.crt.advproject.compiler.input.1664909737" superClass="com.crt.advproject.compiler.input"/>
@@ -120,6 +121,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd_rom}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ciaa_api_common/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1339229243" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1909657916" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -189,12 +191,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc://inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd_rom}&quot;"/>
 									<listOptionValue builtIn="false" value="/lpc_chip_43xx_m0/inc/config_43xx_m0app"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc/usbd_rom}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ciaa_api_common/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.fpu.1059373281" name="Floating point" superClass="com.crt.advproject.gcc.fpu" useByScannerDiscovery="true" value="com.crt.advproject.gcc.fpu.fpv4" valueType="enumerated"/>
 								<option id="com.crt.advproject.gcc.hdrlib.2030534191" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" useByScannerDiscovery="false" value="Redlib" valueType="enumerated"/>
@@ -262,12 +264,12 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc://inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/usbd_rom}&quot;"/>
 									<listOptionValue builtIn="false" value="/lpc_chip_43xx_m0/inc/config_43xx_m0app"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc/usbd_rom}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ciaa_api_common/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.fpu.1389370754" name="Floating point" superClass="com.crt.advproject.gas.fpu" value="com.crt.advproject.gas.fpu.fpv4" valueType="enumerated"/>
 								<option id="com.crt.advproject.gas.hdrlib.197702439" name="Library headers" superClass="com.crt.advproject.gas.hdrlib" value="Redlib" valueType="enumerated"/>

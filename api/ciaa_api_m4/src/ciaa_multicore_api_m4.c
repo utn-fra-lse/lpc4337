@@ -1,11 +1,11 @@
 /*
- * ciaa_multicore_api.c
+ * ciaa_multicore_api_m4.c
  *
  *  Created on: Jun 16, 2022
  *      Author: fabri
  */
 
-#include "ciaa_multicore_api.h"
+#include "ciaa_multicore_api_m4.h"
 
 /* Array of IPC Event callback functions */
 static void(*ipc_callback_lookup[IPC_MAX_PID]) (const ipc_msg_t*);
@@ -92,20 +92,6 @@ int multicore_m0_start(void) {
 	Chip_CREG_SetM0AppMemMap(m0_image_addr);
 	Chip_RGU_ClearReset(RGU_M0APP_RST);
 	return 0;
-}
-
-/*
- * 	@brief	Enable/Disbale M4 interrupt for M0 core
- *
- * 	@param	enabled: whether to enable or disable
- *
- * 	@return	None
- */
-void multicore_irq_set_enabled(bool enabled) {
-#ifdef	CORE_M0APP
-	if(enabled) { NVIC_EnableIRQ(M4_IRQn); }
-	else { NVIC_DisableIRQ(M4_IRQn); }
-#endif
 }
 
 /*

@@ -1,12 +1,12 @@
 /*
- * ciaa_multicore_api.h
+ * ciaa_multicore_api_m4.h
  *
  *  Created on: Jun 16, 2022
  *      Author: fabri
  */
 
-#ifndef CIAA_MULTICORE_API_H_
-#define CIAA_MULTICORE_API_H_
+#ifndef CIAA_MULTICORE_API_M4_H_
+#define CIAA_MULTICORE_API_M4_H_
 
 #include "chip.h"
 #include <string.h>
@@ -104,7 +104,6 @@ typedef void (*ipc_global_update_function_t)(int);
 
 /* Function prototypes */
 int multicore_m0_start(void);
-void multicore_irq_set_enabled(bool enabled);
 void ipc_init(void);
 void ipc_queue_init(void *data, int msgSize, int maxNoOfMsg);
 int ipc_register_callback(uint16_t pid, void (*func)(const ipc_msg_t *));
@@ -316,4 +315,4 @@ void ipc_msg_notify(void);
  */
 const char *ipc_err_str(int errnum);
 
-#endif /* CIAA_MULTICORE_API_H_ */
+#endif /* CIAA_MULTICORE_API_M4_H_ */

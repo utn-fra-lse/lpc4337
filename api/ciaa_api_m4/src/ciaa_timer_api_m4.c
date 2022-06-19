@@ -1,11 +1,11 @@
 /*
- * ciaa_timer_api.c
+ * ciaa_timer_api_m4.c
  *
  *  Created on: Jun 8, 2022
  *      Author: fabri
  */
 
-#include "ciaa_timer_api.h"
+#include "ciaa_timer_api_m4.h"
 
 /* TIMER base registers array */
 LPC_TIMER_T *CIAA_TIMERS[] = { CIAA_TIMER0, CIAA_TIMER1, CIAA_TIMER2, CIAA_TIMER3 };

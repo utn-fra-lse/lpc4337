@@ -1,12 +1,12 @@
 /*
- * ciaa_systick_api.h
+ * ciaa_systick_api_m4.h
  *
  *  Created on: Jun 7, 2022
  *      Author: fabri
  */
 
-#ifndef CIAA_SYSTICK_API_H_
-#define CIAA_SYSTICK_API_H_
+#ifndef CIAA_SYSTICK_API_M4_H_
+#define CIAA_SYSTICK_API_M4_H_
 
 #include "chip.h"
 
@@ -86,4 +86,4 @@ static inline absolute_time_t systick_get_absolute_time(void) { return absoluteT
  */
 static inline void systick_set_irq_handler(void (*handler)(void)) { systick_handler = handler; }
 
-#endif /* CIAA_SYSTICK_API_H_ */
+#endif /* CIAA_SYSTICK_API_M4_H_ */

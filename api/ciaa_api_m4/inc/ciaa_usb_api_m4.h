@@ -1,12 +1,12 @@
 /*
- * ciaa_usb_api.h
+ * ciaa_usb_api_m4.h
  *
  *  Created on: Jun 15, 2022
  *      Author: fabri
  */
 
-#ifndef CIAA_USB_API_H_
-#define CIAA_USB_API_H_
+#ifndef CIAA_USB_API_M4_H_
+#define CIAA_USB_API_M4_H_
 
 #include <string.h>
 #include "chip.h"
@@ -167,4 +167,4 @@ ErrorCode_t usb_bulk_out_handler(usb_handle_t handle, void *data, uint32_t event
 ErrorCode_t usb_wcid_handler(usb_handle_t handle, void *data, uint32_t event);
 ErrorCode_t usb_ep0_patch(usb_handle_t handle, void *data, uint32_t event);
 
-#endif /* CIAA_USB_API_H_ */
+#endif /* CIAA_USB_API_M4_H_ */
