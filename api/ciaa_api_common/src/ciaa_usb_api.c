@@ -5,7 +5,7 @@
  *      Author: fabri
  */
 
-#include "ciaa_usb_api_m4.h"
+#include "ciaa_usb_api.h"
 
 const usb_api_t *g_pUsbApi;
 lusb_ctrl_t lusb;
