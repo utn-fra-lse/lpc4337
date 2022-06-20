@@ -7,12 +7,8 @@
 
 #include "ciaa_timer_api.h"
 
-/* TIMER base registers array */
-LPC_TIMER_T *CIAA_TIMERS[] = { CIAA_TIMER0, CIAA_TIMER1, CIAA_TIMER2, CIAA_TIMER3 };
-/* Base clocks for TIMERs */
-CHIP_CCU_CLK_T TIMER_CLKS[] = { CLK_MX_TIMER0, CLK_MX_TIMER1, CLK_MX_TIMER2, CLK_MX_TIMER3 };
 /* Interrupt handlers function pointer */
-void (*timer_handlers[])(void) = { NULL, NULL, NULL, NULL };
+void (*timer_handlers[])(ciaa_timer_t) = { NULL, NULL, NULL, NULL };
 #ifdef CORE_M0
 /* TIMER base registers array */
 LPC43XX_M0_IRQn_Type TIMER_IRQS[] = { TIMER0_IRQn, NULL, NULL, TIMER3_IRQn };
@@ -71,7 +67,7 @@ void timer_set_irq_enabled(ciaa_timer_t timer, bool enabled) {
 void TIMER0_IRQHandler(void) {
 
 	if(timer_get_match_pending(TIMER_0)) {
-		if(timer_handlers[TIMER_0]) { timer_handlers[TIMER_0](); }
+		if(timer_handlers[TIMER_0]) { timer_handlers[TIMER_0](TIMER_0); }
 		timer_clear_irq_flag(TIMER_0);
 	}
 }
@@ -88,7 +84,7 @@ void TIMER1_IRQHandler(void) {
 
 	if(timer_get_match_pending(TIMER_1)) {
 
-		if(timer_handlers[TIMER_1]) { timer_handlers[TIMER_1](); }
+		if(timer_handlers[TIMER_1]) { timer_handlers[TIMER_1](TIMER_1); }
 		timer_clear_irq_flag(TIMER_1);
 	}
 }
@@ -104,7 +100,7 @@ void TIMER2_IRQHandler(void) {
 
 	if(timer_get_match_pending(TIMER_2)) {
 
-		if(timer_handlers[TIMER_2]) { timer_handlers[TIMER_2](); }
+		if(timer_handlers[TIMER_2]) { timer_handlers[TIMER_2](TIMER_2); }
 		timer_clear_irq_flag(TIMER_2);
 	}
 }
@@ -121,7 +117,7 @@ void TIMER3_IRQHandler(void) {
 
 	if(timer_get_match_pending(TIMER_3)) {
 
-		if(timer_handlers[TIMER_3]) { timer_handlers[TIMER_3](); }
+		if(timer_handlers[TIMER_3]) { timer_handlers[TIMER_3](TIMER_3); }
 		timer_clear_irq_flag(TIMER_3);
 	}
 }

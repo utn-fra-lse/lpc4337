@@ -46,11 +46,11 @@ void lcd_config_init(lcd_config_t config) {
 	/* Function set: 8 bits interface length */
 	lcd_put_command(lcd, 0x03);
 	/* Wait for 4.1 ms */
-	sleep_ms(5);
+	sleep_ms(TIMER_0, 5);
 	/* Function set: 8 bits interface length */
 	lcd_put_command(lcd, 0x03);
 	/* Wait for 100 us */
-	sleep_us(100);
+	sleep_us(TIMER_0, 100);
 	/* Function set: 8 bits interface length */
 	lcd_put_command(lcd, 0x03);
 	/* Now the other instructions can be send */
@@ -96,7 +96,7 @@ void lcd_put(lcd_t lcd, uint8_t nibble) {
 	/* Set enable pin */
 	gpio_set(*en);
 	/* Wait for 40 us */
-	sleep_us(40);
+	sleep_us(TIMER_0, 40);
 	/* Clear enable pin */
 	gpio_clr(*en);
 }
@@ -169,7 +169,7 @@ void lcd_clear(lcd_t lcd) {
 	/* Send clear command: second nibble */
 	lcd_put_command(lcd, 0x01);
 	/* Wait for 4ms */
-	sleep_ms(4);
+	sleep_ms(TIMER_0, 4);
 }
 
 /*
