@@ -1,5 +1,5 @@
 /*
- * ciaa_usb_api_m4.c
+ * ciaa_usb_api.c
  *
  *  Created on: Jun 15, 2022
  *      Author: fabri
