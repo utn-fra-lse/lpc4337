@@ -34,9 +34,9 @@ int main(void) {
 	return 0;
 }
 
-/* M0APP interrupt handler
+/* @brief	M0APP interrupt handler
  *
- * @note produces same effect as using macro: m0app_handler(m0app_callback);
+ * @note	produces same effect as using macro: m0app_handler(m0app_callback);
  */
 void M0APP_IRQHandler(void) {
 	/* Clear interrupt */

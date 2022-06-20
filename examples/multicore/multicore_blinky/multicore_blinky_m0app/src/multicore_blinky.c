@@ -24,9 +24,9 @@ int main(void) {
 	return 0;
 }
 
-/* M4 interrupt handler
+/* @brief	M4 interrupt handler
  *
- * @note produces same effect as using macro: m4_handler(m4_callback);
+ * @note	produces same effect as using macro: m4_handler(m4_callback);
  */
 void M4_IRQHandler(void) {
 	/* Clear interrupt */
