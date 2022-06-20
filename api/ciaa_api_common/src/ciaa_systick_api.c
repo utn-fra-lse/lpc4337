@@ -5,7 +5,7 @@
  *      Author: fabri
  */
 
-#include "ciaa_systick_api_m4.h"
+#include "ciaa_systick_api.h"
 
 /* Interrupt handler function pointer */
 void (*systick_handler)(void) = { NULL };

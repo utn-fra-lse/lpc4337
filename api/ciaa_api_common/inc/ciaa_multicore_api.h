@@ -19,6 +19,33 @@
 #define IFLASH_B_BASE_ADDR 		0x1B000000
 /* M0APP Flash address */
 #define BASE_ADDRESS_M0APP     	(IFLASH_B_BASE_ADDR)
+
+#ifdef CORE_M0
+/*
+ * 	@brief	Alternative macro for the M4_IRQHandler
+ *
+ * 	@param	handler: function to execute when interrupt is triggered
+ */
+#define m4_handler(handler); 	void M4_IRQHandler(void) {	\
+									/* Clear interrupt */	\
+									multicore_irq_clear();	\
+									/* Call handler */		\
+									handler();				\
+								}
+#elif defined(CORE_M4)
+/*
+ * 	@brief	Alternative macro for the M0APP_IRQHandler
+ *
+ * 	@param	handler: function to execute when interrupt is triggered
+ */
+#define m0app_handler(handler);		void M0APP_IRQHandler(void) {	\
+										/* Clear interrupt */		\
+										multicore_irq_clear();		\
+										/* Call handler */			\
+										handler();					\
+									}
+#endif
+
 /* Extern interrupt handler */
 extern void (*multicore_irq_handler[])(void);
 
@@ -28,7 +55,40 @@ typedef enum {
 	CM0
 } multicore_cores_t;
 
+#if !defined(CORE_M0) && defined(CORE_M4)
+/* Function prototypes */
+int multicore_m0_start(void);
+#endif
+
 /* Multicore inline functions */
+#if !defined(CORE_M0) && defined(CORE_M4)
+/*
+ * 	@brief	Check memory alignment
+ *
+ * 	@param	address: address to the M0APP flash memory
+ *
+ * 	@return memory alignment value
+ */
+static inline uint32_t multicore_m0_check_alignment(uint32_t address) { return address & 0xFFF; }
+
+/*
+ * 	@brief	Perform a sanity check on the M0 memory address
+ *
+ * 	@param	address: address to the M0APP flash memory
+ *
+ * 	@return	true if valid, false if not
+ */
+static inline bool multicore_m0_sanity_check(uint32_t address) { return (address & 0xFFF00000) != ((*(unsigned long*) (address + 4)) & 0xFFF00000); }
+
+/*
+ * 	@brief	Set M0 memory map
+ *
+ * 	@param	address: address to the M0APP flash memory
+ *
+ * 	@return	None
+ */
+static inline void multicore_m0_set_memory_map(uint32_t address) { LPC_CREG->M0APPMEMMAP = address & ~0xFFF; }
+#endif
 
 #ifdef CORE_M0
 /*
@@ -58,7 +118,7 @@ static inline void multicore_m0app_irq_set_enabled(bool enabled) {
 #endif
 
 /*
- * @brief	Initiate interrupt on other processor
+ * 	@brief	Initiate interrupt on other processor
  *
  * 	@param	None
  *
