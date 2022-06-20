@@ -6,8 +6,7 @@
 		<project>lpc_board_nxp_lpcxpresso_4337</project>
 		<project>lpc_chip_43xx</project>
 		<project>multicore_blinky_m0app</project>
-		<project>ciaa_api_m4</project>
-		<project>ciaa_api_common</project>
+		<project>ciaa_api</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
