@@ -2,40 +2,34 @@
 <cdtprojectproperties>
 <section name="org.eclipse.cdt.internal.ui.wizards.settingswizards.IncludePaths">
 <language name="C Source File">
-<includepath workspace_path="true">/ciaa_api_m4</includepath>
-<includepath workspace_path="true">/ciaa_api_common</includepath>
+<includepath workspace_path="true">/ciaa_api</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc/config_43xx</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc/usbd_rom</includepath>
 <includepath workspace_path="true">/${ProjName}/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_m4/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_common/inc</includepath>
 <includepath workspace_path="true">/multicore_blinky_m4/inc</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx</includepath>
-
-</language>
-<language name="Assembly Source File">
-<includepath workspace_path="true">/${ProjName}/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_m4</includepath>
-<includepath workspace_path="true">/ciaa_api_m4/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_common</includepath>
-<includepath workspace_path="true">/ciaa_api_common/inc</includepath>
-<includepath workspace_path="true">/lpc_chip_43xx</includepath>
-<includepath workspace_path="true">/lpc_chip_43xx/inc</includepath>
-<includepath workspace_path="true">/lpc_chip_43xx/inc/usbd_rom</includepath>
-<includepath workspace_path="true">/lpc_chip_43xx/inc/config_43xx</includepath>
+<includepath workspace_path="true">/ciaa_api/inc</includepath>
 
 </language>
 <language name="Additional Assembly Source Files">
+<includepath workspace_path="true">/ciaa_api</includepath>
 <includepath workspace_path="true">/${ProjName}/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_m4</includepath>
-<includepath workspace_path="true">/ciaa_api_m4/inc</includepath>
-<includepath workspace_path="true">/ciaa_api_common</includepath>
-<includepath workspace_path="true">/ciaa_api_common/inc</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc/usbd_rom</includepath>
 <includepath workspace_path="true">/lpc_chip_43xx/inc/config_43xx</includepath>
+<includepath workspace_path="true">/ciaa_api/inc</includepath>
+
+</language>
+<language name="Assembly Source File">
+<includepath workspace_path="true">/ciaa_api</includepath>
+<includepath workspace_path="true">/${ProjName}/inc</includepath>
+<includepath workspace_path="true">/lpc_chip_43xx</includepath>
+<includepath workspace_path="true">/lpc_chip_43xx/inc</includepath>
+<includepath workspace_path="true">/lpc_chip_43xx/inc/usbd_rom</includepath>
+<includepath workspace_path="true">/lpc_chip_43xx/inc/config_43xx</includepath>
+<includepath workspace_path="true">/ciaa_api/inc</includepath>
 
 </language>
 <language name="Object File">
@@ -76,10 +70,10 @@
 </macro>
 
 </language>
-<language name="Assembly Source File">
+<language name="Additional Assembly Source Files">
 
 </language>
-<language name="Additional Assembly Source Files">
+<language name="Assembly Source File">
 
 </language>
 <language name="Object File">
