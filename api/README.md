@@ -1,11 +1,5 @@
 # API
 
-## About Specific Core Libraries
-
-Separate libraries were made for each core in order to proper build multicore projects. In most of the cases, the libraries for both cores only have an include instruction to fetch the common api.
-
-There are some cases though when the specific core libary adds some code that is specific to that core. More on that within the [M0 API](ciaa_api_m0/) and the [M4 API](ciaa_api_m4).
-
 ## Supported peripherials
 
 | Peripherial | Files | Description |
@@ -29,27 +23,27 @@ There are some cases though when the specific core libary adds some code that is
 | usb_descriptors | [ciaa_usb_descriptors.c] | Defines the USB descriptors for the LPC4337.
 | usb_app_config | [app_usbd_cfg.h] | USB configuration and definitions for generic project.
 
-[ciaa_gpio_api.h]: ciaa_api_common/inc/ciaa_gpio_api.h
-[ciaa_gpio_api.c]: ciaa_api_common/src/ciaa_gpio_api.c
-[ciaa_adc_api.h]: ciaa_api_common/inc/ciaa_adc_api.h
-[ciaa_adc_api.c]: ciaa_api_common/src/ciaa_adc_api.c
-[ciaa_dac_api.h]: ciaa_api_common/inc/ciaa_dac_api.h
-[ciaa_dac_api.c]: ciaa_api_common/src/ciaa_dac_api.c
-[ciaa_pwm_api.h]: ciaa_api_common/inc/ciaa_pwm_api.h
-[ciaa_pwm_api.c]: ciaa_api_common/src/ciaa_pwm_api.c
-[ciaa_scu_api.h]: ciaa_api_common/inc/ciaa_scu_api.h
-[ciaa_scu_api.c]: ciaa_api_common/src/ciaa_scu_api.c
-[ciaa_systick_api.h]: ciaa_api_common/inc/ciaa_systick_api.h
-[ciaa_systick_api.c]: ciaa_api_common/src/ciaa_systick_api.c
-[ciaa_timer_api.h]: ciaa_api_common/inc/ciaa_timer_api.h
-[ciaa_timer_api.c]: ciaa_api_common/src/ciaa_timer_api.c
-[ciaa_stdlib.h]: ciaa_api_common/inc/ciaa_stdlib.h
-[ciaa_stdlib.c]: ciaa_api_common/src/ciaa_stdlib.c
-[ciaa_uart_api.h]: ciaa_api_common/inc/ciaa_uart_api.h
-[ciaa_uart_api.c]: ciaa_api_common/src/ciaa_uart_api.c
-[ciaa_usb_api.h]: ciaa_api_common/inc/ciaa_usb_api.h
-[ciaa_usb_api.c]: ciaa_api_common/src/ciaa_usb_api.c
-[ciaa_usb_descriptors.c]: ciaa_api_common/src/ciaa_usb_descriptors.c
-[app_usbd_cfg.h]: ciaa_api_common/inc/app_usbd_cfg.h
-[ciaa_multicore_api.h]: ciaa_api_common/inc/ciaa_multicore_api.h
-[ciaa_multicore_api.c]: ciaa_api_common/src/ciaa_multicore_api.c
+[ciaa_gpio_api.h]: ciaa_api/inc/ciaa_gpio_api.h
+[ciaa_gpio_api.c]: ciaa_api/src/ciaa_gpio_api.c
+[ciaa_adc_api.h]: ciaa_api/inc/ciaa_adc_api.h
+[ciaa_adc_api.c]: ciaa_api/src/ciaa_adc_api.c
+[ciaa_dac_api.h]: ciaa_api/inc/ciaa_dac_api.h
+[ciaa_dac_api.c]: ciaa_api/src/ciaa_dac_api.c
+[ciaa_pwm_api.h]: ciaa_api/inc/ciaa_pwm_api.h
+[ciaa_pwm_api.c]: ciaa_api/src/ciaa_pwm_api.c
+[ciaa_scu_api.h]: ciaa_api/inc/ciaa_scu_api.h
+[ciaa_scu_api.c]: ciaa_api/src/ciaa_scu_api.c
+[ciaa_systick_api.h]: ciaa_api/inc/ciaa_systick_api.h
+[ciaa_systick_api.c]: ciaa_api/src/ciaa_systick_api.c
+[ciaa_timer_api.h]: ciaa_api/inc/ciaa_timer_api.h
+[ciaa_timer_api.c]: ciaa_api/src/ciaa_timer_api.c
+[ciaa_stdlib.h]: ciaa_api/inc/ciaa_stdlib.h
+[ciaa_stdlib.c]: ciaa_api/src/ciaa_stdlib.c
+[ciaa_uart_api.h]: ciaa_api/inc/ciaa_uart_api.h
+[ciaa_uart_api.c]: ciaa_api/src/ciaa_uart_api.c
+[ciaa_usb_api.h]: ciaa_api/inc/ciaa_usb_api.h
+[ciaa_usb_api.c]: ciaa_api/src/ciaa_usb_api.c
+[ciaa_usb_descriptors.c]: ciaa_api/src/ciaa_usb_descriptors.c
+[app_usbd_cfg.h]: ciaa_api/inc/app_usbd_cfg.h
+[ciaa_multicore_api.h]: ciaa_api/inc/ciaa_multicore_api.h
+[ciaa_multicore_api.c]: ciaa_api/src/ciaa_multicore_api.c
