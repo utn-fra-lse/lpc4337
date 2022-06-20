@@ -13,62 +13,59 @@ bool sleep_flags[] = { false, false, false, false };
 /*
  * 	@brief	Delay for a number of milliseconds
  *
- *	@param	timer: TIMER to control de the dalay
  * 	@param	ms: number of milliseconds
  *
  * 	@return	None
  */
-void sleep_ms(ciaa_timer_t timer, uint32_t ms) {
+void sleep_ms(uint32_t ms) {
 	/* Get the number of ticks necessary */
 	uint32_t ticks = timer_ms_to_ticks(ms);
 	/* Sleep said number of ticks */
-	sleep_ticks(timer, ticks);
+	sleep_ticks(ticks);
 }
 
 /*
  * 	@brief	Delay for a number of microseconds
  *
- *	@param	timer: TIMER to control de the dalay
  * 	@param	us: number of microseconds
  *
  * 	@return	None
  */
-void sleep_us(ciaa_timer_t timer, uint32_t us) {
+void sleep_us(uint32_t us) {
 	/* Get the number of ticks necessary */
 	uint32_t ticks = timer_us_to_ticks(us);
 	/* Sleep said number of ticks */
-	sleep_ticks(timer, ticks);
+	sleep_ticks(ticks);
 }
 
 /*
  * 	@brief	Delay for a number of ticks
  *
- *	@param	timer: TIMER to control de the dalay
  * 	@param	ticks: number of ticks
  *
  * 	@return	None
  */
-void sleep_ticks(ciaa_timer_t timer, uint32_t ticks) {
+void sleep_ticks(uint32_t ticks) {
 	/* Initialize TIMER */
-	timer_init(timer);
+	timer_init(DELAY_TIMER);
 	/* Reset counter value */
-	timer_reset(timer);
+	timer_reset(DELAY_TIMER);
 	/* Set a new match to trigger interrupt */
-	timer_set_match_ticks(timer, ticks);
+	timer_set_match_ticks(DELAY_TIMER, ticks);
 	/* Enable TIMER0 interrupt */
-	timer_set_irq_enabled(timer, true);
+	timer_set_irq_enabled(DELAY_TIMER, true);
 	/* Set a handler for the interrupt */
-	timer_set_irq_handler(timer, sleep_set_flag);
+	timer_set_irq_handler(DELAY_TIMER, sleep_set_flag);
 	/* Start TIMER0 counter */
-	timer_start(timer);
+	timer_start(DELAY_TIMER);
 	/* Wait for interrupt to trigger */
-	while(!sleep_get_flag(timer));
+	while(!sleep_get_flag(DELAY_TIMER));
 	/* Clear sleep flag */
-	sleep_clear_flag(timer);
+	sleep_clear_flag(DELAY_TIMER);
 	/* Stop TIMER conter */
-	timer_stop(timer);
+	timer_stop(DELAY_TIMER);
 	/* Reset counter value */
-	timer_reset(timer);
+	timer_reset(DELAY_TIMER);
 	/* Disable TIMER */
-	timer_deinit(timer);
+	timer_deinit(DELAY_TIMER);
 }

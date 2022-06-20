@@ -13,10 +13,16 @@
 /* Extern sleep end flag */
 extern bool sleep_flags[];
 
+#ifdef CORE_M0
+#define DELAY_TIMER	TIMER_3
+#elif defined(CORE_M4)
+#define DELAY_TIMER	TIMER_2
+#endif
+
 /* Function prototypes */
-void sleep_ms(ciaa_timer_t timer, uint32_t ms);
-void sleep_us(ciaa_timer_t timer, uint32_t us);
-void sleep_ticks(ciaa_timer_t timer, uint32_t ticks);
+void sleep_ms(uint32_t ms);
+void sleep_us(uint32_t us);
+void sleep_ticks(uint32_t ticks);
 
 /* Inline functions */
 
@@ -53,7 +59,7 @@ static inline void _sleep_ms(uint32_t ms) {
 /*
  * 	@brief	Set sleep flag
  *
- * 	@param	None
+ * 	@param	timer: TIMER from with to set flag
  *
  * 	@return	None
  */
@@ -62,7 +68,7 @@ static inline void sleep_set_flag(ciaa_timer_t timer) { sleep_flags[timer] = tru
 /*
  * 	@brief	Clear sleep flag
  *
- * 	@param	None
+ * 	@param	timer: TIMER from with to clear flag
  *
  * 	@return None
  */
@@ -71,7 +77,7 @@ static inline void sleep_clear_flag(ciaa_timer_t timer) { sleep_flags[timer] = f
 /*
  * 	@brief	Get sleep flag value
  *
- * 	@param	None
+ * 	@param	timer: TIMER from with to get flag
  *
  * 	@return	true or false
  */
