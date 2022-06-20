@@ -55,17 +55,6 @@ static void ipc_global_update(const ipc_msg_t *msg) {
 	}
 }
 
-/*
- * Initiate interrupt on other processor
- * Upon calling this function generates and interrupt on the other
- * core. Ex. if called from M0 core it generates interrupt on M4 core
- * and vice versa.
- */
-static void ipc_send_signal(void) {
-	__DSB();
-	__SEV();
-}
-
 /* Simple event handler for non OS implementations */
 static int ipc_event_handler_implementation(ipc_event_t event, uint16_t cpu, int tout) {
 	__WFI();
@@ -178,7 +167,7 @@ ipc_global_update_function_t ipc_global_register_function(ipc_global_update_func
 
 /* Function to send notificaton interrupt */
 void ipc_msg_notify(void) {
-	ipc_send_signal();
+	//ipc_send_signal();
 }
 
 /* Function to push a message into queue with timeout */
@@ -204,7 +193,7 @@ int ipc_msg_push_timeout(uint16_t cpuid, const void *data, int tout) {
 
 	memcpy(qwr->data + ((qwr->head & (qwr->count - 1)) * qwr->size), data, qwr->size);
 	qwr->head++;
-	ipc_send_signal();
+	//ipc_send_signal();
 
 	return QUEUE_INSERT;
 }
@@ -233,7 +222,7 @@ int ipc_msg_pop_timeout(void *data, int tout) {
 	qrd->tail++;
 
 	if (raise_event) {
-		ipc_send_signal();
+		//ipc_send_signal();
 	}
 	return QUEUE_VALID;
 }

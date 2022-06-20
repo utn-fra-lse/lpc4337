@@ -10,7 +10,4 @@
 
 #include "ciaa_multicore_api.h"
 
-/* Function prototypes */
-void multicore_irq_set_enabled(bool enabled);
-
 #endif /* CIAA_MULTICORE_API_M0_H_ */

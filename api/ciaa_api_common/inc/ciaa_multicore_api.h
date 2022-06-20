@@ -132,6 +132,40 @@ uint32_t ipc_global_get(int index);
 ipc_global_update_function_t ipc_global_register_function(ipc_global_update_function_t fn);
 
 /* Multicore inline functions */
+
+/*
+ * 	@brief	Enable/Disbale M4 interrupt for M0 core
+ *
+ * 	@param	enabled: whether to enable or disable
+ *
+ * 	@return	None
+ */
+static inline void multicore_irq_set_enabled(bool enabled) {
+#ifdef CORE_M0
+	if(enabled) { NVIC_EnableIRQ(M4_IRQn); }
+	else { NVIC_DisableIRQ(M4_IRQn); }
+#elif defined(CORE_M4)
+	if(enabled) { NVIC_EnableIRQ(M0APP_IRQn); }
+	else { NVIC_DisableIRQ(M0APP_IRQn); }
+#endif
+
+}
+
+/*
+ * Initiate interrupt on other processor
+ * Upon calling this function generates and interrupt on the other
+ * core. Ex. if called from M0 core it generates interrupt on M4 core
+ * and vice versa.
+ */
+#ifdef CORE_M0
+static inline void multicore_interrupt_m4_core(void) {
+#elif defined(CORE_M4)
+static inline void multicore_interrupt_m0_core(void) {
+#endif
+	__DSB();
+	__SEV();
+}
+
 static inline bool ipc_queue_sanity_check(void *data, int size, int count) {
 	/* Sanity Check */
 	if(!size || !count || !data) { return -1; }
