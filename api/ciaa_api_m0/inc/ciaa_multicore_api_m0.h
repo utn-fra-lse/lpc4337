@@ -10,8 +10,15 @@
 
 #include "ciaa_multicore_api.h"
 
+/*
+ * 	@brief	Alternative macro for the M4_IRQHandler
+ *
+ * 	@param	handler: function to execute when interrupt is triggered
+ */
 #define m4_handler(handler); 	void M4_IRQHandler(void) {	\
+									/* Clear interrupt */	\
 									multicore_irq_clear();	\
+									/* Call handler */		\
 									handler();				\
 								}
 
