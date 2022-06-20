@@ -1,6 +1,6 @@
-#include "ciaa_multicore_api_m4.h"
-#include "ciaa_gpio_api_m4.h"
-#include "ciaa_stdlib_m4.h"
+#include "ciaa_multicore_api.h"
+#include "ciaa_gpio_api.h"
+#include "ciaa_stdlib.h"
 
 /* Callback for M0APP interrupt  */
 void m0app_callback(void) {
@@ -24,7 +24,7 @@ int main(void) {
 
 	while (1) {
 		/* Wait for 1 second */
-		delay_ms(1000);
+		sleep_ms(1000);
 		/* Toggle LED1 */
 		gpio_xor(LED1);
 		/* Interrupt M0 core */

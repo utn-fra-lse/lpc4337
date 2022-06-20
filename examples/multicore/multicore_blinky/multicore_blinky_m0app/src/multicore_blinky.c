@@ -1,6 +1,5 @@
-#include "ciaa_multicore_api_m0.h"
-#include "ciaa_gpio_api_m0.h"
-#include "ciaa_stdlib_m0.h"
+#include "ciaa_multicore_api.h"
+#include "ciaa_gpio_api.h"
 
 /* Callback for M4 interrupt */
 void m4_callback(void) {
