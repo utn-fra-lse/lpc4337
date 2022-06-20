@@ -24,7 +24,7 @@ int multicore_m0_start(void) {
 	Chip_RGU_TriggerReset(RGU_M0APP_RST);
 	Chip_Clock_Enable(CLK_M4_M0APP);
 	/* Keep in mind the M0 image must be aligned on a 4K boundary */
-	Chip_CREG_SetM0AppMemMap(m0_image_addr);
+	multicore_m0_set_memory_map(m0_image_addr);
 	Chip_RGU_ClearReset(RGU_M0APP_RST);
 	return 0;
 }

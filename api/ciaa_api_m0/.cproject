@@ -49,7 +49,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc/config_43xx_m0app}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx_m0/inc/usbd_rom}&quot;"/>
-									<listOptionValue builtIn="false" value="/ciaa_api_common/inc"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ciaa_api_common/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.hdrlib.1706025932" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" useByScannerDiscovery="false" value="Redlib" valueType="enumerated"/>

@@ -10,4 +10,9 @@
 
 #include "ciaa_multicore_api.h"
 
+#define m4_handler(handler); 	void M4_IRQHandler(void) {	\
+									multicore_irq_clear();	\
+									handler();				\
+								}
+
 #endif /* CIAA_MULTICORE_API_M0_H_ */
