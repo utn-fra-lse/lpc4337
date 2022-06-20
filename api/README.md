@@ -1,5 +1,11 @@
 # API
 
+## About Specific Core Libraries
+
+Separate libraries were made for each core in order to proper build multicore projects. In most of the cases, the libraries for both cores only have an include instruction to fetch the common api.
+
+There are some cases though when the specific core libary adds some code that is specific to that core. More on that within the [M0 API](ciaa_api_m0/) and the [M4 API](ciaa_api_m4).
+
 ## Supported peripherials
 
 | Peripherial | Files | Description |
