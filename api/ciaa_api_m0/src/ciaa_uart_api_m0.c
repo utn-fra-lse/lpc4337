@@ -1,8 +1,0 @@
-/*
- * ciaa_uart_api_m0.c
- *
- *  Created on: Jun 9, 2022
- *      Author: fabri
- */
-
-#include "ciaa_uart_api_m0.h"
