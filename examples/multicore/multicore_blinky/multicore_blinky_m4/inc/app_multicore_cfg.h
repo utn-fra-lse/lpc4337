@@ -32,7 +32,7 @@
 #ifndef __APP_MULTICORE_CFG_H_
 #define __APP_MULTICORE_CFG_H_
 
-#include "board.h"
+#include "chip.h"
 
 typedef enum CPUID {
 	CPUID_MIN,
