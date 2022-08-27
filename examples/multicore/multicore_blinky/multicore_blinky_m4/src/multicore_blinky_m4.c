@@ -44,3 +44,4 @@ void M0APP_IRQHandler(void) {
 	/* Call callback */
 	m0app_callback();
 }
+

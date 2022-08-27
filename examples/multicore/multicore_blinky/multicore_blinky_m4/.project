@@ -3,7 +3,6 @@
 	<name>multicore_blinky_m4</name>
 	<comment></comment>
 	<projects>
-		<project>lpc_board_nxp_lpcxpresso_4337</project>
 		<project>lpc_chip_43xx</project>
 		<project>multicore_blinky_m0app</project>
 		<project>ciaa_api</project>

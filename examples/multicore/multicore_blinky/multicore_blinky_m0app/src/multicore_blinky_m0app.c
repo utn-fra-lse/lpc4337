@@ -34,3 +34,4 @@ void M4_IRQHandler(void) {
 	/* Call callback */
 	m4_callback();
 }
+
