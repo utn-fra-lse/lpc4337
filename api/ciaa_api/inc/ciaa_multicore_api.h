@@ -19,6 +19,23 @@
 #define IFLASH_B_BASE_ADDR 		0x1B000000
 /* M0APP Flash address */
 #define BASE_ADDRESS_M0APP     	(IFLASH_B_BASE_ADDR)
+/* Shared IPC memory */
+#define	SHARED_MEM_IPC			0x10088000
+
+/* Extern interrupt handler */
+extern void (*multicore_irq_handler[])(void);
+
+/* Available coees */
+typedef enum {
+	CM4,
+	CM0
+} multicore_cores_t;
+
+#ifdef CORE_M0
+#define CPUID_CURR	CM0
+#elif defined(CORE_M4)
+#define	CPUID_CURR	CM4
+#endif
 
 #ifdef CORE_M0
 /*
@@ -45,15 +62,6 @@
 										handler();					\
 									}
 #endif
-
-/* Extern interrupt handler */
-extern void (*multicore_irq_handler[])(void);
-
-/* Available coees */
-typedef enum {
-	CM4,
-	CM0
-} multicore_cores_t;
 
 #if !defined(CORE_M0) && defined(CORE_M4)
 /* Function prototypes */
