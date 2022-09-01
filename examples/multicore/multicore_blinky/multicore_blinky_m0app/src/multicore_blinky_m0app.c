@@ -14,10 +14,18 @@ int main(void) {
 	SystemCoreClockUpdate();
 	/* Set LED2 as output */
 	gpio_set_dir_out(LED2);
+	/* Set RGB LED as output */
+	gpio_set_dir_out(LEDR);
+	gpio_set_dir_out(LEDG);
+	gpio_set_dir_out(LEDB);
 	/* Enable interrupt from M4 core */
 	multicore_m4_irq_set_enabled(true);
 	/* Clear LED2 */
 	gpio_clr(LED2);
+	/* Clear RGB LED */
+	gpio_clr(LEDR);
+	gpio_clr(LEDG);
+	gpio_clr(LEDB);
 
 	while (1);
 
