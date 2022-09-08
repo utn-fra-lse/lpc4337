@@ -5,6 +5,7 @@
 | Peripherial | Files | Description |
 | --- | --- | --- |
 | ADC | [ciaa_adc_api.h]/[ciaa_adc_api.c] | Support for ADC0 and ADC1. Works by enabling one channel at a time. Reading can be done by polling or interrupt request service.
+| Board | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
 | DAC | [ciaa_dac_api.h]/[ciaa_dac_api.c] | Support for controling output of DAC and enabling alternative output pin.
 | GPIO | [ciaa_gpio_api.h]/[ciaa_gpio_api.c] | Support for general purpose functions such as: enable GPIO pin, set direction, read and write values and set, clear and xor output. 
 | IPC | [ciaa_ipc_api.h]/[ciaa_ipc_api.c] | Support for Intterprocessor Communication. Handles messaging between cores with a queue in a shared memory address.
@@ -50,3 +51,5 @@
 [ciaa_multicore_api.c]: ciaa_api/src/ciaa_multicore_api.c
 [ciaa_ipc_api.h]: ciaa_api/inc/ciaa_ipc_api.h
 [ciaa_ipc_api.c]: ciaa_api/src/ciaa_ipc_api.c
+[ciaa_board_api.h]: ciaa_api/inc/ciaa_board_api.h
+[ciaa_board_api.c]: ciaa_api/src/ciaa_board_api.c
