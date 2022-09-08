@@ -9,7 +9,7 @@
 */
 
 #include "ciaa_ipc_api.h"
-#include "ciaa_gpio_api.h"
+#include "ciaa_board_api.h"
 
 /* Define M0 function */
 #define M0_SLAVE
@@ -66,8 +66,8 @@ int pop(void *data, int tout) {
 uint32_t data = 0;
 
 int main(void) {
-	/* Update system clock */
-	SystemCoreClockUpdate();
+	/* Initialize board */
+	ciaa_board_init();
 	/* IPC quque initialization */
     ipc_queue_init(&data, sizeof(uint32_t), 1);
     /* Enable interrupts from M4 */

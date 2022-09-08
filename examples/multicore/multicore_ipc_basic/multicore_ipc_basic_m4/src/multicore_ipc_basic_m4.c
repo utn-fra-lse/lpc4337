@@ -10,7 +10,7 @@
 
 #include "ciaa_ipc_api.h"
 #include "ciaa_systick_api.h"
-#include "ciaa_gpio_api.h"
+#include "ciaa_board_api.h"
 
 /* Define M4 function */
 #define M4_MASTER
@@ -41,8 +41,8 @@ void systick(void) {
 }
 
 int main(void) {
-	/* Update system clock */
-    SystemCoreClockUpdate();
+	/* Initialize board */
+	ciaa_board_init();
     /* IPC quque initialization */
     ipc_queue_init(&data, sizeof(uint32_t), 1);
     /* Start M0 core */
@@ -51,20 +51,6 @@ int main(void) {
     systick_set_irq_handler(systick);
     /* Initialize SysTick at 10ms */
     systick_init(10000);
-    /* Initialize LEDs as output */
-    gpio_set_dir(LED1, true);
-    gpio_set_dir(LED2, true);
-    gpio_set_dir(LED3, true);
-    gpio_set_dir(LEDR, true);
-    gpio_set_dir(LEDB, true);
-    gpio_set_dir(LEDG, true);
-    /* Turn off LEDs */
-    gpio_clr(LED1);
-    gpio_clr(LED2);
-    gpio_clr(LED3);
-    gpio_clr(LEDR);
-    gpio_clr(LEDB);
-    gpio_clr(LEDG);
 
     while(1) {
 #if defined(M4_SLAVE) && !defined(M4_MASTER)
