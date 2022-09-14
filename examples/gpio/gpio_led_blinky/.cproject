@@ -23,7 +23,7 @@
 							<tool id="com.crt.advproject.cpp.exe.debug.1257414836" name="MCU C++ Compiler" superClass="com.crt.advproject.cpp.exe.debug">
 								<option id="com.crt.advproject.cpp.hdrlib.936043027" name="Library headers" superClass="com.crt.advproject.cpp.hdrlib" useByScannerDiscovery="false"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1073717574" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false"/>
-								<option id="com.crt.advproject.cpp.fpu.20050543" superClass="com.crt.advproject.cpp.fpu"/>
+								<option id="com.crt.advproject.cpp.fpu.20050543" superClass="com.crt.advproject.cpp.fpu" useByScannerDiscovery="true"/>
 							</tool>
 							<tool id="com.crt.advproject.gcc.exe.debug.1543810570" name="MCU C Compiler" superClass="com.crt.advproject.gcc.exe.debug">
 								<option id="com.crt.advproject.gcc.thumb.1024116151" name="Thumb mode" superClass="com.crt.advproject.gcc.thumb" useByScannerDiscovery="false" value="true" valueType="boolean"/>
