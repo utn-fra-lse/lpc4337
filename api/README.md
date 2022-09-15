@@ -5,7 +5,6 @@
 | Peripherial | Files | Description |
 | --- | --- | --- |
 | ADC | [ciaa_adc_api.h]/[ciaa_adc_api.c] | Support for ADC0 and ADC1. Works by enabling one channel at a time. Reading can be done by polling or interrupt request service.
-| Board | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
 | DAC | [ciaa_dac_api.h]/[ciaa_dac_api.c] | Support for controling output of DAC and enabling alternative output pin.
 | GPIO | [ciaa_gpio_api.h]/[ciaa_gpio_api.c] | Support for general purpose functions such as: enable GPIO pin, set direction, read and write values and set, clear and xor output. 
 | IPC | [ciaa_ipc_api.h]/[ciaa_ipc_api.c] | Support for Intterprocessor Communication. Handles messaging between cores with a queue in a shared memory address.
@@ -24,6 +23,16 @@
 | stdlib | [ciaa_stdlib.h]/[ciaa_stdlib.c] | Adds sleep functions.
 | usb_descriptors | [ciaa_usb_descriptors.c] | Defines the USB descriptors for the LPC4337.
 | usb_app_config | [app_usbd_cfg.h] | USB configuration and definitions for generic project.
+| Board | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
+
+## Notes on some APIs
+
+Currently, there are some libraries that work partially on the M0 core and require the implementation of some function on the main source code. The reasons are unknown, it seams to be that the functions are missing on the M0 core and it throws a HardFault. See the examples to know how to use them in your own code:
+
+| Library | Example | Description |
+| --- | --- | --- |
+| IPC | [multicore_ipc_basic](../examples/multicore/multicore_ipc_basic/) | The push and pop main functions need to be implemented on the main file.
+| Board | No such example yet | There is no example implementation on the M0 core yet. 
 
 [ciaa_gpio_api.h]: ciaa_api/inc/ciaa_gpio_api.h
 [ciaa_gpio_api.c]: ciaa_api/src/ciaa_gpio_api.c
