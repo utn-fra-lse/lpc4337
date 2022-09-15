@@ -131,4 +131,35 @@ static inline bool ipc_queue_is_empty(ipc_queue_t *q) { return ((q)->head == (q)
  */
 static inline bool ipc_queue_is_valid(ipc_queue_t *q) { return ((q)->valid == QUEUE_MAGIC_VALID); }
 
+/*
+ *	@brief	Pushes data to the pointed queue
+ *
+ *	@param	q: pointer to the queue
+ *	@param	data: pointer data to push
+ *
+ *	@return	queue_insert on success
+ */
+static inline ipc_status_t ipc_queue_push(ipc_queue_t *q, void *data) {
+
+	q->data = data;
+	memcpy(q->data + ((q->head & (q->count - 1)) * q->size), data, q->size);
+	q->head++;
+	return queue_insert;
+}
+
+/*
+ *	@brief	Pops data from the pointed queue
+ *
+ *	@param	q: pointer to the queue
+ *	@param	data: pointer to store the popped data
+ *
+ *	@return	queue_valid on success
+ */
+static inline ipc_status_t ipc_queue_pop(ipc_queue_t *q, void *data) {
+	memcpy(data, q->data + ((q->tail & (q->count - 1)) * q->size), q->size);
+	q->tail++;
+	data = q->data;
+	return queue_valid;
+}
+
 #endif /* CIAA_IPC_API_H_ */

@@ -53,22 +53,18 @@ void ipc_queue_init(void *data, int size, int count) {
  *          queue_timeout when there is a timeout
  */
 ipc_status_t ipc_push_tout(void *data, int tout) {
-	/* Pointer to shared queue */
+	/* Point to shared memory */
 	ipc_queue_t *qwr = q_ipc;
 	/* Check if queue is initialized */
 	if (!ipc_queue_is_valid(qwr)) { return queue_error; }
-	/* Check if queue is full */
+	/* Check if queue has space to push data */
 	if ((tout == 0) && ipc_queue_is_full(qwr)) { return queue_full; }
-	/* Wait for queue to be empty */
+	/* Wait for queue to have space with timeout */
 	while (ipc_queue_is_full(qwr)) {
 		if (ipc_event_handler()) { return queue_timeout; }
 	}
-	/* Push item to queue */
-	qwr->data = data;
-	memcpy(qwr->data + ((qwr->head & (qwr->count - 1)) * qwr->size), data, qwr->size);
-	qwr->head++;
-	/* Insert was a success */
-	return queue_insert;
+	/* Push the item to the queue */
+	return ipc_queue_push(qwr, data);
 }
 
 /*
@@ -84,22 +80,18 @@ ipc_status_t ipc_push_tout(void *data, int tout) {
  *          queue_timeout when there is a timeout
  */
 ipc_status_t ipc_pop_tout(void *data, int tout) {
-	/* Pointer to shared queue */
+	/* Point to shared memory */
 	ipc_queue_t *qrd = q_ipc;
 	/* Check if queue is initialized */
 	if (!ipc_queue_is_valid(qrd)) { return queue_error; }
-	/* Check if queue is empty */
+	/* Check if queue has data to pop */
 	if ((tout == 0) && ipc_queue_is_empty(qrd)) { return queue_empty; }
-	/* Wait for queue to be full */
+	/* Wait for queue to have some data with timeout */
 	while (ipc_queue_is_empty(qrd)) {
 		if (ipc_event_handler()) { return queue_timeout; }
 	}
 	/* Pop the queue item */
-	memcpy(data, qrd->data + ((qrd->tail & (qrd->count - 1)) * qrd->size), qrd->size);
-	qrd->tail++;
-	data = qrd->data;
-	/* Pop was a success */
-	return queue_valid;
+	return ipc_queue_pop(qrd, data);
 }
 
 #endif
