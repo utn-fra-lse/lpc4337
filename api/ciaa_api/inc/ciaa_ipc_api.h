@@ -44,6 +44,10 @@ typedef enum {
 
 /* Function prototypes */
 void ipc_queue_init(void *data, int size, int count);
+
+/* Next prototypes and functions compile only in M4. Implement them on your main for the M0 */
+#if !defined(CORE_M0) && defined(CORE_M4)
+
 ipc_status_t ipc_push_tout(void *data, int tout);
 ipc_status_t ipc_pop_tout(void *data, int tout);
 
@@ -82,6 +86,8 @@ static inline ipc_status_t ipc_push(void *data) { return ipc_push_tout(data, -1)
  * 	@return	queue_valid on success, queue_error or queue_empty on failure
  */
 static inline ipc_status_t ipc_pop(void *data) { return ipc_pop_tout(data, -1); }
+
+#endif	/* CORE_M4 && !CORE_M0 */
 
 /* Simple event handler for non OS implementations */
 static inline int ipc_event_handler(void) {

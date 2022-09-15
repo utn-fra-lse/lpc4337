@@ -37,6 +37,9 @@ void ipc_queue_init(void *data, int size, int count) {
 	qrd->valid = QUEUE_MAGIC_VALID;
 }
 
+/* This functions only work in the M4 Core. Implement them on your main source code */
+#if !defined(CORE_M0) && defined(CORE_M4)
+
 /*
  * 	@brief	Function to push a message into queue with timeout
  *
@@ -98,3 +101,5 @@ ipc_status_t ipc_pop_tout(void *data, int tout) {
 	/* Pop was a success */
 	return queue_valid;
 }
+
+#endif
