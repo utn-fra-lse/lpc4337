@@ -29,6 +29,7 @@ void systick(void) {
 #if defined(M4_SLAVE) && !defined(M4_MASTER)
 		/* Interrupt M0 to request data */
 		multicore_interrupt_m0_core();
+		/* Try to push data if M4 is the master */
 #elif defined(M4_MASTER) && !defined(M4_SLAVE)
 		/* Send data to M0 */
 		ipc_try_push(&data);
@@ -53,6 +54,7 @@ int main(void) {
     systick_init(10000);
 
     while(1) {
+    	/* Try to pop data if M4 is the slave */
 #if defined(M4_SLAVE) && !defined(M4_MASTER)
     	/* Check if there is data to pop */
     	if(ipc_try_pop(&data) == queue_valid) {
