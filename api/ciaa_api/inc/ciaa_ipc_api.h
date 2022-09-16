@@ -43,11 +43,13 @@ typedef enum {
 #define QUEUE_MAGIC_VALID  0xCAB51053
 
 /* Function prototypes */
+
+/* Works on both cores */
 void ipc_queue_init(void *data, int size, int count);
 
 /* Next prototypes and functions compile only in M4. Implement them on your main for the M0 */
 #if !defined(CORE_M0) && defined(CORE_M4)
-
+/* This next to function need to be implemented on the M0 core */
 ipc_status_t ipc_push_tout(void *data, int tout);
 ipc_status_t ipc_pop_tout(void *data, int tout);
 
@@ -140,7 +142,6 @@ static inline bool ipc_queue_is_valid(ipc_queue_t *q) { return ((q)->valid == QU
  *	@return	queue_insert on success
  */
 static inline ipc_status_t ipc_queue_push(ipc_queue_t *q, void *data) {
-
 	q->data = data;
 	memcpy(q->data + ((q->head & (q->count - 1)) * q->size), data, q->size);
 	q->head++;
