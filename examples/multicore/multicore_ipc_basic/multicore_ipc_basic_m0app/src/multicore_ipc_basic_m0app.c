@@ -11,7 +11,7 @@
 #include "ciaa_ipc_api.h"
 #include "ciaa_board_api.h"
 
-/* Define M0 function */
+/* Define M0 function: M0_MASTER or M4_SLAVE */
 #define M0_SLAVE
 
 /* Function to push a message into queue with timeout */

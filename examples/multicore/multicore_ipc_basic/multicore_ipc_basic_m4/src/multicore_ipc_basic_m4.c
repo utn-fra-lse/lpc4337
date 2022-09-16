@@ -12,7 +12,7 @@
 #include "ciaa_systick_api.h"
 #include "ciaa_board_api.h"
 
-/* Define M4 function */
+/* Define M4 function: M4_MASTER of M4_SLAVE */
 #define M4_MASTER
 
 /* Shared data */
