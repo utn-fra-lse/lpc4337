@@ -77,6 +77,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc_cmsis}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc/arm}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.fpu.931446415" name="Floating point" superClass="com.crt.advproject.gas.fpu" value="com.crt.advproject.gas.fpu.fpv4" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.869589533" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -200,6 +202,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc_cmsis}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc/arm}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.fpu.1030347144" name="Floating point" superClass="com.crt.advproject.gcc.fpu" useByScannerDiscovery="true" value="com.crt.advproject.gcc.fpu.fpv4" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.2087106910" superClass="com.crt.advproject.compiler.input"/>
@@ -218,6 +222,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/lpc_chip_43xx/inc/config_43xx}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_SRC/inc_cmsis}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_DSPLIB_CM4/inc/arm}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.fpu.1765117961" name="Floating point" superClass="com.crt.advproject.gas.fpu" value="com.crt.advproject.gas.fpu.fpv4" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1309038969" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
