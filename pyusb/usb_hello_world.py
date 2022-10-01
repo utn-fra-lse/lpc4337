@@ -13,7 +13,7 @@ def usb_read(dev: usb.core.Device, timeout: int) -> str:
 	Reads a string from USB
 
 	params:
-		dev (usb.core.Device): device to read
+		dev (Device): device to read
 		timeout (int): time to wait in ms
 
 	return: (str) String read
@@ -58,6 +58,3 @@ while True:
 	print(f"Received: {bytes_read}", end="")
 	# Ask to continue
 	sleep(1)
-
-# Close interface
-usb.util.release_interface(dev, 0)
