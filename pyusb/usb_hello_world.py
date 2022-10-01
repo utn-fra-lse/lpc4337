@@ -56,5 +56,5 @@ while True:
 	bytes_read = usb_read(dev, 500)
 	# Print received data
 	print(f"Received: {bytes_read}", end="")
-	# Ask to continue
+	# Wait for new data
 	sleep(1)
