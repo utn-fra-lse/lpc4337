@@ -84,8 +84,10 @@ while True:
 	print(f"Received: {bytes_read}")
 	# Ask to continue
 	if input("Continue (y/n)? ").lower() == "n":
- 		# End loop
-	 	break
+		# End loop
+		break
+	
+	print()
 
 # Close interface
 usb.util.release_interface(dev, 0)
