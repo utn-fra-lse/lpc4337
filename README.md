@@ -14,13 +14,17 @@ This directory includes all the libraries necessaries to work with the LPC4337. 
 
 LPC43337 chip libraries for the MCUXpresso. Supports M4 and M0 cores. API is dependant on this libraries so it needs to be imported or referenced from the MCUXpresso's workspace in orther for the API to work.
 
+### cmsis
+
+Stands for Common Microcontroller Software Interface Standard. This directory includes the latest source code for a DSP library with some fixes that is specially designed for complex math in embedded systems with ARM architcture.
+
 ### config
 
 This directory has some `.xml` files that can be imported into a new project to easily configure all the paths to the api and the memory bank for the M0 core in dual core applications.
 
 ### etc
 
-This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be able to program and debug the current project with openocd. It also contains a legacy `lpc4337.cfg` file for an older version of the openocd (0.9.0).
+This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be able to program and debug the current project with openocd. It also contains a legacy config file for an older version of the openocd (0.9.0).
 
 ### examples
 
@@ -28,7 +32,7 @@ This one contains some examples for the API for every peripherial.
 
 ### pyusb
 
-This directory has some info on the [pyusb](https://github.com/pyusb/pyusb) Python package, which is used to communicate with the OTG USB on the CIAA board. Some Python scripts are there also to test the currently supported USB examples.
+This directory has some info on the [pyusb][pyusb] Python package, which is used to communicate with the OTG USB on the CIAA board. Some Python scripts are there also to test the currently supported USB examples.
 
 ## About multicore projects
 
@@ -61,3 +65,5 @@ Multicore projects need some special attention to configure. Please follow this 
 5- Complete the rest of the project initialization as you wish.
 
 [cfg]: etc/openocd/lpc4337.cfg
+[cmsis]: https://developer.arm.com/tools-and-software/embedded/cmsis
+[pyusb]: https://github.com/pyusb/pyusb
