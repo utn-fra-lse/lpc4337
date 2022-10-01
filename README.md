@@ -2,37 +2,35 @@
 
 This repository contains some API for the LPC4337 based boards. The purpose of this API is to make the development with such devices easier.
 
-Low level and high level libraries are given to work with the available peripherials. All of it is written in C/C++.
+Low level and high level libraries are given to work with the available peripherials. All of it is written in C.
 
-# Repository organization
+## Repository organization
 
-## api
+### api
 
 This directory includes all the libraries necessaries to work with the LPC4337. It is a self contained library, so it can be imported or referenced from the MCUXpresso to work with any new project.
 
-## chip
+### chip
 
 LPC43337 chip libraries for the MCUXpresso. Supports M4 and M0 cores. API is dependant on this libraries so it needs to be imported or referenced from the MCUXpresso's workspace in orther for the API to work.
 
-## config
+### config
 
 This directory has some `.xml` files that can be imported into a new project to easily configure all the paths to the api and the memory bank for the M0 core in dual core applications.
 
-## etc
+### etc
 
-This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be able to program and debug the current project with openocd.
+This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be able to program and debug the current project with openocd. It also contains a legacy `lpc4337.cfg` file for an older version of the openocd (0.9.0).
 
-## examples
+### examples
 
 This one contains some examples for the API for every peripherial.
 
-## libusb
+### pyusb
 
-This directory has a simple app to test the USB in the CIAA.
+This directory has some info on the [pyusb](https://github.com/pyusb/pyusb) Python package, which is used to communicate with the OTG USB on the CIAA board. Some Python scripts are there also to test the currently supported USB examples.
 
-[cfg]: etc/openocd/lpc4337.cfg
-
-# About multicore projects
+## About multicore projects
 
 Multicore projects need some special attention to configure. Please follow this steps:
 
@@ -61,3 +59,5 @@ Multicore projects need some special attention to configure. Please follow this 
 4- In the M0APP Slave Project Settings window, select the previous M0APP project as the M0APP Slave Project and check the box that says _Use 2nd flash block in dual bank flash MCU_.
 
 5- Complete the rest of the project initialization as you wish.
+
+[cfg]: etc/openocd/lpc4337.cfg
