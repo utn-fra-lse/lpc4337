@@ -1,6 +1,8 @@
 import usb.core
 import usb.backend.libusb1
 import json
+import numpy as np
+import matplotlib.pyplot as plt
 import sys
 
 # LPC4337 IDs and Endpoints
@@ -23,12 +25,9 @@ def usb_read(dev: usb.core.Device, timeout: int) -> str:
 		# Try to read bytes (returns list)
 		data = dev.read(READ_ED, 128, timeout)
 	except usb.core.USBError as e:
-		# Catch and print exception
-		# print(f"Error reading response: {e.args}")
-		# Return empty
+		# Catch exception and return None
 		return None
 
-	# result = json.dumps(data)
 	# Join list to a string
 	byte_str = ''.join(chr(n) for n in data) 
 	# Remove null characters
@@ -70,12 +69,32 @@ while True:
 			# Clear bytes
 			bytes_read = ""
 
-	# Replace infinity values with max and min float 
-	# system values to avoid JSON error
-	data = data.replace("-inf", f"{sys.float_info.min}")
-	data = data.replace("inf", f"{sys.float_info.max}")
+	# Build JSON like object with byte array data
 	data = json.loads(data)
+	# Get the FFT values
+	fft = data["values"]
+	# Get sample length
+	n = len(fft)
+	# Period sampled (change if original data was changed)
+	T = 5e-3
+	# Normalize amplitudes
+	for i, s in enumerate(fft):
+		fft[i] = fft[i] / n
 
-	# Print JSON data
-	print(data)
-	print()
+	# Because FFT is already cut from repeated values,
+	# sampling frequency is the number of samples divided by
+	# the period sampled
+	fs = n / T
+
+	# Go from 0 to sampling frequency with N steps
+	fn = np.linspace(0, fs, n)
+
+	# Plot FFT graph
+	plt.grid()
+	plt.title("Sample FFT")
+	plt.ylabel("Amplitude")
+	plt.xlabel("Frequency [Hz]")
+	plt.plot(fn, fft)
+	plt.show()
+
+	sys.exit(0)
