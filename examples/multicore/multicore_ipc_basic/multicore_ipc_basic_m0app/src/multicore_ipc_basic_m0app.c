@@ -9,46 +9,10 @@
 */
 
 #include "ciaa_ipc_api.h"
-#include "ciaa_board_api.h"
+#include "ciaa_gpio_api.h"
 
 /* Define M0 function: M0_MASTER or M4_SLAVE */
 #define M0_SLAVE
-
-/* Function to push a message into queue with timeout */
-static ipc_status_t ipc_push_tout(void *data, int tout) {
-	/* Point to shared memory */
-	ipc_queue_t *qwr = (ipc_queue_t*) SHARED_MEM_IPC;
-	/* Check if queue is initialized */
-	if (!ipc_queue_is_valid(qwr)) { return queue_error; }
-	/* Check if queue has space to push data */
-	if ((tout == 0) && ipc_queue_is_full(qwr)) { return queue_full; }
-	/* Wait for queue to have space with timeout */
-	while (ipc_queue_is_full(qwr)) {
-		if (ipc_event_handler()) { return queue_timeout; }
-	}
-	/* Push the item to the queue */
-	return ipc_queue_push(qwr, data);
-}
-
-/* Function to read a message from queue with timeout */
-static ipc_status_t ipc_pop_tout(void *data, int tout) {
-	/* Point to shared memory */
-	ipc_queue_t *qrd = (ipc_queue_t*) SHARED_MEM_IPC;
-	/* Check if queue is initialized */
-	if (!ipc_queue_is_valid(qrd)) { return queue_error; }
-	/* Check if queue has data to pop */
-	if ((tout == 0) && ipc_queue_is_empty(qrd)) { return queue_empty; }
-	/* Wait for queue to have some data with timeout */
-	while (ipc_queue_is_empty(qrd)) {
-		if (ipc_event_handler()) { return queue_timeout; }
-	}
-	/* Pop the queue item */
-	return ipc_queue_pop(qrd, data);
-}
-
-/* Push and pop with no timeout version */
-static inline ipc_status_t ipc_try_push(void *data) { return ipc_push_tout(data, 0); }
-static inline ipc_status_t ipc_try_pop(void *data) { return ipc_pop_tout(data, 0); }
 
 /* Shared data */
 uint32_t data = 0;
