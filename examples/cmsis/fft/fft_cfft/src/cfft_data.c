@@ -11,7 +11,7 @@
 #include "arm_math.h"
 
 /**
- * Two 1KHz sine periods
+ * 1KHz and 5KHz sine waves with amplitudes one and two respectively
  */
 float32_t testInput[1024] = {
 
