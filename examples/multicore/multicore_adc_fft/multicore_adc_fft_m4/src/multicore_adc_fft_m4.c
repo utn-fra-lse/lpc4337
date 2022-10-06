@@ -16,8 +16,6 @@
 /* Number of ADC samples */
 #define N_SAMPLES	2048
 
-/* Complex data */
-float32_t adcComplex[N_SAMPLES * 2] = { 0.0 };
 /* FFT output */
 float32_t fftOutput[N_SAMPLES];
 
@@ -30,11 +28,10 @@ arm_cfft_instance_f32 s;
 
 int main(void) {
 	/* Initialize ADC buffer */
-	uint16_t *adcResults;
+	float32_t *adcResults;
 	/* Results address */
 	uint32_t addr;
 	/* ADC conversion factor */
-	const float32_t conv_factor = 3.3 / (1 << 10);
 	/* Initialize USB */
 	usb_init();
 	/* IPC quque initialization */
@@ -50,18 +47,11 @@ int main(void) {
 		/* Try to pop value from IPC */
 		if(ipc_try_pop(&addr) == queue_valid) {
 			/* Point to address */
-			adcResults = (uint16_t*)addr;
-			/* Create complex array for FFT analysis */
-			for(uint16_t i = 0; i < N_SAMPLES; i++) {
-				/* Clear odd indexes */
-				adcComplex[(i * 2) + 1] = 0.0;
-				/* Copy values in even indexes */
-				adcComplex[i * 2] = adcResults[i] * conv_factor;
-			}
+			adcResults = (float32_t*)addr;
 			/* Process the data through the CFFT/CIFFT module */
-			arm_cfft_f32(&s, adcComplex, ifftFlag, doBitReverse);
+			arm_cfft_f32(&s, adcResults, ifftFlag, doBitReverse);
 			/* Calculate the magnitude at each bin, it's symmetrical */
-			arm_cmplx_mag_f32(adcComplex, fftOutput, fftSize);
+			arm_cmplx_mag_f32(adcResults, fftOutput, fftSize);
 			/* Continue if math was successful */
 			if (status == ARM_MATH_SUCCESS) {
 				/* Wait for host to be connected */
