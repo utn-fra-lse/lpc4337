@@ -34,7 +34,7 @@ int main(void) {
 		adcResults[index++] = adc_read(0);
 		/* Check if array is full already */
 		if(index == N_SAMPLES) {
-			/* Try to push samples to IPC */
+			/* Try to push samples address to IPC */
 			ipc_try_push(&addr);
 			/* Reset index */
 			index = 0;
