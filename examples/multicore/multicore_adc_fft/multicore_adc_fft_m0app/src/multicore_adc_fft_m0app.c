@@ -16,10 +16,12 @@
 #define N_SAMPLES	2048
 
 int main(void) {
-	/* Initialize ADC buffer */
-	uint16_t adcResults[N_SAMPLES] = { 0 };
+	/* ADC conversion factor */
+	const float conv_factor = 3.3 / (1 << 10);
+	/* Initialize complex signal buffer */
+	float signal[N_SAMPLES * 2] = { 0.0 };
 	/* Results address */
-	uint32_t addr = (uint32_t)adcResults;
+	uint32_t addr = (uint32_t)signal;
 	/* Array index */
 	uint16_t index = 0;
 	/* ADC default initialization */
@@ -30,10 +32,14 @@ int main(void) {
 	ipc_queue_init(&addr, sizeof(uint32_t), 1);
 
 	while(1) {
-		/* Do ADC conversion and store into results */
-		adcResults[index++] = adc_read(0);
+		/* Do ADC conversion and store into even indexes */
+		signal[index * 2] = conv_factor * adc_read(0);
+		/* Clear imaginary indexes */
+		signal[(index * 2) + 1] = 0.0;
+		/* Increment index */
+		index++;
 		/* Check if array is full already */
-		if(index == N_SAMPLES) {
+		if(index == N_SAMPLES / 2) {
 			/* Try to push samples address to IPC */
 			ipc_try_push(&addr);
 			/* Reset index */
