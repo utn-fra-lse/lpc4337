@@ -16,9 +16,6 @@
 /* Number of ADC samples */
 #define N_SAMPLES	512
 
-/* Initialize ADC buffer */
-uint16_t adcResults[N_SAMPLES] = { 0 };
-
 /* Complex data */
 float32_t adcComplex[N_SAMPLES * 2] = { 0.0 };
 /* FFT output */
@@ -32,10 +29,16 @@ uint32_t doBitReverse = 1;
 arm_cfft_instance_f32 s;
 
 int main(void) {
+	/* Initialize ADC buffer */
+	uint16_t *adcResults;
+	/* Results address */
+	uint32_t addr;
+	/* ADC conversion factor */
+	const float32_t conv_factor = 3.3 / (1 << 10);
 	/* Initialize USB */
 	usb_init();
 	/* IPC quque initialization */
-	ipc_queue_init(adcResults, sizeof(uint16_t), N_SAMPLES);
+	ipc_queue_init(&addr, sizeof(uint32_t), 1);
 	/* ARM math status */
 	arm_status status = ARM_MATH_SUCCESS;
 	/* Initialize CFFT instance */
@@ -45,11 +48,13 @@ int main(void) {
 
 	while(1) {
 		/* Try to pop value from IPC */
-		if(ipc_try_pop(adcResults) == queue_valid) {
+		if(ipc_try_pop(&addr) == queue_valid) {
+			/* Point to address */
+			adcResults = (uint16_t*)addr;
 			/* Create complex array for FFT analysis */
 			for(uint16_t i = 0; i < N_SAMPLES; i++) {
 				/* Copy values in even indexes */
-				adcComplex[i * 2] = adcResults[i];
+				adcComplex[i * 2] = adcResults[i] * conv_factor;
 			}
 			/* Process the data through the CFFT/CIFFT module */
 			arm_cfft_f32(&s, adcComplex, ifftFlag, doBitReverse);
@@ -80,10 +85,10 @@ int main(void) {
 					/* Print values */
 					printf("%12.6f,", i, fftOutput[i]);
 #endif
-					/* Send last value with closing JSON format characters */
-					sprintf(str, "%e]}", fftOutput[i]);
-					usb_send(str);
 				}
+				/* Send last value with closing JSON format characters */
+				sprintf(str, "%e]}", fftOutput[i]);
+				usb_send(str);
 			}
 		}
 	}
