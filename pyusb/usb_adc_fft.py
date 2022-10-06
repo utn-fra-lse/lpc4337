@@ -13,6 +13,8 @@ READ_ED = 0x81
 
 # Conversion time for a 10 bit sample
 conversion_time = 2.45e-6
+# Get sampling frequency
+fs = 1 / conversion_time
 
 def usb_read(dev: usb.core.Device, timeout: int) -> str:
 	"""
@@ -78,11 +80,12 @@ while True:
     fft = data["values"]
     # Get sample length
     n = len(fft)
-    # Get sampling frequency
-    fs = 4 * n / conversion_time
     # Normalize amplitudes
     for i, s in enumerate(fft):
         fft[i] = fft[i] / n
+
+    # Remove DC offset
+    fft[0] = 0.0
 
     # Go from 0 to sampling frequency with N steps
     fn = np.linspace(0, fs / 2, n)
@@ -92,6 +95,7 @@ while True:
     plt.title("Sample FFT")
     plt.ylabel("Amplitude")
     plt.xlabel("Frequency [Hz]")
+    plt.xlim([0, 20e3])
     # Plot up to fs / 2 the FFT values
     plt.plot(fn, fft, label=f"Fs: {(fs):.2e} Hz", color="blue")
     plt.legend()
