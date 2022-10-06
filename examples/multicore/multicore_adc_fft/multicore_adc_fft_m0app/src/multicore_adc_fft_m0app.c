@@ -15,12 +15,11 @@
 /* Number of ADC samples */
 #define N_SAMPLES	512
 
-/* Initialize ADC buffer */
-uint16_t adcResults[N_SAMPLES] = { 0 };
-
 int main(void) {
-	/* ADC result */
-	float result;
+	/* Initialize ADC buffer */
+	uint16_t adcResults[N_SAMPLES] = { 0 };
+	/* Results address */
+	uint32_t addr = (uint32_t)adcResults;
 	/* Array index */
 	uint16_t index = 0;
 	/* ADC default initialization */
@@ -28,7 +27,7 @@ int main(void) {
 	/* Select ADC channel 0 */
 	adc_select_input(0, ADC_CH0);
 	/* IPC quque initialization */
-	ipc_queue_init(adcResults, sizeof(uint16_t), N_SAMPLES);
+	ipc_queue_init(&addr, sizeof(uint32_t), 1);
 
 	while(1) {
 		/* Do ADC conversion and store into results */
@@ -36,7 +35,7 @@ int main(void) {
 		/* Check if array is full already */
 		if(index == N_SAMPLES) {
 			/* Try to push samples to IPC */
-			ipc_try_push(adcResults);
+			ipc_try_push(&addr);
 			/* Reset index */
 			index = 0;
 			/* Wait half a second */
