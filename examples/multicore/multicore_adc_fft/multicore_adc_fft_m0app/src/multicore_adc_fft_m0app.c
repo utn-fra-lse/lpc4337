@@ -13,7 +13,7 @@
 #include "ciaa_stdlib.h"
 
 /* Number of ADC samples */
-#define N_SAMPLES	512
+#define N_SAMPLES	2048
 
 int main(void) {
 	/* Initialize ADC buffer */

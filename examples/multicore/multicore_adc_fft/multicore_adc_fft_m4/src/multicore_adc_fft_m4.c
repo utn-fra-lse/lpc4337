@@ -14,7 +14,7 @@
 #include "arm_math.h"
 
 /* Number of ADC samples */
-#define N_SAMPLES	512
+#define N_SAMPLES	2048
 
 /* Complex data */
 float32_t adcComplex[N_SAMPLES * 2] = { 0.0 };
