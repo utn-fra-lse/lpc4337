@@ -48,7 +48,8 @@ deactivate
 | [usb_hello_world][hello_world_py] | [usb_hello_world][hello_world_c] | Constantly reads from the USB buffer and prints the message (Hello world!)
 | [usb_echo][usb_echo_py] | [usb_echo][usb_echo_c] | Gets user input, sends it to the CIAA board and reads it back
 | [usb_fft][usb_fft_py] | [usb_fft][usb_fft_c] | Reads an FFT output in JSON format produced by the CIAA from a set data array and then plots the result
-| [fft_test][fft_test_ipynb] | [fft_test][fft_cfft] | It has two code pieces. The first one generates a complex sine wave data set that can be used in the CIAA example. The second one can be used to paste the CIAA output calculation and plot the result to compare
+| [fft_test][fft_test_ipynb] | [fft_test][fft_cfft_c] | It has two code pieces. The first one generates a complex sine wave data set that can be used in the CIAA example. The second one can be used to paste the CIAA output calculation and plot the result to compare
+| [usb_adc_fft][usb_adc_fft_py] | [multicore_adc_fft][multicore_adc_fft_c] | Works in a similar way as the `usb_fft` but plot in real time the data that is read by the ADC
 
 [hello_world_py]: usb_hello_world.py
 [hello_world_c]: ../examples/usb/usb_hello_world/
@@ -57,4 +58,6 @@ deactivate
 [usb_fft_py]: usb_fft.py
 [usb_fft_c]: ../examples/usb/usb_fft/
 [fft_test_ipynb]: fft_test.ipynb
-[fft_cfft]: ../examples/cmsis/fft/fft_cfft/
+[fft_cfft_c]: ../examples/cmsis/fft/fft_cfft/
+[usb_adc_fft_py]: usb_adc_fft.py
+[multicore_adc_fft_c]: ../examples/multicore/multicore_adc_fft/multicore_adc_fft_m4/
