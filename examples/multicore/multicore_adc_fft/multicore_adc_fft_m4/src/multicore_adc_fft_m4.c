@@ -53,6 +53,8 @@ int main(void) {
 			adcResults = (uint16_t*)addr;
 			/* Create complex array for FFT analysis */
 			for(uint16_t i = 0; i < N_SAMPLES; i++) {
+				/* Clear odd indexes */
+				adcComplex[(i * 2) + 1] = 0.0;
 				/* Copy values in even indexes */
 				adcComplex[i * 2] = adcResults[i] * conv_factor;
 			}
