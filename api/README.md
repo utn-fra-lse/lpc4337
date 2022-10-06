@@ -25,14 +25,9 @@
 | usb_app_config | [app_usbd_cfg.h] | USB configuration and definitions for generic project.
 | Board | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
 
-## Notes on some APIs
+## Notes
 
-Currently, there are some libraries that work partially on the M0 core and require the implementation of some function on the main source code. The reasons are unknown, it seams to be that the functions are missing on the M0 core and it throws a HardFault. See the examples to know how to use them in your own code:
-
-| Library | Example | Description |
-| --- | --- | --- |
-| IPC | [multicore_ipc_basic](../examples/multicore/multicore_ipc_basic/) | The push and pop main functions need to be implemented on the main file.
-| Board | No such example yet | There is no example implementation on the M0 core yet. 
+1- These are references to the M4 API. However, the M0 API works in the same way with some exceptions that will be mentioned in the docs.
 
 [ciaa_gpio_api.h]: ciaa_api/inc/ciaa_gpio_api.h
 [ciaa_gpio_api.c]: ciaa_api/src/ciaa_gpio_api.c
