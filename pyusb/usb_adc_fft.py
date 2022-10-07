@@ -102,7 +102,7 @@ while True:
     plt.ylim([0, 0.5])
     plt.xlim([0, 20e3])
     # Plot up to fs / 2 the FFT values
-    plt.plot(fn, fft, label=f"Fs: {(fs):.2e} Hz", color="blue")
+    plt.stem(fn, fft, label=f"Fs: {(fs):.2e} Hz", linefmt="blue", markerfmt="none")
     plt.legend()
     # Pause to gather new data
     plt.pause(.5)
