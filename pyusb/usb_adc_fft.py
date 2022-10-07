@@ -3,7 +3,7 @@ import usb.backend.libusb1
 import json
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
+import time
 
 # LPC4337 IDs and Endpoints
 VENDOR_ID = 0x1fc9
@@ -62,6 +62,8 @@ while True:
     bytes_read = ""
     data = ""
 
+    start_time = time.time()
+
     # Look for closing JSON character
     while not "}" in bytes_read:
         # Read from USB
@@ -73,6 +75,8 @@ while True:
         else:
             # Clear bytes
             bytes_read = ""
+
+    print(f"Data transfer done in: {(time.time() - start_time):.2e}s")
 
     # Build JSON like object with byte array data
     data = json.loads(data)
@@ -101,6 +105,6 @@ while True:
     plt.plot(fn, fft, label=f"Fs: {(fs):.2e} Hz", color="blue")
     plt.legend()
     # Pause to gather new data
-    plt.pause(.01)
+    plt.pause(.5)
     # Clear plot
     plt.clf()
