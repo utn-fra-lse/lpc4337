@@ -28,6 +28,7 @@
 ## Notes
 
 1- These are references to the M4 API. However, the M0 API works in the same way with some exceptions that will be mentioned in the docs.
+
 2- Not yet implemented in the M0 core.
 
 [ciaa_gpio_api.h]: ciaa_api/inc/ciaa_gpio_api.h
