@@ -30,10 +30,12 @@ float32_t fftOutput[N_SAMPLES / 2];
 arm_cfft_instance_f32 s;
 
 int main(void) {
+#ifdef DEBUG
 	/* Max value of FFT */
 	float32_t maxValue;
 	/* Max value of FFT index */
 	uint32_t maxIndex;
+#endif
 	/* ADC conversion factor */
 	const float32_t conv_factor = 3.3 / (1 << 10);
 	/* Initialize USB */
@@ -63,9 +65,9 @@ int main(void) {
 		arm_cfft_f32(&s, complexInput, ifftFlag, doBitReverse);
 		/* Calculate the magnitude at each bin, it's symmetrical */
 		arm_cmplx_mag_f32(complexInput, fftOutput, fftSize);
+#ifdef DEBUG
 		/* Get max value */
 		arm_max_f32(fftOutput, fftSize, &maxValue, &maxIndex);
-#ifdef DEBUG
 		/* Print fundamental frequency */
 		printf("[%d] : %.2f\r\n", maxIndex, 40000.0 * maxIndex / fftSize);
 #endif
