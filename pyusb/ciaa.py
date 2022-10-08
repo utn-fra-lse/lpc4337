@@ -28,7 +28,7 @@ class Ciaa():
             self.__PRODUCT_ID = kwargs["product_id"]
 
 
-    def find(self):
+    def find(self) -> CiaaStatusCode:
         """
         Try to find a CIAA connected to USB
 
@@ -44,8 +44,30 @@ class Ciaa():
 
         return CiaaStatusCode.CIAA_FOUND
 
+
+    def write(self, msg: str) -> int:
+        """
+        Sends a string through USB
+
+        params:
+            msg (str): string to send
+
+        return: (int) How many bytes were sent
+        """
+        # Number of bytes written
+        bytes_written = 0
+
+        try:
+            # Try to send bytes
+            bytes_written = self.__dev.write(self.__WRITE_ED, msg.encode("utf-8"))
+        except usb.core.USBError as e:
+            # Catch and print exception
+            print(f"Error when writing: {e.args}")
+        # Return number of bytes sent
+        return bytes_written
+
     
-    def read(self, timeout: int = 100):
+    def read(self, timeout: int = 100) -> str:
         """
         Reads a string from USB
 
@@ -73,7 +95,7 @@ class Ciaa():
         return result
 
 
-    def read_json(self, timeout: int = 100, debug: bool = False):
+    def read_json(self, timeout: int = 100, debug: bool = False) -> str:
         """
         Reads a JSON from USB
 
