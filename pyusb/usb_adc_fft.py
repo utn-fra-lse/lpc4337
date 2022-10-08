@@ -33,7 +33,7 @@ while True:
     fn = np.linspace(0, fs / 2, n)
     # Take error into account
     for i, f in enumerate(fn):
-        fn[i] = 1.76 * f +2.72e+1
+        fn[i] = 1.46 * f + 8.91e-1
 
     # Normalize amplitudes
     for i, s in enumerate(fft):
