@@ -12,9 +12,12 @@ WRITE_ED = 0x01
 READ_ED = 0x81
 
 # Conversion time for a 10 bit sample
-conversion_time = 2.45e-6
+conversion_time = 25e-6
 # Get sampling frequency
 fs = 1 / conversion_time
+# Sample length
+N = 2048
+
 
 def usb_read(dev: usb.core.Device, timeout: int) -> str:
 	"""
@@ -44,6 +47,7 @@ def usb_read(dev: usb.core.Device, timeout: int) -> str:
 	# Return full string
 	return result
 
+
 # Find device by vendor and product IDs
 dev = usb.core.find(idVendor=VENDOR_ID, idProduct=PRODUCT_ID)
 
@@ -57,11 +61,12 @@ print("CIAA found!")
 print("-" * 80)
 print()
 
+
 while True:
 
     bytes_read = ""
     data = ""
-
+    # Starting time timestamp
     start_time = time.time()
 
     # Look for closing JSON character
@@ -76,35 +81,30 @@ while True:
             # Clear bytes
             bytes_read = ""
 
+    # Show how much time it has passed since the beginnig of the transfer
     print(f"Data transfer done in: {(time.time() - start_time):.2e}s")
-
     # Build JSON like object with byte array data
     data = json.loads(data)
     # Get the FFT values
     fft = data["values"]
-    # Get sample length
+    # Get list length
     n = len(fft)
-    # Normalize amplitudes
-    for i, s in enumerate(fft):
-        fft[i] = fft[i] / n
-
-    # Remove DC offset
-    fft[0] = 0.0
-
     # Go from 0 to sampling frequency with N steps
     fn = np.linspace(0, fs / 2, n)
+    # Normalize amplitudes
+    for i, s in enumerate(fft):
+        fft[i] = fft[i] / N
 
-    # Plot FFT graph
-    plt.grid()
+    # Plot settings
+    plt.grid(True)
     plt.title("Sample FFT")
     plt.ylabel("Amplitude")
     plt.xlabel("Frequency [Hz]")
     plt.ylim([0, 0.5])
     plt.xlim([0, 20e3])
     # Plot up to fs / 2 the FFT values
-    plt.stem(fn, fft, label=f"Fs: {(fs):.2e} Hz", linefmt="blue", markerfmt="none")
-    plt.legend()
-    # Pause to gather new data
-    plt.pause(.5)
+    plt.stem(fn, fft, linefmt="blue", markerfmt="none")
+    # Pause plot
+    plt.pause(0.001)
     # Clear plot
     plt.clf()
