@@ -1,3 +1,4 @@
+from operator import indexOf
 import usb.core
 import usb.backend.libusb1
 import json
@@ -15,8 +16,8 @@ READ_ED = 0x81
 conversion_time = 25e-6
 # Get sampling frequency
 fs = 1 / conversion_time
-# Sample length
-N = 2048
+# Real sample length
+N = 1024
 
 
 def usb_read(dev: usb.core.Device, timeout: int) -> str:
@@ -91,9 +92,25 @@ while True:
     n = len(fft)
     # Go from 0 to sampling frequency with N steps
     fn = np.linspace(0, fs / 2, n)
+    # Take error into account
+    for i, f in enumerate(fn):
+        fn[i] = 1.76 * f +2.72e+1
+
     # Normalize amplitudes
     for i, s in enumerate(fft):
-        fft[i] = fft[i] / N
+        fft[i] = s / N
+
+    # Get rid of DC level
+    fft[0] = 0.0
+
+    # Get peak value
+    peak = max(fft)
+    # Get frequency index of max value
+    index = indexOf(fft, peak)
+
+    print()
+    print(f"Max value of {peak:.2f} in {fn[index]:.2f} Hz")
+    print()
 
     # Plot settings
     plt.grid(True)
