@@ -1,4 +1,3 @@
-from operator import indexOf
 import usb.core
 import usb.backend.libusb1
 import json
@@ -106,7 +105,7 @@ while True:
     # Get peak value
     peak = max(fft)
     # Get frequency index of max value
-    index = indexOf(fft, peak)
+    index = fft.index(peak)
 
     print()
     print(f"Max value of {peak:.2f} in {fn[index]:.2f} Hz")
