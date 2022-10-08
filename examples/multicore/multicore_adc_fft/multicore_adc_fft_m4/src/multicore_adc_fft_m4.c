@@ -16,10 +16,8 @@
 /* Number of ADC samples */
 #define N_SAMPLES	2048
 
-/* Complex data */
-float32_t adcComplex[N_SAMPLES * 2] = { 0.0 };
 /* FFT output */
-float32_t fftOutput[N_SAMPLES];
+float32_t fftOutput[N_SAMPLES / 2];
 
 /* FFT configuration */
 uint32_t fftSize = N_SAMPLES / 2;
@@ -30,11 +28,9 @@ arm_cfft_instance_f32 s;
 
 int main(void) {
 	/* Initialize ADC buffer */
-	uint16_t *adcResults;
+	float32_t *complexInput;
 	/* Results address */
 	uint32_t addr;
-	/* ADC conversion factor */
-	const float32_t conv_factor = 3.3 / (1 << 10);
 	/* Initialize USB */
 	usb_init();
 	/* IPC quque initialization */
@@ -50,24 +46,15 @@ int main(void) {
 		/* Try to pop value from IPC */
 		if(ipc_try_pop(&addr) == queue_valid) {
 			/* Point to address */
-			adcResults = (uint16_t*)addr;
-			/* Create complex array for FFT analysis */
-			for(uint16_t i = 0; i < N_SAMPLES; i++) {
-				/* Clear odd indexes */
-				adcComplex[(i * 2) + 1] = 0.0;
-				/* Copy values in even indexes */
-				adcComplex[i * 2] = adcResults[i] * conv_factor;
-			}
+			complexInput = (float32_t*)addr;
 			/* Process the data through the CFFT/CIFFT module */
-			arm_cfft_f32(&s, adcComplex, ifftFlag, doBitReverse);
+			arm_cfft_f32(&s, complexInput, ifftFlag, doBitReverse);
 			/* Calculate the magnitude at each bin, it's symmetrical */
-			arm_cmplx_mag_f32(adcComplex, fftOutput, fftSize);
+			arm_cmplx_mag_f32(complexInput, fftOutput, fftSize);
 			/* Continue if math was successful */
 			if (status == ARM_MATH_SUCCESS) {
 				/* Wait for host to be connected */
 				while(!usb_is_connected());
-				/* Get size of FFT result */
-				uint16_t n = sizeof(fftOutput) / sizeof(fftOutput[0]);
 				/* Send first couple of JSON format characters */
 				char str[25] = "{\"values\":[";
 				usb_send(str);
@@ -77,7 +64,7 @@ int main(void) {
 #endif
 				/* Get rid of second half */
 				uint16_t i;
-				for(i = 0; i < n / 2; i++) {
+				for(i = 0; i < fftSize / 2; i++) {
 					/* Format string and send except the last one */
 					sprintf(str, "%e,", fftOutput[i]);
 					usb_send(str);

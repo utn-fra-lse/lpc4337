@@ -15,32 +15,37 @@
 /* Number of ADC samples */
 #define N_SAMPLES	2048
 
+/* Initialize ADC buffer */
+float complexInput[N_SAMPLES] = { 0.0 };
+
 int main(void) {
-	/* Initialize ADC buffer */
-	uint16_t adcResults[N_SAMPLES] = { 0 };
+	/* FFT size */
+	const uint32_t fftSize = N_SAMPLES / 2;
+	/* ADC conversion factor */
+	const float conversion_factor = 3.3 / (1 << 10);
 	/* Results address */
-	uint32_t addr = (uint32_t)adcResults;
-	/* Array index */
-	uint16_t index = 0;
-	/* ADC default initialization */
-	adc_init(0);
+	uint32_t addr = (uint32_t)complexInput;
+	/* Get default ADC configuration */
+	adc_config_t config = adc_get_default_config();
+	/* Sampling frequency at 40KHz */
+	config.rate = 40000;
+	/* ADC initialization */
+	adc_config_init(0, config);
 	/* Select ADC channel 0 */
 	adc_select_input(0, ADC_CH0);
 	/* IPC quque initialization */
 	ipc_queue_init(&addr, sizeof(uint32_t), 1);
 
 	while(1) {
-		/* Do ADC conversion and store into results */
-		adcResults[index++] = adc_read(0);
-		/* Check if array is full already */
-		if(index == N_SAMPLES) {
-			/* Try to push samples address to IPC */
-			ipc_try_push(&addr);
-			/* Reset index */
-			index = 0;
-			/* Wait half a second */
-			sleep_ms(500);
+		/* Create complex array for FFT analysis */
+		for(uint16_t i = 0; i < fftSize; i++) {
+			/* Clear odd indexes */
+			complexInput[(i * 2) + 1] = 0.0;
+			/* Copy values in even indexes */
+			complexInput[i * 2] = adc_read(0) * conversion_factor;
 		}
+		/* Try to push samples address to IPC */
+		ipc_try_push(&addr);
 	}
 	return 0;
 }
