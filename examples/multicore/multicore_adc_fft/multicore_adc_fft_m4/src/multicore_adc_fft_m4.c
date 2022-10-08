@@ -31,7 +31,6 @@ int main(void) {
 	float32_t *adcResults;
 	/* Results address */
 	uint32_t addr;
-	/* ADC conversion factor */
 	/* Initialize USB */
 	usb_init();
 	/* IPC quque initialization */
