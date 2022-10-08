@@ -16,6 +16,8 @@
 #define N_SAMPLES	2048
 
 int main(void) {
+	/* DC offset */
+	const float dc_offset = 1.2;
 	/* ADC conversion factor */
 	const float conv_factor = 3.3 / (1 << 10);
 	/* Initialize complex signal buffer */
@@ -24,8 +26,12 @@ int main(void) {
 	uint32_t addr = (uint32_t)signal;
 	/* Array index */
 	uint16_t index = 0;
+	/* Get ADC default configuration */
+	adc_config_t config = adc_get_default_config();
+	/* Change sampling frequency to 40KHz */
+	config.rate = 40000;
 	/* ADC default initialization */
-	adc_init(0);
+	adc_config_init(0, config);
 	/* Select ADC channel 0 */
 	adc_select_input(0, ADC_CH0);
 	/* IPC quque initialization */
@@ -33,7 +39,7 @@ int main(void) {
 
 	while(1) {
 		/* Do ADC conversion and store into even indexes */
-		signal[index * 2] = conv_factor * adc_read(0);
+		signal[index * 2] = conv_factor * adc_read(0) - dc_offset;
 		/* Clear imaginary indexes */
 		signal[(index * 2) + 1] = 0.0;
 		/* Increment index */
@@ -44,8 +50,6 @@ int main(void) {
 			ipc_try_push(&addr);
 			/* Reset index */
 			index = 0;
-			/* Wait half a second */
-			sleep_ms(500);
 		}
 	}
 	return 0;
