@@ -23,7 +23,7 @@
 | stdlib | [ciaa_stdlib.h]/[ciaa_stdlib.c] | Adds sleep functions.
 | usb_descriptors [2] | [ciaa_usb_descriptors.c] | Defines the USB descriptors for the LPC4337.
 | usb_app_config [2] | [app_usbd_cfg.h] | USB configuration and definitions for generic project.
-| Board [2] | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
+| Board | [ciaa_board_api.h]/[ciaa_board_api.c] | Support for board initialization.
 
 ## Notes
 
