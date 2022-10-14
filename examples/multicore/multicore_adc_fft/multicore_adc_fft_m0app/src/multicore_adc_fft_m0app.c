@@ -25,12 +25,8 @@ int main(void) {
 	const float conversion_factor = 3.3 / (1 << 10);
 	/* Results address */
 	uint32_t addr = (uint32_t)complexInput;
-	/* Get default ADC configuration */
-	adc_config_t config = adc_get_default_config();
-	/* Sampling frequency at 40KHz */
-	config.rate = 40000;
 	/* ADC initialization */
-	adc_config_init(0, config);
+	adc_init(0);
 	/* Select ADC channel 0 */
 	adc_select_input(0, ADC_CH0);
 	/* IPC quque initialization */
