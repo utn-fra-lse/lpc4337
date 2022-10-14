@@ -20,26 +20,30 @@
 /* Value to get a full conversion */
 #define ADC_FULL_CONV_CLK	11
 
-/* ADC config struct */
-typedef struct {
-	uint32_t rate;			/* ADC rate */
-	uint8_t bitsAccuracy;	/* ADC bit accuracy */
-	bool burstMode;			/* ADC Burt Mode */
-	bool interrupt;			/* ADC Interrupt */
-} adc_config_t;
+/**
+ * @brief Number of clocks used for each conversion
+ * in Burst mode
+ */
+typedef enum {
+	adc_10bits	= ADC_10BITS,
+	adc_9bits 	= ADC_9BITS,
+	adc_8bits 	= ADC_8BITS,
+	adc_7bits	= ADC_7BITS,
+	adc_6bits	= ADC_6BITS,
+	adc_5bits	= ADC_5BITS,
+	adc_4bits	= ADC_4BITS,
+	adc_3bits	= ADC_3BITS
+} adc_bit_accuracy_t;
 
-/* Possible accuracy values
- *
- * - ADC_10BITS
- * - ADC_9BITS
- * - ADC_8BITS
- * - ADC_7BITS
- * - ADC_6BITS
- * - ADC_5BITS
- * - ADC_4BITS
- * - ADC_3BITS
- *
- * */
+/**
+ * @brief ADC configuration struct
+ */
+typedef struct {
+	uint32_t rate;						/* ADC rate */
+	adc_bit_accuracy_t bitsAccuracy;	/* ADC bit accuracy */
+	bool burstMode;						/* ADC Burt Mode */
+	bool interrupt;						/* ADC Interrupt */
+} adc_config_t;
 
 /* Extern interrupt handler pointer */
 extern void (*adc_handlers[])(void);
