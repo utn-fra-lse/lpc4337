@@ -14,7 +14,7 @@
 #include "arm_math.h"
 
 /* Number of ADC samples */
-#define N_SAMPLES	2048
+#define N_SAMPLES	8
 
 /* FFT output */
 float32_t fftOutput[N_SAMPLES / 2];

@@ -13,7 +13,7 @@
 #include "ciaa_stdlib.h"
 
 /* Number of ADC samples */
-#define N_SAMPLES	2048
+#define N_SAMPLES	8
 
 /* Initialize ADC buffer */
 float complexInput[N_SAMPLES] = { 0.0 };
