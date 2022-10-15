@@ -14,13 +14,21 @@
 #include "arm_math.h"
 
 /* Number of ADC samples */
-#define N_SAMPLES	64
+#define MAX_SAMPLES	256
+
+/**
+ * @brief Struct to hold shared data between cores
+ */
+typedef struct {
+	uint16_t size;		/* Size of real samples */
+	float *samples;		/* Pointer to samples */
+} data_t;
 
 /* FFT output */
-float32_t fftOutput[N_SAMPLES / 2];
+float32_t fftOutput[MAX_SAMPLES];
 
 /* FFT configuration */
-uint32_t fftSize = N_SAMPLES / 2;
+uint32_t fftSize = MAX_SAMPLES;
 uint32_t ifftFlag = 0;
 uint32_t doBitReverse = 1;
 /* CFFT instance */
@@ -38,15 +46,19 @@ int main(void) {
 	/* ARM math status */
 	arm_status status = ARM_MATH_SUCCESS;
 	/* Initialize CFFT instance */
-	status = arm_cfft_init_f32(&s,fftSize);
+	status = arm_cfft_init_f32(&s, fftSize);
     /* Start M0 core */
     multicore_m0_start();
 
 	while(1) {
 		/* Try to pop value from IPC */
 		if(ipc_try_pop(&addr) == queue_valid) {
-			/* Point to address */
-			complexInput = (float32_t*)addr;
+			/* Point to samples address */
+			complexInput = (float32_t*)( ((data_t*) addr)->samples );
+			/* Get number of samples */
+			fftSize = ((data_t*) addr)->size;
+			/* Reinitialize CFFT instance if sizes don't match */
+			if(s.fftLen != fftSize) { arm_cfft_init_f32(&s, fftSize); }
 			/* Process the data through the CFFT/CIFFT module */
 			arm_cfft_f32(&s, complexInput, ifftFlag, doBitReverse);
 			/* Calculate the magnitude at each bin, it's symmetrical */
@@ -56,7 +68,8 @@ int main(void) {
 				/* Wait for host to be connected */
 				while(!usb_is_connected());
 				/* Send first couple of JSON format characters */
-				char str[25] = "{\"values\":[";
+				char str[25];
+				sprintf(str, "{\"size\":%d,\"values\":[", fftSize);
 				usb_send(str);
 #ifdef DEBUG
 				/* Print number of samples */
