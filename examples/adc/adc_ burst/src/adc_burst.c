@@ -40,7 +40,7 @@ int main(void) {
 	config.burstMode = ENABLE;
 	/* Enable interrupt */
 	config.interrupt = ENABLE;
-	/* Takes four clocks to finish conversion (1MS/s) */
+	/* Takes four clocks to finish conversion (1.6MS/s) */
 	config.bitsAccuracy = adc_3bits;
 	/* Initialize ADC0 with said configuration */
 	adc_config_init(0, config);
