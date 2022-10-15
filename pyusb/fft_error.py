@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 freq = [f for f in range(2500, 10000, 2500)]
-# Error measured for multicore_adc_fft example at 64 samples
+# Error measured for multicore_adc_fft example at 64 samples (3 bit resolution)
 err = [3295.9, 6591.8, 8789.06]
 
 # Fit a linear function with those values
