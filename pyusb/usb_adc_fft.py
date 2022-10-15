@@ -57,8 +57,8 @@ while True:
     plt.title("Sample FFT")
     plt.ylabel("Amplitude")
     plt.xlabel("Frequency [Hz]")
-    plt.ylim([0, 3.3])
-    plt.xlim([0, 20e3])
+    plt.ylim([0, 1.5])
+    plt.xlim([0, fs / 2])
     # Plot up to fs / 2 the FFT values
     plt.stem(fn, fft, linefmt="blue", markerfmt="none")
     # Pause plot
