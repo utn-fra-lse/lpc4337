@@ -31,4 +31,9 @@ void ciaa_board_init(void) {
     gpio_clr(LEDR);
     gpio_clr(LEDB);
     gpio_clr(LEDG);
+    /* Initialize push buttons */
+    gpio_set_dir(TEC1, false);
+    gpio_set_dir(TEC2, false);
+    gpio_set_dir(TEC3, false);
+    gpio_set_dir(TEC4, false);
 }
