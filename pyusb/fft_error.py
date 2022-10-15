@@ -1,11 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-freq = [f for f in range(2500, 20000, 2500)]
-# Error measured for adc_fft example
-# err = [1406.25, 2851.5625, 4257.8125, 5564.0625, 7109.375, 8515.625, 9921.875]
-# Error measured for multicore_adc_fft example
-err = [1718.75, 3437.5, 5156.25, 6875, 8593.75, 10234.38, 12070.31]
+freq = [f for f in range(2500, 10000, 2500)]
+# Error measured for multicore_adc_fft example at 64 samples
+err = [3295.9, 6591.8, 8789.06]
 
 # Fit a linear function with those values
 f = np.polyfit(err, freq, 1)
