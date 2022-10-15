@@ -4,12 +4,8 @@ import matplotlib.pyplot as plt
 
 # ADC clock
 f_adc = 4.5e6 
-# Conversion time for a 10 bit sample
+# Conversion time for a 3 bit sample
 conversion_time = 4 / f_adc
-# Real sample length
-N = 32
-# Get sampling frequency
-fs = 1 / (N * conversion_time)
 
 # Initialize CIAA usb handler
 ciaa = Ciaa()
@@ -25,11 +21,16 @@ print("-" * 80)
 print()
 
 while True:
-
+    # Get json data
+    data = ciaa.read_json(100, debug = True)
     # Get the FFT values
-    fft = ciaa.read_json(100, debug = True)["values"]
+    fft = data["values"]
     # Get list length
     n = len(fft)
+    # Real sample length
+    N = int(data["size"])
+    # Get sampling frequency
+    fs = 1 / (N * conversion_time)
     # Go from 0 to sampling frequency with N steps
     fn = np.linspace(0, fs / 2, n)
     # Take error into account
@@ -60,8 +61,10 @@ while True:
     plt.ylim([0, 1.5])
     plt.xlim([0, fs / 2])
     # Plot up to fs / 2 the FFT values
-    plt.stem(fn, fft, linefmt="blue", markerfmt="none")
+    plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz")
+    # Show label
+    plt.legend()
     # Pause plot
-    plt.pause(0.001)
+    plt.pause(0.0005)
     # Clear plot
     plt.clf()
