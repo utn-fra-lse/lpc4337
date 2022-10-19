@@ -30,6 +30,10 @@ This one contains a [lpc4337.cfg][cfg] file theat allows the MCUXpresso to be ab
 
 This one contains some examples for the API for every peripherial.
 
+### freertos
+
+This directory contains a static library for the M4 and M0 FreeRTOS implementation. Both of them can be imported into a new workspace and added to the project references.
+
 ### pyusb
 
 This directory has some info on the [pyusb][pyusb] Python package, which is used to communicate with the OTG USB on the CIAA board. Some Python scripts are there also to test the currently supported USB examples.
