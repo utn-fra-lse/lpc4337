@@ -60,7 +60,7 @@ extern BaseType_t xTaskIncrementTick(void);
 /**
  * @brief Reset RIT timer counter
  */
-static inline void rit_reset_counter(void) { LPC_RITIMER->COUTNER = 0x00000000; }
+static inline void rit_reset_counter(void) { LPC_RITIMER->COUNTER = 0x00000000; }
 
 /**
  * @brief Clear RIT timer interrupt
@@ -71,7 +71,7 @@ static inline void rit_clear_interrupt(void) { LPC_RITIMER->CTRL |= RIT_CTRL_INT
  * @brief Sets RIT timer compare value
  * @param val value to compare
  */
-static inline void rit_set_comp_val(val) { LPC_RITIMER->COMPVAL = val; }
+static inline void rit_set_comp_val(uint32_t val) { LPC_RITIMER->COMPVAL = val; }
 
 /**
  * @brief Initialize RIT timer
