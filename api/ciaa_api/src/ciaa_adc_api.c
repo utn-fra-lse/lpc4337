@@ -189,7 +189,9 @@ void adc_set_irq_enabled(uint8_t adc, bool enabled) {
 	/* ADC interrupts */
 	const LPC43XX_IRQn_Type irqs[] = { ADC0_IRQn, ADC1_IRQn };
 	/* Enable ADC interrupt */
-	NVIC_EnableIRQ(irqs[adc]);
+	if(enabled) { NVIC_EnableIRQ(irqs[adc]); }
+	/* Or disable ADC interrupt */
+	else { NVIC_DisableIRQ(irqs[adc]); }
 	/* Get the selected channel */
 	uint8_t channel = adc_get_selected_input(adc);
 	/* Enable ADC interrupt on channel */
