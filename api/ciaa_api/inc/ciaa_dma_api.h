@@ -10,6 +10,9 @@
 
 #include "chip.h"
 
+/**
+ * @brief DMA possible connections
+ */
 typedef enum {
 	conn_mem 			= 0UL,		/* MEMORY */
 	conn_mat0_0 		= 1UL,		/* MAT0.0 */
@@ -43,23 +46,43 @@ typedef enum {
 	conn_i2s1_rx_ch0	= 30UL,		/* I2S1 Rx Channel 0 */
 } dma_conn_t;
 
+/* DMA type redefinitions from SDK */
 typedef DMA_ChannelHandle_t dma_channel_handler_t;
+typedef GPDMA_FLOW_CONTROL_T dma_connection_type_t;
 
-typedef GPDMA_FLOW_CONTROL_T dma_flow_control_t;
-
+/**
+ * @brief DMA configuration struct
+ *
+ * @note src and dst can be pointers to memory or any of
+ * the above dma_conn_t values
+ */
 typedef struct {
-
-	uint32_t channel;
-	uint32_t *src;
-	uint32_t *dst;
-	uint32_t size;
-	uint32_t type;
-
+	uint32_t channel;	/* DMA channel */
+	uint32_t src;		/* DMA source */
+	uint32_t dst;		/* DMA destiny */
+	uint32_t size;		/* DMA buffer size */
+	uint32_t type;		/* DMA connection type (dma_connection_type_t) */
 } dma_config_t;
 
-void dma_config_init(dma_config_t config);
+/* DMA channel handlers pointer */
+extern void (*dma_handlers[])(void);
 
+/* Function prototypes */
+
+void dma_init();
+void dma_transfer(dma_config_t config);
+
+/**
+ * @brief Get the first available DMA channel
+ * @return DMA channel index
+ */
 static inline uint8_t dma_get_free_channel(void) { return Chip_GPDMA_GetFreeChannel(LPC_GPDMA, 0x00); }
 
+/**
+ * @brief Set a handler for a DMA channel interrupt
+ * @param channel: DMA channel index
+ * @param handler: pointer to a function
+ */
+static inline void dma_set_channel_handler(uint32_t channel, void (*handler)(void)) { dma_handlers[channel] = handler; }
 
 #endif /* CIAA_DMA_API_H_ */

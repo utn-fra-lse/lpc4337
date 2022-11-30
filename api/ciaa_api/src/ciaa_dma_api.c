@@ -7,20 +7,47 @@
 
 #include "ciaa_dma_api.h"
 
-void dma_config_init(dma_config_t config) {
+/* DMA channel handlers pointer */
+void (*dma_handlers[])(void) = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+
+/**
+ * @brief Initialize DMA controller
+ */
+void dma_init(void) {
 	/* Initialize DMA controller */
 	Chip_GPDMA_Init(LPC_GPDMA);
-	/* Find a free DMA channel */
-	uint8_t dma_channel = Chip_GPDMA_GetFreeChannel(LPC_GPDMA, 0x00);
+	/* Configure DMA interrupt */
+	NVIC_DisableIRQ(DMA_IRQn);
+	NVIC_SetPriority(DMA_IRQn, ((0x01 << 3) | 0x01));
+	NVIC_EnableIRQ(DMA_IRQn);
+}
+
+/**
+ * @brief Begins a DMA transfer
+ * @param config: an instance of a DMA configuration struct
+ */
+void dma_transfer(dma_config_t config) {
 	/* Setup DMA transfer */
 	Chip_GPDMA_Transfer(
 			LPC_GPDMA,
-			dma_channel,
-			(uint32_t) config.src,
-			(uint32_t) config.dst,
-			(dma_flow_control_t) config.type,
-			(uint32_t) config.size
+			config.channel,
+			config.src,
+			config.dst,
+			(dma_connection_type_t) config.type,
+			config.size
 	);
-	/* Enable DMA Interrupt */
-	NVIC_EnableIRQ(DMA_IRQn);
+}
+
+/**
+ * @brief DMA interrupt handler
+ */
+void DMA_IRQHandler(void) {
+	/* Check every available DMA channel */
+	for(uint8_t channel = 0; channel < GPDMA_NUMBER_CHANNELS; channel++) {
+		/* Check DMA channel transfer status */
+		if(Chip_GPDMA_Interrupt(LPC_GPDMA, channel) == SUCCESS) {
+			/* Call handler if any */
+			if(dma_handlers[channel]) { dma_handlers[channel](); }
+		}
+	}
 }
