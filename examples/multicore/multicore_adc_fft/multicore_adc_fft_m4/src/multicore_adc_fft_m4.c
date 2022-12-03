@@ -21,6 +21,7 @@
  */
 typedef struct {
 	uint16_t size;		/* Size of real samples */
+	uint8_t nclocks;	/* Number of clocks that the conversion takes */
 	float *samples;		/* Pointer to samples */
 } data_t;
 
@@ -39,6 +40,8 @@ int main(void) {
 	float32_t *complexInput;
 	/* Results address */
 	uint32_t addr;
+	/* Number of ADC clocks to finish conversion */
+	uint8_t nclocks;
 	/* Initialize USB */
 	usb_init();
 	/* IPC quque initialization */
@@ -57,6 +60,8 @@ int main(void) {
 			complexInput = (float32_t*)( ((data_t*) addr)->samples );
 			/* Get number of samples */
 			fftSize = ((data_t*) addr)->size;
+			/* Get number of clocks that takes the ADC to finish */
+			nclocks = ((data_t*) addr)->nclocks;
 			/* Reinitialize CFFT instance if sizes don't match */
 			if(s.fftLen != fftSize) { arm_cfft_init_f32(&s, fftSize); }
 			/* Process the data through the CFFT/CIFFT module */
@@ -68,8 +73,8 @@ int main(void) {
 				/* Wait for host to be connected */
 				while(!usb_is_connected());
 				/* Send first couple of JSON format characters */
-				char str[25];
-				sprintf(str, "{\"size\":%d,\"values\":[", fftSize);
+				char str[40];
+				sprintf(str, "{\"size\":%d,\"nclocks\":%d,\"values\":[", fftSize, nclocks);
 				usb_send(str);
 #ifdef DEBUG
 				/* Print number of samples */
