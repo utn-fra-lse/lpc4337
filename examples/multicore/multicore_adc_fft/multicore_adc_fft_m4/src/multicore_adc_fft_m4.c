@@ -76,22 +76,12 @@ int main(void) {
 				char str[40];
 				sprintf(str, "{\"size\":%d,\"nclocks\":%d,\"values\":[", fftSize, nclocks);
 				usb_send(str);
-#ifdef DEBUG
-				/* Print number of samples */
-				printf("FFT output with %d samples (symmetric values removed)\r\n", n / 2);
-#endif
 				/* Get rid of second half */
 				uint16_t i;
 				for(i = 0; i < fftSize / 2; i++) {
 					/* Format string and send except the last one */
 					sprintf(str, "%e,", fftOutput[i]);
 					usb_send(str);
-#ifdef DEBUG
-					/* Print a new line every 16 values */
-					if(!(i % 16)) { printf("\r\n"); }
-					/* Print values */
-					printf("%12.6f,", i, fftOutput[i]);
-#endif
 				}
 				/* Send last value with closing JSON format characters */
 				sprintf(str, "%e]}", fftOutput[i]);
