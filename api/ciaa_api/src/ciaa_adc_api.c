@@ -167,7 +167,7 @@ uint16_t adc_get_conversion_value(uint8_t adc, uint8_t channel) {
  */
 void adc_set_irq_enabled(uint8_t adc, bool enabled) {
 	/* ADC interrupts */
-	const LPC43XX_M0_IRQn_Type irqs[] = { ADC0_IRQn, ADC1_IRQn };
+	const LPC43XX_IRQn_Type irqs[] = { ADC0_IRQn, ADC1_IRQn };
 	/* Enable ADC interrupt */
 	if(enabled) { NVIC_EnableIRQ(irqs[adc]); }
 	/* Or disable ADC interrupt */
