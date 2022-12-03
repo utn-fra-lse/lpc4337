@@ -132,3 +132,15 @@ class Ciaa():
         # Build JSON like object with byte array data
         data = json.loads(data)
         return data
+
+    def get_resolution_bits(self, nclocks: int) -> int:
+        """
+        Get the number of bits of ADC resolution from the clocks
+        needed to finish the conversion
+
+        params:
+            nclocks (int): number of clocks
+
+        return (int): resolution bits (3 to 10)
+        """
+        return nclocks - 1
