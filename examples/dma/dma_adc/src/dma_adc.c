@@ -72,7 +72,7 @@ int main(void) {
 		/* Get proper ADC results */
 		for(uint32_t i = 0; i < DMA_BUFFER_SIZE; i++) {
 			/* Need to shift 4 bits to get ADC result */
-			adc_results[i] = (dst[i] >> 4 & 0x03FF) * conv_factor;
+			adc_results[i] = ((dst[i] >> 4) & 0x03FF) * conv_factor;
 		}
 	}
 
