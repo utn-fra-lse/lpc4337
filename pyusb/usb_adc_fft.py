@@ -4,8 +4,6 @@ import matplotlib.pyplot as plt
 
 # ADC clock
 f_adc = 4.5e6 
-# Conversion time for a 3 bit sample
-conversion_time = 4 / f_adc
 
 # Initialize CIAA usb handler
 ciaa = Ciaa()
@@ -29,6 +27,10 @@ while True:
     n = len(fft)
     # Real sample length
     N = int(data["size"])
+    # Get number of clocks
+    nclocks = int(data["nclocks"])
+    # Conversion time
+    conversion_time = nclocks / f_adc
     # Get sampling frequency
     fs = 1 / (N * conversion_time)
     # Go from 0 to sampling frequency with N steps
