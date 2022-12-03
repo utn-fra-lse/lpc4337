@@ -117,7 +117,7 @@ int main(void) {
 				/* Clear odd indexes */
 				complexInput[(i * 2) + 1] = 0.0;
 				/* Copy ADC result */
-				complexInput[i * 2] = (dma_buffer[i] >> 4 & 0x03FF) * conversion_factor;
+				complexInput[i * 2] = ((dma_buffer[i] >> 4) & 0x03FF) * conversion_factor;
 			}
 			/* Clear flag */
 			dma_transfer_done = false;
