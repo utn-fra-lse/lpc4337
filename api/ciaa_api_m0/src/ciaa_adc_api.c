@@ -16,12 +16,9 @@ ADC_CHANNEL_T channels[] = {
 /* Interrupt handler function pointer */
 void (*adc_handlers[])(void) = { NULL, NULL };
 
-/*
- * 	@brief	Initializes ADC with default config
- *
- * 	@param	adc: ADC number
- *
- * 	@return	None
+/**
+ * @brief Initializes ADC with default config
+ * @param adc: ADC number
  */
 void adc_init(uint8_t adc) {
 	/* Default config */
@@ -30,13 +27,10 @@ void adc_init(uint8_t adc) {
 	adc_config_init(adc, config);
 }
 
-/*
- * 	@brief	Initializes ADC with given config
- *
- * 	@param	adc: ADC number
- * 	@param	config: ADC configuration struct
- *
- * 	@return	None
+/**
+ * @brief Initializes ADC with given config
+ * @param adc: ADC number
+ * @param config: ADC configuration struct
  */
 void adc_config_init(uint8_t adc, adc_config_t config) {
 	/* Auxiliary variables to calculate register values */
@@ -80,13 +74,11 @@ void adc_config_init(uint8_t adc, adc_config_t config) {
 	adc_set_irq_enabled(adc, config.interrupt);
 }
 
-/*
- * 	@brief	Enable burst mode
+/**
+ * @brief Enable burst mode
  *
- * 	@param	adc: ADC number
- * 	@param	enabled: burst mode state
- *
- * 	@return	None
+ * @param adc: ADC number
+ * @param enabled: burst mode state
  */
 void adc_set_burst_mode_enabled(uint8_t adc, bool enabled) {
 	/* Get ADC register */
@@ -99,13 +91,10 @@ void adc_set_burst_mode_enabled(uint8_t adc, bool enabled) {
 	else { reg->CR &= ~ADC_CR_BURST; }
 }
 
-/*
- *	@brief	Selects a single ADC channel
- *
- *	@param	adc: ADC number
- *	@param	channel: ADC channel
- *
- *	@return	None
+/**
+ * @brief Selects a single ADC channel
+ * @param adc: ADC number
+ * @param channel: ADC channel
  */
 void adc_select_input(uint8_t adc, uint8_t channel) {
 	/* Get ADC register */
@@ -117,12 +106,10 @@ void adc_select_input(uint8_t adc, uint8_t channel) {
 	reg->CR |= 1UL << channel;
 }
 
-/*
- * 	@brief	Get single selected input
- *
- * 	@param	adc: ADC number
- *
- * 	@return	selected ADC channel
+/**
+ * @brief Get single selected input
+ * @param adc: ADC number
+ * @return selected ADC channel
  */
 uint8_t adc_get_selected_input(uint8_t adc) {
 	/* Get ADC register */
@@ -136,13 +123,11 @@ uint8_t adc_get_selected_input(uint8_t adc) {
 	return 0xff;
 }
 
-/*
- * 	@brief	Returns ADC conversion value. If no interrupt is enabled,
- * 			it also starts the conversion and waits for it to finish
- *
- * 	@param	adc: ADC number
- *
- * 	@return	ADC conversion value
+/**
+ * @brief Returns ADC conversion value. If no interrupt is enabled,
+ * it also starts the conversion and waits for it to finish
+ * @param adc: ADC number
+ * @return ADC conversion value
  */
 uint16_t adc_read(uint8_t adc) {
 	/* ADC selected value */
@@ -160,13 +145,11 @@ uint16_t adc_read(uint8_t adc) {
 	return adc_get_conversion_value(adc, channel);
 }
 
-/*
- * 	@brief	Returns the conversion value
- *
- * 	@param	adc: ADC number
- * 	@param	channel: ADC channel
- *
- * 	@return	ADC conversion value
+/**
+ * @brief Returns the conversion value
+ * @param adc: ADC number
+ * @param channel: ADC channel
+ * @return ADC conversion value
  */
 uint16_t adc_get_conversion_value(uint8_t adc, uint8_t channel) {
 	/* Auxiliary variable */
@@ -177,13 +160,10 @@ uint16_t adc_get_conversion_value(uint8_t adc, uint8_t channel) {
 	return (uint16_t) ADC_DR_RESULT(temp);
 }
 
-/*
- * 	@brief	Enable/Disable interrupt
- *
- * 	@param	adc: ADC number
- * 	@param	enabled: interrupt state
- *
- * 	@return	None
+/**
+ * @brief Enable/Disable interrupt
+ * @param adc: ADC number
+ * @param enabled: interrupt state
  */
 void adc_set_irq_enabled(uint8_t adc, bool enabled) {
 	/* ADC interrupts */
@@ -198,24 +178,16 @@ void adc_set_irq_enabled(uint8_t adc, bool enabled) {
 	adc_set_irq_channel_enabled(adc, channel, enabled);
 }
 
-/*
- *	@brief	ADC0 interrupt handler
- *
- *	@param	None
- *
- *	@return	None
+/**
+ * @brief ADC0 interrupt handler
  */
 void ADC0_IRQHandler(void) {
 	/* Check if there is a handler and call it */
 	if(adc_handlers[0]) { adc_handlers[0](); }
 }
 
-/*
- *	@brief	ADC1 interrupt handler
- *
- *	@param	None
- *
- *	@return	None
+/**
+ * @brief ADC1 interrupt handler
  */
 void ADC1_IRQHandler(void) {
 	/* Check if there is a handler and call it */
