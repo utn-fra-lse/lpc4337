@@ -31,6 +31,8 @@ while True:
     nclocks = int(data["nclocks"])
     # Conversion time
     conversion_time = nclocks / f_adc
+    # Get resolution bits
+    resolution = ciaa.get_resolution_bits(nclocks)
     # Get sampling frequency
     fs = 1 / (N * conversion_time)
     # Go from 0 to sampling frequency with N steps
@@ -63,7 +65,7 @@ while True:
     plt.ylim([0, 1.5])
     plt.xlim([0, fs / 2])
     # Plot up to fs / 2 the FFT values
-    plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz")
+    plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz ({resolution} bit resolution)")
     # Show label
     plt.legend()
     # Pause plot
