@@ -62,17 +62,32 @@ int main(void) {
 	/* Initialize DMA controller */
 	dma_init();
 
+//	DMA_TransferDescriptor_t dma_descriptor;
+
+//	Chip_GPDMA_PrepareDescriptor(
+//			LPC_GPDMA,
+//			&dma_descriptor,
+//			GPDMA_CONN_ADC_0,
+//			(uint32_t) dst,
+//			DMA_BUFFER_SIZE,
+//			GPDMA_TRANSFERTYPE_P2M_CONTROLLER_DMA,
+//			NULL
+//	);
+
+	//Chip_GPDMA_SGTransfer (LPC_GPDMA, dma.channel, &dma_descriptor, GPDMA_TRANSFERTYPE_P2M_CONTROLLER_DMA);
+	//dma_descriptor.ctrl |= GPDMA_DMACCxControl_I;
+
 	while(1) {
-		/* Clear DMA interrupt flag */
-		dma_flag = false;
 		/* Initialize DMA transfer */
 		dma_transfer(dma);
 		/* Wait for DMA transfer to finish */
 		while(!dma_flag);
+		/* Clear DMA interrupt flag */
+		dma_flag = false;
 		/* Get proper ADC results */
 		for(uint32_t i = 0; i < DMA_BUFFER_SIZE; i++) {
 			/* Need to shift 4 bits to get ADC result */
-			adc_results[i] = ((dst[i] >> 4) & 0x03FF) * conv_factor;
+			adc_results[i] = ADC_DR_RESULT(dst[i]) * conv_factor;
 		}
 	}
 
