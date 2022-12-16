@@ -55,6 +55,8 @@ int main(void) {
 			gpio_set(LED2);
 			gpio_set(LED3);
 		}
+		/* Print in console */
+		printf("ADC value: %d\r\n", adc_value);
 	}
 
 	return 0;
