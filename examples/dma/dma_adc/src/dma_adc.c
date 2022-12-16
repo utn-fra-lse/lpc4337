@@ -11,11 +11,19 @@
 #include "ciaa_board_api.h"
 #include "ciaa_dma_api.h"
 #include "ciaa_adc_api.h"
+#include "ciaa_dac_api.h"
+
+#define DAC_INPUT
 
 /* DMA buffer size */
+#ifndef DAC_INPUT
 #define DMA_BUFFER_SIZE	2048
+#else
+#define DMA_BUFFER_SIZE 64
+#endif
 /* DMA IRQ status flag */
 bool dma_flag = false;
+
 
 /**
  * @brief DMA interrupt handler
@@ -38,7 +46,7 @@ int main(void) {
 	/* Buffer to store ADC results */
 	float adc_results[DMA_BUFFER_SIZE];
 	/* ADC selected channel */
-	const uint8_t adc_channel = ADC_CH0;
+	const uint8_t adc_channel = ADC_CH1;
 	/* Init CIAA board */
 	ciaa_board_init();
 	/* Get ADC default configuration struct */
@@ -47,6 +55,8 @@ int main(void) {
 	config.burstMode = ENABLE;
 	/* Configure ADC0 */
 	adc_config_init(0, config);
+	/* Enable selected channel */
+	adc_select_input(0, adc_channel);
 	/* Enable interrupt on the selected channel. Needed for DMA to work */
 	adc_set_irq_channel_enabled(0, adc_channel, ENABLE);
 	/* DMA configuration struct */
@@ -62,22 +72,47 @@ int main(void) {
 	/* Initialize DMA controller */
 	dma_init();
 
-//	DMA_TransferDescriptor_t dma_descriptor;
-
-//	Chip_GPDMA_PrepareDescriptor(
-//			LPC_GPDMA,
-//			&dma_descriptor,
-//			GPDMA_CONN_ADC_0,
-//			(uint32_t) dst,
-//			DMA_BUFFER_SIZE,
-//			GPDMA_TRANSFERTYPE_P2M_CONTROLLER_DMA,
-//			NULL
-//	);
-
-	//Chip_GPDMA_SGTransfer (LPC_GPDMA, dma.channel, &dma_descriptor, GPDMA_TRANSFERTYPE_P2M_CONTROLLER_DMA);
-	//dma_descriptor.ctrl |= GPDMA_DMACCxControl_I;
+#ifdef DAC_INPUT
+	/* DAC direction */
+	bool up = true;
+	/* DAC value */
+	int16_t dac_value = 0x00;
+	/* Get DAC config */
+	dac_config_t dac_config = dac_get_default_config();
+	/* Set DAC initial value to zero */
+	dac_config.value = dac_value;
+	/* Initialize DAC */
+	dac_config_init(dac_config);
+#endif
 
 	while(1) {
+#ifdef DAC_INPUT
+		/* Check DAC count direction */
+		if(up) {
+			/* Increment DAC value */
+			dac_value+=50;
+			/* Check if high limit was surpassed */
+			if(dac_value > 0x3ff) {
+				/* Change direction */
+				up = false;
+				/* Decrement */
+				dac_value--;
+			}
+		}
+		else {
+			/* Decrement DAC value */
+			dac_value-=50;
+			/* Check if low limit was surpassed */
+			if(dac_value < 0) {
+				/* Change direction */
+				up = true;
+				/* Increment */
+				dac_value++;
+			}
+		}
+		/* Update value */
+		dac_set_output_value(dac_value);
+#endif
 		/* Initialize DMA transfer */
 		dma_transfer(dma);
 		/* Wait for DMA transfer to finish */
