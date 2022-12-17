@@ -114,44 +114,45 @@ extern scu_pin_functions_t P1_4;
 extern scu_pin_functions_t P6_3;
 extern scu_pin_functions_t P6_6;
 
-/*
- *	@brief	Sets IO control pin mux
- *
- *	@param	scu_port: SCU PORT of the GPIO
- *	@param	scu_pin: SCU PIN of the GPIO
- *	@param	mode: function to set to the pin
- *
- *	@return	None
+/**
+ * @brief Sets IO control pin mux
+ * @param scu_port: SCU PORT of the GPIO
+ * @param scu_pin: SCU PIN of the GPIO
+ * @param mode: function to set to the pin
  */
 static inline void scu_set_pin_mode(uint8_t scu_port,  uint8_t scu_pin, uint16_t mode) { CIAA_SCU->SFSP[scu_port][scu_pin] = mode; }
 
-/*
- *	@brief	I2C0 configuration
- *
- *	@param	mode: I2C0 mode. Should be:
- *		- I2C0_STANDARD_FAST_MODE
+/**
+ * @brief Selects external interrupt for GPIO pin
+ * @param pint_channel: PINT channel (0 to 7)
+ * @param scu_port: GPIO SCU port
+ * @param scu_pin: GPIO SCU pin
+ */
+static inline void scu_gpio_pint_select(uint8_t pint_channel, uint8_t scu_port, uint8_t scu_pin) {
+	/* Get values to map PINT channel to GPIO */
+	int32_t of = (pint_channel & 3) << 3;
+	uint32_t val = (((scu_port & 0x7) << 5) | (scu_pin & 0x1F)) << of;
+	LPC_SCU->PINTSEL[pint_channel >> 2] = (LPC_SCU->PINTSEL[pint_channel >> 2] & ~(0xFF << of)) | val;
+}
+
+/**
+ * @brief I2C0 configuration
+ * @param mode: I2C0 mode. Should be:
+ * 		- I2C0_STANDARD_FAST_MODE
  *		- I2C0_FAST_MODE_PLUS
- *
- *	@return	None
  */
 static inline void scu_i2c0_config(uint32_t mode) { CIAA_SCU->SFSI2C0 = mode; }
 
-/*
- *	@brief	Configure ADC channel
- *
- *	@param	adc: ADC number
- *	@param	channel: one of the 8 available ADC channels
- *
- *	@return	None
+/**
+ * @brief Configure ADC channel
+ * @param adc: ADC number
+ * @param channel: one of the 8 available ADC channels
  */
 static inline void scu_adc_channel_config(uint8_t adc, uint8_t channel) { CIAA_SCU->ENAIO[adc] |= 1UL << channel; }
 
-/*
- *	@brief	Enable/Disable DAC output on P4_4
- *
- *	@param	enabled: whether to enable or disable the DAC output
- *
- *	@param	None
+/**
+ * @brief Enable/Disable DAC output on P4_4
+ * @param enabled: whether to enable or disable the DAC output
  */
 static inline void scu_dac_config(bool enabled) {
 	/* Clear ENAIO bit that enables P4_4 DAC output */

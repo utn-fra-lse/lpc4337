@@ -68,3 +68,86 @@ pin_t CAN_TD = { 3, 2, 5, 9, &P3_2 };
 
 pin_t SPI_MISO = { 1, 3, 0, 10, &P1_3 };
 pin_t SPI_MOSI = { 1, 4, 0, 11, &P1_4 };
+
+/* Pint handlers array */
+void (*pint_handlers[8])(void);
+
+/**
+ * @brief Pin Interrupt Handler 0
+ */
+void GPIO0_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(0);
+	/* If able, call handler */
+	if(pint_handlers[0]) { pint_handlers[0](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 1
+ */
+void GPIO1_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(1);
+	/* If able, call handler */
+	if(pint_handlers[1]) { pint_handlers[1](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 2
+ */
+void GPIO2_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(2);
+	/* If able, call handler */
+	if(pint_handlers[2]) { pint_handlers[2](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 3
+ */
+void GPIO3_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(3);
+	/* If able, call handler */
+	if(pint_handlers[3]) { pint_handlers[3](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 4
+ */
+void GPIO4_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(4);
+	/* If able, call handler */
+	if(pint_handlers[4]) { pint_handlers[4](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 5
+ */
+void GPIO5_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(5);
+	/* If able, call handler */
+	if(pint_handlers[5]) { pint_handlers[5](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 6
+ */
+void GPIO6_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(6);
+	/* If able, call handler */
+	if(pint_handlers[6]) { pint_handlers[6](); }
+}
+
+/**
+ * @brief Pin Interrupt Handler 7
+ */
+void GPIO7_IRQHandler(void) {
+	/* Clear pending interrupt */
+	pint_clear_status(7);
+	/* If able, call handler */
+	if(pint_handlers[7]) { pint_handlers[7](); }
+}
