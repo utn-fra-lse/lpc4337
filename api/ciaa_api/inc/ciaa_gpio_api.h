@@ -44,14 +44,6 @@ typedef enum {
 	low_level = 0x03				/* Low level */
 } pint_mode_t;
 
-/**
- * @brief Pin interrupt handler struct
- */
-typedef struct {
-	pin_t *pin;					/* Pin to attach interrupt */
-	void (*handler)(void);			/* Pointer to the function handler */
-} pint_handler_t;
-
 /* Pin declarations */
 extern pin_t LEDR;
 extern pin_t LEDG;
