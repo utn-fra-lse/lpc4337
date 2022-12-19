@@ -34,16 +34,6 @@ typedef struct {
 	scu_pin_functions_t *FUNCTIONS;	/* SCU functions for the PIN */
 } pin_t;
 
-/**
- * @brief Pin interrupt modes
- */
-typedef enum {
-	rising_edge = 0x00,				/* Rising edge */
-	falling_edge = 0x01,			/* Falling edge */
-	high_level = 0x02,				/* High level */
-	low_level = 0x03				/* Low level */
-} pint_mode_t;
-
 /* Pin declarations */
 extern pin_t LEDR;
 extern pin_t LEDG;
@@ -104,9 +94,6 @@ extern pin_t CAN_TD;
 
 extern pin_t SPI_MISO;
 extern pin_t SPI_MOSI;
-
-/* PINT handlers */
-extern void (*pint_handler)(void);
 
 /* Function prototypes */
 
@@ -180,81 +167,5 @@ static void inline gpio_xor(pin_t pin) { CIAA_GPIO->NOT[pin.GPIO_PORT] = (1 << p
  * 		- true for high
  */
 static bool inline gpio_get(pin_t pin) { return (bool) CIAA_GPIO->B[pin.GPIO_PORT][pin.GPIO_PIN]; }
-
-/**
- * @brief Clear interrupt status on selected PINT channel
- */
-static void inline pint_clear_status(void) { LPC_GPIO_PIN_INT->IST = PININTCH(4); }
-
-/**
- * @brief Set PINT interrupt mode to rising edge
- */
-static void inline pint_set_mode_rising_edge(void) {
-	/* Enable edge mode */
-	LPC_GPIO_PIN_INT->ISEL &= ~PININTCH(4);
-	/* Enable high mode */
-	LPC_GPIO_PIN_INT->SIENR |= PININTCH(4);
-}
-
-/**
- * @brief Set PINT interrupt mode to falling edge
- */
-static void inline pint_set_mode_falling_edge(void) {
-	/* Enable edge mode */
-	LPC_GPIO_PIN_INT->ISEL &= ~PININTCH(4);
-	/* Enable low mode */
-	LPC_GPIO_PIN_INT->SIENF |= PININTCH(4);
-}
-
-/**
- * @brief Set PINT interrupt mode to level high
- */
-static void inline pint_set_mode_level_high(void) {
-	/* Enable level mode */
-	LPC_GPIO_PIN_INT->ISEL |= PININTCH(4);
-	/* Enable high mode */
-	LPC_GPIO_PIN_INT->SIENR |= PININTCH(4);
-}
-
-/**
- * @brief Set PINT interrupt mode to level low
- */
-static void inline pint_set_mode_level_low(void) {
-	/* Enable level mode */
-	LPC_GPIO_PIN_INT->ISEL |= PININTCH(4);
-	/* Enable low mode */
-	LPC_GPIO_PIN_INT->SIENF |= PININTCH(4);
-}
-
-/**
- * @brief Choose PINT mode
- * @param mode: interrupt trigger type (rising_edge, falling_edge, high_level, low_level)
- */
-static void inline pint_set_mode(pint_mode_t mode) {
-	/* Check mode and enable */
-	if(mode == rising_edge) { pint_set_mode_rising_edge(); }
-	else if(mode == falling_edge) { pint_set_mode_falling_edge(); }
-	else if(mode == high_level) { pint_set_mode_level_high(); }
-	else { pint_set_mode_level_low(); }
-}
-
-/**
- * @brief Enable pin interrupt for a specified pin
- * @param mode: interrupt trigger type (rising_edge, falling_edge, high_level, low_level)
- * @param handler: function handler
- */
-static void inline pint_enable(pin_t pin, pint_mode_t mode, void (*handler)(void)) {
-	/* Map GPIO to PINT */
-	scu_gpio_pint_select(4, pin.GPIO_PORT, pin.GPIO_PIN);
-	/* Clear pending status */
-	pint_clear_status();
-	/* Select mode */
-	pint_set_mode(mode);
-	/* Attach interrupt */
-	pint_handler = handler;
-	/* Enable interrupt in the NVIC */
-	NVIC_ClearPendingIRQ(PIN_INT4_IRQn);
-	NVIC_EnableIRQ(PIN_INT4_IRQn);
-}
 
 #endif /* CIAA_GPIO_API_H_ */

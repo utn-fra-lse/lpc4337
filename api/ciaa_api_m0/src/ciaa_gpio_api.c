@@ -68,16 +68,3 @@ pin_t CAN_TD = { 3, 2, 5, 9, &P3_2 };
 
 pin_t SPI_MISO = { 1, 3, 0, 10, &P1_3 };
 pin_t SPI_MOSI = { 1, 4, 0, 11, &P1_4 };
-
-/* Pint handlers array */
-void (*pint_handler)(void);
-
-/**
- * @brief Pin Interrupt Handler 4
- */
-void GPIO4_IRQHandler(void) {
-	/* Clear pending interrupt */
-	pint_clear_status();
-	/* If able, call handler */
-	if(pint_handler) { pint_handler(); }
-}
