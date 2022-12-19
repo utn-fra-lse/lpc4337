@@ -7,9 +7,11 @@
 | ADC | [ciaa_adc_api.h]/[ciaa_adc_api.c] | Support for ADC0 and ADC1. Works by enabling one channel at a time. Reading can be done by polling or interrupt request service.
 | DAC [2] | [ciaa_dac_api.h]/[ciaa_dac_api.c] | Support for controling output of DAC and enabling alternative output pin.
 | DMA | [ciaa_dma_api.h]/[ciaa_dma_api.c] | Basic support for DMA controller and channel interrupts
-| GPIO | [ciaa_gpio_api.h]/[ciaa_gpio_api.c] | Support for general purpose functions such as: enable GPIO pin, set direction, read and write values and set, clear and xor output. Support for 8 different external interrupts.
+| GPIO | [ciaa_gpio_api.h]/[ciaa_gpio_api.c] | Support for general purpose functions such as: enable GPIO pin, set direction, read and write values and set, clear and xor output.
+| Group GPIO [3] | [ciaa_ggpio_api.h]/[ciaa_ggpio_api.c] | Support for both group interrupts with AND/OR modes.
 | IPC | [ciaa_ipc_api.h]/[ciaa_ipc_api.c] | Support for Intterprocessor Communication. Handles messaging between cores with a queue in a shared memory address.
 | Multicore | [ciaa_multicore_api.h]/[ciaa_multicore_api.c] | Support for multicore initialization and communication. No data is shared within cores in this library, only interrupts are used to synchronize them.
+| Pin Interrupt [3] | [ciaa_pint_api.h]/[ciaa_pint_api.c] | Support for 8 different external interrupts.
 | PWM [2] | [ciaa_pwm_api.h]/[ciaa_pwm_api.c] | Support for controlling up to 16 PWM outputs. Frequency, duty cycle and output pins are customizable.
 | SCU | [ciaa_scu_api.h]/[ciaa_scu_api.c] | Support for System Control Unit. It is responsible for enabling a pin function.
 | SysTick [2] | [ciaa_systick_api.h]/[ciaa_systick_api.c] | Support for SysTick and time tracking.
@@ -31,6 +33,8 @@
 1- These are references to the M4 API. However, the M0 API works in the same way with some exceptions that will be mentioned in the docs.
 
 2- Not yet implemented in the M0 core.
+
+3- Not fully functional in the M0 core.
 
 [ciaa_gpio_api.h]: ciaa_api/inc/ciaa_gpio_api.h
 [ciaa_gpio_api.c]: ciaa_api/src/ciaa_gpio_api.c
@@ -62,3 +66,7 @@
 [ciaa_board_api.c]: ciaa_api/src/ciaa_board_api.c
 [ciaa_dma_api.h]: ciaa_api/inc/ciaa_dma_api.h
 [ciaa_dma_api.c]: ciaa_api/src/ciaa_dma_api.c
+[ciaa_pint_api.h]: ciaa_api/int/ciaa_pint_api.h
+[ciaa_pint_api.c]: ciaa_api/src/ciaa_pint_api.c
+[ciaa_ggpio_api.h]: ciaa_api/int/ciaa_ggpio_api.h
+[ciaa_ggpio_api.c]: ciaa_api/src/ciaa_ggpio_api.c
