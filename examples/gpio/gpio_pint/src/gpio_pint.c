@@ -9,6 +9,7 @@
 */
 
 #include "ciaa_board_api.h"
+#include "ciaa_pint_api.h"
 
 /* Function prototypes */
 void pint0_handler(void);
