@@ -9,6 +9,7 @@
 */
 
 #include "ciaa_board_api.h"
+#include "ciaa_ggpio_api.h"
 
 /* Function prototype */
 void ggpio_handler(void);
@@ -35,5 +36,10 @@ int main(void) {
 /**
  * @brief Group GPIO interrupt
  */
-void ggpio_handler(void) { gpio_xor(LEDB); }
-
+void ggpio_handler(void) {
+	/* Check which pin was triggered */
+	if(!gpio_get(TEC1)) { gpio_xor(LEDB); }
+	else if(!gpio_get(TEC2)) { gpio_xor(LED1); }
+	else if(!gpio_get(TEC3)) { gpio_xor(LED2); }
+	else if(!gpio_get(TEC4)) { gpio_xor(LED3); }
+}
