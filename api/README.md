@@ -8,7 +8,7 @@
 | DAC [2] | [ciaa_dac_api.h]/[ciaa_dac_api.c] | Support for controling output of DAC and enabling alternative output pin.
 | DMA | [ciaa_dma_api.h]/[ciaa_dma_api.c] | Basic support for DMA controller and channel interrupts
 | GPIO | [ciaa_gpio_api.h]/[ciaa_gpio_api.c] | Support for general purpose functions such as: enable GPIO pin, set direction, read and write values and set, clear and xor output.
-| Group GPIO [3] | [ciaa_ggpio_api.h]/[ciaa_ggpio_api.c] | Support for both group interrupts with AND/OR modes.
+| Group GPIO | [ciaa_ggpio_api.h]/[ciaa_ggpio_api.c] | Support for both group interrupts with AND/OR modes.
 | IPC | [ciaa_ipc_api.h]/[ciaa_ipc_api.c] | Support for Intterprocessor Communication. Handles messaging between cores with a queue in a shared memory address.
 | Multicore | [ciaa_multicore_api.h]/[ciaa_multicore_api.c] | Support for multicore initialization and communication. No data is shared within cores in this library, only interrupts are used to synchronize them.
 | Pin Interrupt [3] | [ciaa_pint_api.h]/[ciaa_pint_api.c] | Support for 8 different external interrupts.
