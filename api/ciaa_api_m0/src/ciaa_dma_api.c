@@ -46,8 +46,13 @@ void DMA_IRQHandler(void) {
 	for(uint8_t channel = 0; channel < GPDMA_NUMBER_CHANNELS; channel++) {
 		/* Check DMA channel transfer status */
 		if(Chip_GPDMA_Interrupt(LPC_GPDMA, channel) == SUCCESS) {
-			/* Call handler if any */
-			if(dma_handlers[channel]) { dma_handlers[channel](); }
+			/* Check if there's any handler */
+			if(dma_handlers[channel]) {
+				/* Call it */
+				dma_handlers[channel]();
+				/* Return from handler */
+				return;
+			}		
 		}
 	}
 }
