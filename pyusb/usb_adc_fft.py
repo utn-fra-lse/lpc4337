@@ -3,8 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-# ADC clock
-f_adc = 4.5e6 
+# Sampling frequency
+fs = 96e3
 
 # Initialize CIAA usb handler
 ciaa = Ciaa()
@@ -32,24 +32,17 @@ try:
         N = int(data["size"])
         # Get number of clocks
         nclocks = int(data["nclocks"])
-        # Conversion time
-        conversion_time = nclocks / f_adc
         # Get resolution bits
         resolution = ciaa.get_resolution_bits(nclocks)
-        # Get sampling frequency
-        fs = 1 / (N * conversion_time)
         # Go from 0 to sampling frequency with N steps
         fn = np.linspace(0, fs / 2, n)
-        # Take error into account
-        #for i, f in enumerate(fn):
-        #    fn[i] = 1.46 * f + 8.91e-1
 
         # Normalize amplitudes
         for i, s in enumerate(fft):
             fft[i] = s / n
 
         # Get rid of DC level
-        # fft[0] = 0.0
+        fft[0] = 0.0
 
         # Get peak value
         peak = max(fft)
@@ -60,12 +53,13 @@ try:
         print()
 
         # Plot settings
+        plt.figure("CIAA FFT")
         plt.grid(True)
         plt.title("Sample FFT")
         plt.ylabel("Amplitude")
         plt.xlabel("Frequency [Hz]")
-        plt.ylim([0, 1.5])
-        plt.xlim([0, fs / 2])
+        plt.ylim([0, 3.6])
+        plt.xlim([0, fs / 4])
         # Plot up to fs / 2 the FFT values
         plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz ({resolution} bit resolution)")
         # Show label
