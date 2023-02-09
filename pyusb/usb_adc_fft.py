@@ -58,7 +58,7 @@ try:
         plt.title("Sample FFT")
         plt.ylabel("Amplitude")
         plt.xlabel("Frequency [Hz]")
-        plt.ylim([0, 3.6])
+        plt.ylim([0, 1.7])
         plt.xlim([0, fs / 4])
         # Plot up to fs / 2 the FFT values
         plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz ({resolution} bit resolution)")
