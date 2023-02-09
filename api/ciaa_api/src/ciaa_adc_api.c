@@ -51,7 +51,7 @@ void adc_config_init(uint8_t adc, adc_config_t config) {
 	/* Enable ADC */
 	cr |= ADC_CR_PDN;
 	/* Click for full conversion */
-	clk = ADC_FULL_CONV_CLK;
+	clk = adc_get_number_of_clocks(config.bitsAccuracy);
 	/* The APB clock (PCLK_ADC0) is divided by (CLKDIV+1) to produce the clock for
 	 * A/D converter, which should be less than or equal to 4.5MHz.
 	 * A fully conversion requires (bits_accuracy+1) of these clocks.
@@ -59,9 +59,8 @@ void adc_config_init(uint8_t adc, adc_config_t config) {
 	 * ADC rate = ADC clock / (the number of clocks required for each conversion);
 	 */
 	adcBlockFreq = Chip_Clock_GetRate(clkADC);
-	fullAdcRate = config.rate * clk;
-	/* Get the round value by fomular: (2*A + B)/(2*B) */
-	div = ((adcBlockFreq * 2 + fullAdcRate) / (fullAdcRate * 2)) - 1;
+	/* Get the round value */
+	div = adcBlockFreq / (config.rate * clk) - 1;
 	/* Clock divider */
 	cr |= ADC_CR_CLKDIV(div);
 	/* Number of ADC accuracy bits */
