@@ -4,8 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>lpc_chip_43xx</project>
-		<project>CMSIS_DSPLIB_SRC</project>
 		<project>ciaa_api</project>
+		<project>cmsis_dsp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
