@@ -63,7 +63,7 @@ try:
         # Plot up to fs / 2 the FFT values
         plt.stem(fn, fft, linefmt="blue", markerfmt="none", label=f"{N} samples @ {fs:.2e} Hz ({resolution} bit resolution)")
         # Plot max frequency bin
-        plt.stem(fn[index], peak, linefmt="blue", label=f"Max value of {peak:.2f} V @ {fn[index]:.2f} Hz")
+        plt.stem(fn[index], peak, linefmt="blue", label=f"Max value of {peak:.2f} V @ {fn[index]:.2f} ± {fs / (2 * n)} Hz")
         # Show label
         plt.legend()
         # Pause plot
