@@ -66,7 +66,7 @@
 [ciaa_board_api.c]: ciaa_api/src/ciaa_board_api.c
 [ciaa_dma_api.h]: ciaa_api/inc/ciaa_dma_api.h
 [ciaa_dma_api.c]: ciaa_api/src/ciaa_dma_api.c
-[ciaa_pint_api.h]: ciaa_api/int/ciaa_pint_api.h
+[ciaa_pint_api.h]: ciaa_api/inc/ciaa_pint_api.h
 [ciaa_pint_api.c]: ciaa_api/src/ciaa_pint_api.c
-[ciaa_ggpio_api.h]: ciaa_api/int/ciaa_ggpio_api.h
+[ciaa_ggpio_api.h]: ciaa_api/inc/ciaa_ggpio_api.h
 [ciaa_ggpio_api.c]: ciaa_api/src/ciaa_ggpio_api.c
