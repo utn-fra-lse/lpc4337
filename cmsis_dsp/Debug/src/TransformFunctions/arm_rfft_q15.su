@@ -1,3 +1,0 @@
-../src/TransformFunctions/arm_rfft_q15.c:107:6:arm_rfft_q15	40	static
-../src/TransformFunctions/arm_rfft_q15.c:235:6:arm_split_rfft_q15	192	static
-../src/TransformFunctions/arm_rfft_q15.c:455:6:arm_split_rifft_q15	208	static
